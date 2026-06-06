@@ -26,48 +26,54 @@ export default function Header({
   theme,
   onToggleTheme,
 }: HeaderProps) {
-  const isHomeActive = selectedCategory === "All" && !showingFavorites && !searchQuery;
-  const isCricketActive = selectedCategory === "Sports" && searchQuery.toLowerCase() === "cricket" && !showingFavorites;
-  const isFootballActive = selectedCategory === "Sports" && searchQuery.toLowerCase() === "football" && !showingFavorites;
-  const isNewsActive = selectedCategory === "News" && !showingFavorites && !searchQuery;
+  const isHomeActive =
+    selectedCategory === "All" && !showingFavorites && !searchQuery;
+  const isCricketActive =
+    selectedCategory === "Sports" &&
+    searchQuery.toLowerCase() === "cricket" &&
+    !showingFavorites;
+  const isFootballActive =
+    selectedCategory === "Sports" &&
+    searchQuery.toLowerCase() === "football" &&
+    !showingFavorites;
+  const isNewsActive =
+    selectedCategory === "News" && !showingFavorites && !searchQuery;
 
   return (
     <div className="sticky top-0 z-50 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-100/80 dark:border-slate-800/80 shadow-xs transition-colors duration-200">
       {/* Upper Brand & Profile Row */}
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2">
+        <button
+          onClick={() => {
+            onSelectCategory("All");
+            onSearch("");
+            if (showingFavorites) onShowFavorites();
+            if (typeof window !== "undefined") {
+              window.history.pushState(null, "", "/");
+            }
+          }}
+          className="flex items-center gap-2 cursor-pointer text-left focus:outline-none"
+        >
           <div className="h-10 w-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-md shadow-blue-500/20 text-white">
             <Tv className="h-5 w-5" />
           </div>
           <div>
             <span className="font-extrabold text-slate-900 dark:text-white text-lg sm:text-xl tracking-tight">
-              QoraPlay<span className="text-blue-600 font-semibold text-sm ml-0.5">TV</span>
+              QoraPlay
+              <span className="text-blue-600 font-semibold text-sm ml-0.5">
+                TV
+              </span>
             </span>
             <div className="flex items-center gap-1 text-[9px] text-emerald-600 dark:text-emerald-400 font-bold -mt-1 bg-emerald-50 dark:bg-emerald-950/30 px-1 py-px rounded-sm border border-emerald-100/50 dark:border-emerald-900/20 w-fit">
               <Activity className="h-2 w-2 animate-pulse" />
               <span>ONLINE</span>
             </div>
           </div>
-        </div>
+        </button>
 
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-          <button
-            onClick={() => {
-              onSelectCategory("All");
-              onSearch("");
-              if (showingFavorites) onShowFavorites();
-            }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              isHomeActive
-                ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white"
-                : "text-slate-655 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            <span>🏠</span> Home
-          </button>
-          
           <button
             onClick={() => {
               onSelectCategory("All");
@@ -153,7 +159,9 @@ export default function Header({
           <button
             onClick={onToggleTheme}
             className="h-9 w-9 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-450 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center justify-center transition-all cursor-pointer"
-            title={theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
+            title={
+              theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"
+            }
           >
             {theme === "light" ? (
               <Moon className="h-4.5 w-4.5" />
@@ -168,7 +176,9 @@ export default function Header({
               <User className="h-4 w-4" />
             </div>
             <div className="hidden lg:block text-left">
-              <p className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">Guest Account</p>
+              <p className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">
+                Guest Account
+              </p>
               <div className="flex items-center gap-0.5 text-[10px] text-blue-600 dark:text-blue-400 font-semibold leading-none">
                 <ShieldCheck className="h-3 w-3" />
                 <span>Free Access</span>
@@ -268,9 +278,13 @@ export default function Header({
           >
             <span>❤️</span> Favorites
             {favoritesCount > 0 && (
-              <span className={`rounded-full text-[9px] h-3.5 min-w-3.5 px-1 flex items-center justify-center font-bold ml-1 ${
-                showingFavorites ? "bg-white text-rose-600" : "bg-rose-500 text-white"
-              }`}>
+              <span
+                className={`rounded-full text-[9px] h-3.5 min-w-3.5 px-1 flex items-center justify-center font-bold ml-1 ${
+                  showingFavorites
+                    ? "bg-white text-rose-600"
+                    : "bg-rose-500 text-white"
+                }`}
+              >
                 {favoritesCount}
               </span>
             )}

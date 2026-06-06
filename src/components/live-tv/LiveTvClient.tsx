@@ -169,20 +169,25 @@ export default function LiveTvClient({
     }
   }, [channels]);
 
-  // Maintain a ref of activeChannel to avoid race condition/dependency loops in the sync effect
-  const activeChannelRef = useRef<Channel | null>(null);
+  // Synchronize active channel on browser Back/Forward navigation (popstate)
   useEffect(() => {
-    activeChannelRef.current = activeChannel;
-  }, [activeChannel]);
+    const handlePopState = () => {
+      if (typeof window !== "undefined") {
+        const path = window.location.pathname;
+        const parts = path.split("/");
+        const slug = parts[parts.length - 1];
+        if (slug && slug !== "live-tv") {
+          const matched = channels.find((c) => slugify(c.name) === slug);
+          if (matched) {
+            setActiveChannel(matched);
+          }
+        }
+      }
+    };
 
-  // Synchronize active channel when slug changes (e.g. back navigation)
-  useEffect(() => {
-    if (!initialSlug || channels.length === 0) return;
-    const matched = channels.find((c) => slugify(c.name) === initialSlug);
-    if (matched && activeChannelRef.current?.url !== matched.url) {
-      setActiveChannel(matched);
-    }
-  }, [initialSlug, channels]);
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [channels]);
 
   // Filter channels based on category, search query, and favorites status
   useEffect(() => {
@@ -225,7 +230,9 @@ export default function LiveTvClient({
   const handleChannelSelect = (channel: Channel) => {
     setActiveChannel(channel);
     const slug = slugify(channel.name);
-    router.push(`/live-tv/${slug}`);
+    if (typeof window !== "undefined") {
+      window.history.pushState(null, "", `/live-tv/${slug}`);
+    }
   };
 
   const handlePrevChannel = () => {
