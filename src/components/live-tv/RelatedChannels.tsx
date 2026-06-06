@@ -47,6 +47,8 @@ export default function RelatedChannels({
                 <img
                   src={related.logo}
                   alt={related.name}
+                  width="36"
+                  height="36"
                   className="max-h-full max-w-full object-contain"
                   onError={(e) => {
                     (e.target as HTMLElement).style.display = "none";

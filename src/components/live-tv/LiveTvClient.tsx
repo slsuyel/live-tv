@@ -385,6 +385,8 @@ export default function LiveTvClient({
                     <img
                       src={c.logo}
                       alt={c.name}
+                      width="56"
+                      height="56"
                       className="max-h-full max-w-full object-contain filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.05)] dark:drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
                       onError={(e) => {
                         (e.target as HTMLElement).style.display = "none";
@@ -461,6 +463,8 @@ export default function LiveTvClient({
                         <img
                           src={activeChannel.logo}
                           alt={activeChannel.name}
+                          width="56"
+                          height="56"
                           className="max-h-full max-w-full object-contain"
                           onError={(e) => {
                             (e.target as HTMLElement).style.display = "none";

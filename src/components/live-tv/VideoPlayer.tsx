@@ -418,6 +418,7 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
       <video
         ref={videoRef}
         controls
+        title="Live IPTV Video Stream"
         className="w-full h-full object-contain"
         poster={channel.logo}
         playsInline

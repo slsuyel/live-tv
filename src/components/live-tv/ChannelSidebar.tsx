@@ -142,6 +142,8 @@ export default function ChannelSidebar({
                       <img
                         src={channel.logo}
                         alt={channel.name}
+                        width="40"
+                        height="40"
                         className="max-h-full max-w-full object-contain"
                         onError={(e) => {
                           (e.target as HTMLElement).style.display = "none";
