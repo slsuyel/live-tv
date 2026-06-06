@@ -286,6 +286,96 @@ export default function LiveTvClient({
     }
   };
 
+  // Movie site shelves grouping
+  const trendingChannels = channels.slice(10, 25);
+  const sportsChannels = channels
+    .filter((c) => c.group === "Sports")
+    .slice(0, 15);
+  const banglaChannels = channels
+    .filter((c) => c.group === "Bangla")
+    .slice(0, 15);
+  const newsChannels = channels.filter((c) => c.group === "News").slice(0, 15);
+  const movieChannels = channels
+    .filter((c) => c.group === "Movies" || c.group === "Entertainment")
+    .slice(0, 15);
+
+  const renderMovieShelf = (
+    title: string,
+    icon: string,
+    shelfChannels: Channel[],
+  ) => {
+    if (shelfChannels.length === 0) return null;
+    return (
+      <div className="space-y-3 pt-6 border-t border-slate-200/50 dark:border-slate-800/60 first:border-0 transition-colors duration-200">
+        <div className="flex justify-between items-center px-1">
+          <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-slate-100 flex items-center gap-2 tracking-tight">
+            <span>{icon}</span>
+            {title}
+          </h3>
+          <span className="text-[10px] text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/20 px-2.5 py-0.5 rounded-full border border-blue-100/30 dark:border-blue-900/20">
+            {shelfChannels.length} Streams
+          </span>
+        </div>
+        <div className="flex gap-4 overflow-x-auto pb-3 pt-1 px-1 no-scrollbar scroll-smooth">
+          {shelfChannels.map((c, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                handleChannelSelect(c);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="group shrink-0 w-36 sm:w-48 aspect-video bg-[#0f172a] dark:bg-slate-950 border border-slate-800/80 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-blue-550/10 hover:scale-[1.04] transition-all duration-300 relative text-left cursor-pointer flex flex-col justify-between"
+            >
+              {/* Bottom gradient fade for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-10" />
+
+              {/* Corner Live Badge */}
+              <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-1 bg-rose-600 text-white font-black text-[8px] px-2 py-0.5 rounded-md shadow-xs tracking-wider">
+                <span className="h-1.5 w-1.5 bg-white rounded-full animate-pulse" />
+                <span>LIVE</span>
+              </div>
+
+              {/* Centered Logo Container */}
+              <div className="absolute inset-0 flex items-center justify-center pb-8 pt-4 z-0">
+                <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-xl bg-white/95 dark:bg-slate-900/90 shadow-sm p-1.5 flex items-center justify-center transition-all duration-300 group-hover:scale-105 border border-white/10 dark:border-slate-800/40">
+                  {c.logo ? (
+                    <img
+                      src={c.logo}
+                      alt={c.name}
+                      className="max-h-full max-w-full object-contain"
+                      onError={(e) => {
+                        (e.target as HTMLElement).style.display = "none";
+                      }}
+                    />
+                  ) : (
+                    <Tv className="h-5 w-5 text-slate-400 dark:text-slate-550" />
+                  )}
+                </div>
+              </div>
+
+              {/* Title & Group Overlays */}
+              <div className="absolute bottom-0 inset-x-0 p-3 z-20 min-w-0">
+                <h4 className="text-[10px] sm:text-xs font-bold text-white group-hover:text-blue-405 truncate pr-2 tracking-wide">
+                  {c.name}
+                </h4>
+                <span className="text-[8px] sm:text-[9px] text-slate-400 font-semibold uppercase tracking-wider block mt-0.5">
+                  {c.group}
+                </span>
+              </div>
+
+              {/* Play Hover Overlay */}
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-35 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 scale-75 group-hover:scale-100 transition-all duration-300">
+                  <span className="text-xs">▶</span>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-[#f8fafc] dark:bg-[#0b0f19] transition-colors duration-200">
       <Header
@@ -410,6 +500,23 @@ export default function LiveTvClient({
                 />
               </div>
             )}
+
+            {/* Movie Streaming Site Shelves */}
+            {selectedCategory === "All" &&
+              !searchQuery.trim() &&
+              !showFavoritesOnly && (
+                <div className="space-y-6 pt-4">
+                  {renderMovieShelf("Trending Streams", "🔥", trendingChannels)}
+                  {renderMovieShelf("Sports Live", "🏏", sportsChannels)}
+                  {renderMovieShelf("Bangla Channels", "🇧🇩", banglaChannels)}
+                  {renderMovieShelf("Live News Updates", "📰", newsChannels)}
+                  {renderMovieShelf(
+                    "Movies & Entertainment",
+                    "🎬",
+                    movieChannels,
+                  )}
+                </div>
+              )}
           </div>
 
           {/* Channels Selector Sidebar (Right 5 Cols) */}
