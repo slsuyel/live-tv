@@ -68,3 +68,21 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* Mini thin scrollbar */
+.mini-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+.mini-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mini-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+.dark .mini-scrollbar::-webkit-scrollbar-thumb {
+  background: #1e293b;
+}
+.mini-scrollbar {
+  scrollbar-width: thin;
+}

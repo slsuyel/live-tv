@@ -29,6 +29,8 @@ export default function Header({
 }: HeaderProps) {
   const isHomeActive =
     selectedCategory === "All" && !showingFavorites && !searchQuery;
+  const isSportsActive =
+    selectedCategory === "Sports" && !searchQuery && !showingFavorites;
   const isCricketActive =
     selectedCategory === "Sports" &&
     searchQuery.toLowerCase() === "cricket" &&
@@ -82,6 +84,21 @@ export default function Header({
             }`}
           >
             <span>📺</span> Live TV
+          </button>
+
+          <button
+            onClick={() => {
+              onSelectCategory("Sports");
+              onSearch("");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              isSportsActive
+                ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white"
+                : "text-slate-655 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            <span>🏆</span> Sports
           </button>
 
           <button
@@ -199,6 +216,21 @@ export default function Header({
             }`}
           >
             <span>📺</span> Live TV
+          </button>
+
+          <button
+            onClick={() => {
+              onSelectCategory("Sports");
+              onSearch("");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
+              isSportsActive
+                ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-255 dark:border-slate-700 shadow-xs"
+                : "text-slate-600 dark:text-slate-400 bg-transparent border-transparent"
+            }`}
+          >
+            <span>🏆</span> Sports
           </button>
 
           <button

@@ -43,7 +43,7 @@ export default function ChannelSidebar({
   setShowFavoritesOnly,
 }: ChannelSidebarProps) {
   return (
-    <Card className="border border-slate-100 dark:border-slate-800/40 shadow-sm rounded-xl sm:rounded-2xl overflow-hidden h-[calc(100vh-220px)] lg:h-[calc(100vh-180px)] flex flex-col bg-white dark:bg-[#0d1527] transition-colors duration-200">
+    <Card className="border border-slate-100 dark:border-slate-800/40 shadow-sm rounded-xl sm:rounded-2xl overflow-hidden h-full lg:h-[calc(100vh-180px)] flex flex-col bg-white dark:bg-[#0d1527] transition-colors duration-200">
       {/* Search & Category Filter Header */}
       <div className="p-3 sm:p-4 border-b border-slate-100 dark:border-slate-800/30 space-y-2.5 sm:space-y-3 bg-slate-50/50 dark:bg-[#070b13]/40">
         {/* Search */}
@@ -112,7 +112,7 @@ export default function ChannelSidebar({
       <div
         ref={listContainerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto p-2.5 sm:p-4 space-y-1.5 sm:space-y-2 custom-scrollbar"
+        className="flex-1 overflow-y-auto p-2.5 sm:p-4 space-y-1.5 sm:space-y-2 mini-scrollbar"
       >
         {paginatedChannels.length > 0 ? (
           <div className="grid grid-cols-1 gap-1.5 sm:gap-2">

@@ -8,6 +8,8 @@ import {
   ChevronRight,
   Heart,
   Search,
+  List,
+  X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -58,6 +60,7 @@ export default function LiveTvClient({
   const listContainerRef = useRef<HTMLDivElement>(null);
   const sidebarContainerRef = useRef<HTMLDivElement>(null);
   const isFirstRender = useRef(true);
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
 
   // Sync favorites on mount
   useEffect(() => {
@@ -571,16 +574,10 @@ export default function LiveTvClient({
               )}
           </div>
 
-          {/* Channels Selector Sidebar (Right 5 Cols) */}
+          {/* Desktop Sidebar (always visible on lg+) */}
           <div
             ref={sidebarContainerRef}
-            className={`${
-              selectedCategory === "All" &&
-              !searchQuery.trim() &&
-              !showFavoritesOnly
-                ? "hidden lg:block"
-                : "block"
-            } lg:col-span-5 xl:col-span-4 space-y-3 md:space-y-4`}
+            className="hidden lg:block lg:col-span-5 xl:col-span-4 space-y-3 md:space-y-4"
           >
             <ChannelSidebar
               searchQuery={searchQuery}
@@ -602,6 +599,66 @@ export default function LiveTvClient({
             />
           </div>
         </div>
+
+        {/* Mobile Floating Browse Button */}
+        <button
+          onClick={() => setShowMobileSidebar(true)}
+          className="lg:hidden fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-full shadow-xl shadow-blue-600/30 transition-all active:scale-95 cursor-pointer"
+        >
+          <List className="h-5 w-5" />
+          <span>Channels</span>
+        </button>
+
+        {/* Mobile Sidebar Overlay */}
+        {showMobileSidebar && (
+          <div className="lg:hidden fixed inset-0 z-50 flex flex-col">
+            {/* Backdrop */}
+            <div
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              onClick={() => setShowMobileSidebar(false)}
+            />
+            {/* Drawer */}
+            <div className="relative mt-auto h-[85vh] bg-white dark:bg-[#0b101f] rounded-t-2xl shadow-2xl flex flex-col animate-in slide-in-from-bottom duration-300">
+              {/* Drawer Header */}
+              <div className="flex items-center justify-between px-3 py-2.5 border-b border-slate-100 dark:border-slate-800/40">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Tv className="h-4 w-4 text-blue-500" />
+                  Browse Channels
+                </h3>
+                <button
+                  onClick={() => setShowMobileSidebar(false)}
+                  className="h-8 w-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+              {/* Drawer Body */}
+              <div className="flex-1 overflow-hidden p-1.5">
+                <ChannelSidebar
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                  categories={categories}
+                  paginatedChannels={paginatedChannels}
+                  activeChannel={activeChannel}
+                  handleChannelSelect={(channel) => {
+                    handleChannelSelect(channel);
+                    setShowMobileSidebar(false);
+                  }}
+                  listContainerRef={listContainerRef}
+                  handleScroll={handleScroll}
+                  sidebarPage={sidebarPage}
+                  totalPages={totalPages}
+                  favorites={favorites}
+                  onToggleFavorite={handleToggleFavorite}
+                  showFavoritesOnly={showFavoritesOnly}
+                  setShowFavoritesOnly={setShowFavoritesOnly}
+                />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Movie Streaming Site Shelves */}
         {selectedCategory === "All" &&
