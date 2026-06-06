@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Tv, Info, Globe, Heart } from "lucide-react";
+import { Tv, Info, Globe, Heart, Mail } from "lucide-react";
 import Image from "next/image";
 
 export default function Footer() {
@@ -17,7 +17,7 @@ export default function Footer() {
                 alt="QoraPlay TV"
                 width={250}
                 height={58}
-                className="h-8 sm:h-12 w-auto dark:filter-[invert(1)_hue-rotate(180deg)]"
+                className="h-8 sm:h-12 w-auto dark:[filter:invert(1)_hue-rotate(180deg)]"
               />
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
@@ -45,13 +45,53 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-slate-100 dark:border-slate-800/80 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-          <p className="text-xs text-slate-400 dark:text-slate-500">
-            © {new Date().getFullYear()} QoraPlay TV. All rights reserved.
-          </p>
-          <p className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
-            Made with <Heart className="h-3 w-3 fill-rose-500 text-rose-500" />{" "}
-            for free streaming access.
-          </p>
+          <div className="space-y-1">
+            <p className="text-xs text-slate-400 dark:text-slate-500">
+              © {new Date().getFullYear()} QoraPlay TV. All rights reserved.
+            </p>
+            <p className="text-[11px] text-slate-400/80 dark:text-slate-500/80 flex items-center justify-center sm:justify-start gap-1">
+              Developed by{" "}
+              <a
+                href="https://fb.com/slsuyel"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                slsuyel
+              </a>
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-4 gap-y-2">
+            <a
+              href="mailto:slsuyel@gmail.com"
+              className="text-xs text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 transition-colors"
+            >
+              <Mail className="h-3.5 w-3.5" />
+              <span>slsuyel@gmail.com</span>
+            </a>
+            <a
+              href="https://fb.com/slsuyel"
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-3.5 w-3.5"
+              >
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+              </svg>
+              <span>Facebook</span>
+            </a>
+          </div>
         </div>
       </div>
     </footer>
