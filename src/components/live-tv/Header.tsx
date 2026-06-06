@@ -40,7 +40,7 @@ export default function Header({
     selectedCategory === "News" && !showingFavorites && !searchQuery;
 
   return (
-    <div className="sticky top-0 z-50 w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-100/80 dark:border-slate-800/80 shadow-xs transition-colors duration-200">
+    <div className="sticky top-0 z-50 w-full bg-white/95 dark:bg-[#0d1527]/95 backdrop-blur-md border-b border-slate-100/80 dark:border-slate-800/80 shadow-xs transition-colors duration-200">
       {/* Upper Brand & Profile Row */}
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
@@ -158,7 +158,7 @@ export default function Header({
           {/* Theme Toggle Button */}
           <button
             onClick={onToggleTheme}
-            className="h-9 w-9 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-450 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center justify-center transition-all cursor-pointer"
+            className="h-9 w-9 rounded-xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-[#111a30] text-slate-600 dark:text-slate-450 hover:bg-slate-50 dark:hover:bg-slate-800/60 flex items-center justify-center transition-all cursor-pointer"
             title={
               theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"
             }
@@ -172,7 +172,7 @@ export default function Header({
 
           {/* User Badge */}
           <div className="flex items-center gap-2 pl-1.5 sm:pl-3 border-l border-slate-200 dark:border-slate-800">
-            <div className="h-9 w-9 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 flex items-center justify-center text-slate-600 dark:text-slate-400">
+            <div className="h-9 w-9 rounded-xl bg-slate-100 dark:bg-[#111a30] border border-slate-200 dark:border-slate-700/80 flex items-center justify-center text-slate-600 dark:text-slate-400">
               <User className="h-4 w-4" />
             </div>
             <div className="hidden lg:block text-left">
@@ -189,7 +189,7 @@ export default function Header({
       </div>
 
       {/* Mobile Secondary Navigation Row (Scrollable) */}
-      <div className="md:hidden border-t border-slate-100/60 dark:border-slate-800/60 bg-slate-50/50 dark:bg-slate-950/20">
+      <div className="md:hidden border-t border-slate-100/60 dark:border-slate-800/60 bg-slate-50/50 dark:bg-[#0b101f]">
         <div className="container mx-auto px-2 py-1.5 flex gap-1.5 overflow-x-auto no-scrollbar scroll-smooth">
           <button
             onClick={() => {

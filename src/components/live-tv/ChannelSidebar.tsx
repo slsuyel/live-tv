@@ -43,9 +43,9 @@ export default function ChannelSidebar({
   setShowFavoritesOnly,
 }: ChannelSidebarProps) {
   return (
-    <Card className="border border-slate-100 dark:border-slate-800/80 shadow-sm rounded-xl sm:rounded-2xl overflow-hidden h-[calc(100vh-220px)] lg:h-[calc(100vh-180px)] flex flex-col bg-white dark:bg-slate-900 transition-colors duration-200">
+    <Card className="border border-slate-100 dark:border-slate-800/40 shadow-sm rounded-xl sm:rounded-2xl overflow-hidden h-[calc(100vh-220px)] lg:h-[calc(100vh-180px)] flex flex-col bg-white dark:bg-[#0d1527] transition-colors duration-200">
       {/* Search & Category Filter Header */}
-      <div className="p-3 sm:p-4 border-b border-slate-100 dark:border-slate-800/80 space-y-2.5 sm:space-y-3 bg-slate-50/50 dark:bg-slate-950/20">
+      <div className="p-3 sm:p-4 border-b border-slate-100 dark:border-slate-800/30 space-y-2.5 sm:space-y-3 bg-slate-50/50 dark:bg-[#070b13]/40">
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-slate-400 dark:text-slate-550" />
@@ -134,7 +134,7 @@ export default function ChannelSidebar({
                   className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl border text-left transition-all w-full group cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
                     isActive
                       ? "bg-blue-50/70 dark:bg-blue-950/20 border-blue-100/80 dark:border-blue-900/40 text-blue-600 dark:text-blue-400 shadow-sm"
-                      : "bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800/60 hover:border-slate-200 dark:hover:border-slate-700 hover:bg-slate-50/40 dark:hover:bg-slate-800/40 text-slate-655 dark:text-slate-400 hover:text-slate-955 dark:hover:text-white"
+                      : "bg-white dark:bg-[#111a30] border-slate-100 dark:border-slate-800/40 hover:border-slate-200 dark:hover:border-slate-700 hover:bg-slate-50/40 dark:hover:bg-slate-800/30 text-slate-655 dark:text-slate-400 hover:text-slate-955 dark:hover:text-white"
                   }`}
                 >
                   <div className="relative h-8 w-8 sm:h-10 sm:w-10 bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 rounded-md sm:rounded-lg p-1 flex items-center justify-center shrink-0">
@@ -197,7 +197,7 @@ export default function ChannelSidebar({
 
       {/* Sidebar Infinite loading footer */}
       {sidebarPage < totalPages && (
-        <div className="py-2 text-center text-[10px] text-slate-400 dark:text-slate-505 font-semibold animate-pulse bg-slate-50/50 dark:bg-slate-950/20 border-t border-slate-100 dark:border-slate-800/80 shrink-0">
+        <div className="py-2 text-center text-[10px] text-slate-400 dark:text-slate-500 font-semibold animate-pulse bg-slate-50/50 dark:bg-[#070b13]/40 border-t border-slate-100 dark:border-slate-800/30 shrink-0">
           Loading more channels...
         </div>
       )}
