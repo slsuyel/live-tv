@@ -64,7 +64,7 @@ export default function Header({
             width={250}
             height={58}
             priority
-            className="h-14 w-auto"
+            className="h-9 sm:h-14 w-auto"
           />
         </button>
         {/* Desktop Navigation Links */}

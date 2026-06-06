@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Tv, Info, Globe, Heart } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -11,27 +12,19 @@ export default function Footer() {
           {/* Logo & Description */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
-                <Tv className="h-4 w-4" />
-              </div>
-              <span className="font-extrabold text-slate-900 dark:text-white text-lg tracking-tight">
-                QoraPlay<span className="text-blue-600 font-semibold text-xs ml-0.5">TV</span>
-              </span>
+              <Image
+                src="/logo.png"
+                alt="QoraPlay TV"
+                width={250}
+                height={58}
+                className="h-8 sm:h-12 w-auto"
+              />
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
-              Enjoy free live television streaming from around the world. Access over 7,000 channels covering sports, news, entertainment, and movies on any device, completely free.
+              Enjoy free live television streaming from around the world. Access
+              over 7,000 channels covering sports, news, entertainment, and
+              movies on any device, completely free.
             </p>
-            <div className="flex gap-2">
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noreferrer"
-                className="h-8 w-8 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 dark:text-slate-550 hover:text-slate-900 dark:hover:text-white hover:border-slate-350 dark:hover:border-slate-700 transition-colors"
-                title="Github repository"
-              >
-                <Globe className="h-4 w-4" />
-              </a>
-            </div>
           </div>
 
           {/* Legal / Disclaimer */}
@@ -41,7 +34,12 @@ export default function Footer() {
               IPTV Content Disclaimer
             </h4>
             <p className="text-[11px] text-slate-505 dark:text-slate-400 leading-relaxed">
-              QoraPlay TV serves as a directory of publicly available HLS streaming URL links. We do not host, store, stream, or broadcast any media or copyright content. All streams are retrieved directly from public repositories (such as IPTV indexes on GitHub). If you are a copyright owner and want any content removed, please contact the stream source providers directly.
+              QoraPlay TV serves as a directory of publicly available HLS
+              streaming URL links. We do not host, store, stream, or broadcast
+              any media or copyright content. All streams are retrieved directly
+              from public repositories (such as IPTV indexes on GitHub). If you
+              are a copyright owner and want any content removed, please contact
+              the stream source providers directly.
             </p>
           </div>
         </div>
@@ -51,7 +49,8 @@ export default function Footer() {
             © {new Date().getFullYear()} QoraPlay TV. All rights reserved.
           </p>
           <p className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
-            Made with <Heart className="h-3 w-3 fill-rose-500 text-rose-500" /> for free streaming access.
+            Made with <Heart className="h-3 w-3 fill-rose-500 text-rose-500" />{" "}
+            for free streaming access.
           </p>
         </div>
       </div>
