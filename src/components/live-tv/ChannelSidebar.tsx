@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Search, Tv, Play } from "lucide-react";
+import { Search, Tv, Play, Heart } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Channel } from "./types";
 
@@ -18,6 +18,10 @@ interface ChannelSidebarProps {
   handleScroll: () => void;
   sidebarPage: number;
   totalPages: number;
+  favorites: string[];
+  onToggleFavorite: (url: string) => void;
+  showFavoritesOnly: boolean;
+  setShowFavoritesOnly: (val: boolean) => void;
 }
 
 export default function ChannelSidebar({
@@ -33,6 +37,10 @@ export default function ChannelSidebar({
   handleScroll,
   sidebarPage,
   totalPages,
+  favorites,
+  onToggleFavorite,
+  showFavoritesOnly,
+  setShowFavoritesOnly,
 }: ChannelSidebarProps) {
   return (
     <Card className="border border-slate-100 shadow-sm rounded-xl sm:rounded-2xl overflow-hidden h-[calc(100vh-220px)] lg:h-[calc(100vh-180px)] flex flex-col bg-white">
@@ -48,6 +56,7 @@ export default function ChannelSidebar({
               setSearchQuery(e.target.value);
               if (e.target.value.trim()) {
                 setSelectedCategory("All");
+                setShowFavoritesOnly(false);
               }
             }}
             placeholder="Search channel by name..."
@@ -57,20 +66,44 @@ export default function ChannelSidebar({
 
         {/* Categories Tab (Scrollable) */}
         {!searchQuery && (
-          <div className="flex gap-1 sm:gap-1.5 overflow-x-auto pb-1 sm:pb-1.5 no-scrollbar">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap border transition-all cursor-pointer ${
-                  selectedCategory === cat
-                    ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/10"
-                    : "bg-white text-slate-600 border-slate-200 hover:border-slate-350 hover:text-slate-900"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          <div className="flex gap-1.5 overflow-x-auto pb-1 sm:pb-1.5 no-scrollbar items-center">
+            {/* Favorites Tab Button */}
+            <button
+              onClick={() => {
+                setShowFavoritesOnly(!showFavoritesOnly);
+                setSelectedCategory("All");
+              }}
+              className={`px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap border transition-all cursor-pointer flex items-center gap-1 shrink-0 ${
+                showFavoritesOnly
+                  ? "bg-rose-500 text-white border-rose-500 shadow-md shadow-rose-500/10"
+                  : "bg-rose-50 text-rose-600 border-rose-100 hover:border-rose-200"
+              }`}
+            >
+              <Heart className={`h-3 w-3 ${showFavoritesOnly ? "fill-white text-white" : "fill-rose-500 text-rose-500"}`} />
+              Favorites ({favorites.length})
+            </button>
+
+            <div className="h-4 w-px bg-slate-200 shrink-0" />
+
+            {categories.map((cat) => {
+              const isSelected = selectedCategory === cat && !showFavoritesOnly;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    setSelectedCategory(cat);
+                    setShowFavoritesOnly(false);
+                  }}
+                  className={`px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap border transition-all cursor-pointer shrink-0 ${
+                    isSelected
+                      ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/10"
+                      : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:text-slate-900"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
@@ -85,14 +118,23 @@ export default function ChannelSidebar({
           <div className="grid grid-cols-1 gap-1.5 sm:gap-2">
             {paginatedChannels.map((channel, index) => {
               const isActive = activeChannel?.url === channel.url;
+              const isFavorite = favorites.includes(channel.url);
               return (
-                <button
+                <div
                   key={index}
                   onClick={() => handleChannelSelect(channel)}
-                  className={`flex items-center gap-2 sm:gap-3 p-2.5 rounded-xl border text-left transition-all w-full group cursor-pointer ${
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleChannelSelect(channel);
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl border text-left transition-all w-full group cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
                     isActive
                       ? "bg-blue-50/70 border-blue-100/80 text-blue-600 shadow-sm"
-                      : "bg-white border-slate-100 hover:border-slate-200 hover:bg-slate-50/40 text-slate-600 hover:text-slate-950"
+                      : "bg-white border-slate-100 hover:border-slate-200 hover:bg-slate-50/40 text-slate-600 hover:text-slate-955"
                   }`}
                 >
                   <div className="relative h-8 w-8 sm:h-10 sm:w-10 bg-slate-50 border border-slate-100 rounded-md sm:rounded-lg p-1 flex items-center justify-center shrink-0">
@@ -111,7 +153,7 @@ export default function ChannelSidebar({
                   </div>
                   <div className="min-w-0 flex-1">
                     <h4
-                      className={`text-[11px] sm:text-xs font-bold leading-snug truncate ${isActive ? "text-blue-600" : "text-slate-700 group-hover:text-slate-900"}`}
+                      className={`text-[11px] sm:text-xs font-bold leading-snug truncate pr-1 ${isActive ? "text-blue-600" : "text-slate-700 group-hover:text-slate-900"}`}
                     >
                       {channel.name}
                     </h4>
@@ -119,20 +161,36 @@ export default function ChannelSidebar({
                       {channel.group}
                     </span>
                   </div>
-                  <div className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Play
-                      className={`h-3 w-3 sm:h-3.5 sm:w-3.5 fill-current ${
-                        isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"
-                      }`}
-                    />
+                  
+                  {/* Actions (Favorite + Play Icon) */}
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleFavorite(channel.url);
+                      }}
+                      className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-300 hover:text-rose-500 transition-colors cursor-pointer"
+                      title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                    >
+                      <Heart className={`h-3.5 w-3.5 ${isFavorite ? "fill-rose-500 text-rose-500" : ""}`} />
+                    </button>
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Play
+                        className={`h-3 w-3 sm:h-3.5 sm:w-3.5 fill-current ${
+                          isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-600"
+                        }`}
+                      />
+                    </div>
                   </div>
-                </button>
+                </div>
               );
             })}
           </div>
         ) : (
           <div className="py-20 text-center text-slate-400 text-sm">
-            No channels found matching current filter.
+            {showFavoritesOnly 
+              ? "You haven't added any channels to your favorites yet. Click the heart icon on any channel to save it!" 
+              : "No channels found matching current filter."}
           </div>
         )}
       </div>

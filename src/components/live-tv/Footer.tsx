@@ -1,0 +1,71 @@
+"use client";
+
+import React from "react";
+import { Tv, Info, Globe, Heart } from "lucide-react";
+
+export default function Footer() {
+  return (
+    <footer className="bg-white border-t border-slate-100/80 mt-auto">
+      <div className="container mx-auto px-4 py-8 md:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+          {/* Logo & Description */}
+          <div className="md:col-span-5 space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                <Tv className="h-4 w-4" />
+              </div>
+              <span className="font-extrabold text-slate-900 text-lg tracking-tight">
+                QoraPlay
+                <span className="text-blue-600 font-semibold text-xs ml-0.5">
+                  TV
+                </span>
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+              Enjoy free live television streaming from around the world. Access
+              over 7,000 channels covering sports, news, entertainment, and
+              movies on any device, completely free.
+            </p>
+            <div className="flex gap-2">
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noreferrer"
+                className="h-8 w-8 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-350 transition-colors"
+                title="Github repository"
+              >
+                <Globe className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Legal / Disclaimer */}
+          <div className="md:col-span-7 space-y-3 bg-amber-50/40 border border-amber-100/40 p-4 rounded-2xl">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+              <Info className="h-4 w-4 text-amber-600" />
+              IPTV Content Disclaimer
+            </h4>
+            <p className="text-[11px] text-slate-500 leading-relaxed">
+              QoraPlay TV serves as a directory of publicly available HLS
+              streaming URL links. We do not host, store, stream, or broadcast
+              any media or copyright content. All streams are retrieved directly
+              from public repositories (such as IPTV indexes on GitHub). If you
+              are a copyright owner and want any content removed, please contact
+              the stream source providers directly.
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-slate-100 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+          <p className="text-xs text-slate-400">
+            © {new Date().getFullYear()} QoraPlay TV. All rights reserved.
+          </p>
+          <p className="text-xs text-slate-400 flex items-center gap-1">
+            Made with <Heart className="h-3 w-3 fill-rose-500 text-rose-500" />{" "}
+            for free streaming access.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
