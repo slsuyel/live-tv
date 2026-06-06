@@ -1,6 +1,8 @@
 import LiveTvClient from "@/components/live-tv/LiveTvClient";
 import { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://live.nextqora.com";
 
 // Server-Side Data Fetching (SSR/ISR)

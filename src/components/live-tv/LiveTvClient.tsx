@@ -220,6 +220,18 @@ export default function LiveTvClient({
     return () => window.removeEventListener("popstate", handlePopState);
   }, [channels]);
 
+  // Synchronize document title with active channel
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (activeChannel) {
+        document.title = `Watch ${activeChannel.name} Live - Free IPTV Online Streaming | LiveTV Portal`;
+      } else {
+        document.title =
+          "Live TV - Free Online IPTV Channel Streaming (7000+ Channels) | LiveTV Portal";
+      }
+    }
+  }, [activeChannel]);
+
   // Filter channels based on category, search query, and favorites status
   useEffect(() => {
     let result = channels;
