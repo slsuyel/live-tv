@@ -43,6 +43,8 @@ export default function LiveTvClient({
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
   const [sidebarPage, setSidebarPage] = useState(1);
   const channelsPerPage = 30;
 
@@ -75,6 +77,38 @@ export default function LiveTvClient({
     if (typeof window !== "undefined") {
       localStorage.setItem("qoraplay_tv_favorites", JSON.stringify(updated));
     }
+  };
+
+  // Sync theme from localStorage on load
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("qoraplay_tv_theme") as
+        | "light"
+        | "dark";
+      if (savedTheme) {
+        setTheme(savedTheme);
+      } else {
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        setTheme(prefersDark ? "dark" : "light");
+      }
+    }
+  }, []);
+
+  // Set the .dark class on the root element
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    localStorage.setItem("qoraplay_tv_theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   // Reset page when category or search query changes
@@ -246,7 +280,7 @@ export default function LiveTvClient({
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8fafc]">
+    <div className="flex flex-col min-h-screen bg-[#f8fafc] dark:bg-[#0b0f19] transition-colors duration-200">
       <Header
         favoritesCount={favorites.length}
         onShowFavorites={() => {
@@ -258,6 +292,8 @@ export default function LiveTvClient({
         onSearch={setSearchQuery}
         selectedCategory={selectedCategory}
         searchQuery={searchQuery}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       <main className="grow container mx-auto space-y-3.5 md:space-y-8 px-2 sm:px-4 py-4 md:py-8">
@@ -267,9 +303,9 @@ export default function LiveTvClient({
             {activeChannel ? (
               <VideoPlayer channel={activeChannel} />
             ) : (
-              <div className="aspect-video w-full bg-[#0d1127] rounded-xl sm:rounded-2xl flex flex-col items-center justify-center text-white border border-slate-200 p-4">
-                <Tv className="text-slate-600 animate-bounce mb-2 h-10 w-10 sm:h-12 sm:w-12" />
-                <p className="text-xs sm:text-sm text-slate-450 font-semibold text-center">
+              <div className="aspect-video w-full bg-[#0d1127] dark:bg-slate-950 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center text-white border border-slate-200 dark:border-slate-800 p-4">
+                <Tv className="text-slate-600 dark:text-slate-700 animate-bounce mb-2 h-10 w-10 sm:h-12 sm:w-12" />
+                <p className="text-xs sm:text-sm text-slate-400 dark:text-slate-550 font-semibold text-center">
                   Select a channel from the list to start watching
                 </p>
               </div>
@@ -277,10 +313,10 @@ export default function LiveTvClient({
 
             {/* Active Channel Details */}
             {activeChannel && (
-              <div className="bg-white border border-slate-100 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm space-y-3 sm:space-y-4">
+              <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-sm space-y-3 sm:space-y-4 transition-colors duration-200">
                 <div className="flex items-start justify-between gap-2 sm:gap-4">
                   <div className="flex items-center gap-2.5 sm:gap-4">
-                    <div className="relative h-11 w-11 sm:h-14 sm:w-14 rounded-lg sm:rounded-xl bg-slate-50 border border-slate-100 p-1.5 flex items-center justify-center shrink-0">
+                    <div className="relative h-11 w-11 sm:h-14 sm:w-14 rounded-lg sm:rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 p-1.5 flex items-center justify-center shrink-0">
                       {activeChannel.logo ? (
                         <img
                           src={activeChannel.logo}
@@ -291,14 +327,14 @@ export default function LiveTvClient({
                           }}
                         />
                       ) : (
-                        <Tv className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400" />
+                        <Tv className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 dark:text-slate-500" />
                       )}
                     </div>
                     <div>
-                      <h2 className="text-base sm:text-xl font-bold text-slate-900">
+                      <h2 className="text-base sm:text-xl font-bold text-slate-900 dark:text-white">
                         {activeChannel.name}
                       </h2>
-                      <span className="inline-block bg-blue-50 text-blue-600 font-bold px-2 py-0.5 rounded-full text-[10px] sm:text-xs border border-blue-100/40 mt-0.5 sm:mt-1">
+                      <span className="inline-block bg-blue-50 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 font-bold px-2 py-0.5 rounded-full text-[10px] sm:text-xs border border-blue-100/40 dark:border-blue-900/30 mt-0.5 sm:mt-1">
                         {activeChannel.group}
                       </span>
                     </div>
@@ -309,7 +345,7 @@ export default function LiveTvClient({
                       variant="outline"
                       size="icon"
                       onClick={handlePrevChannel}
-                      className="rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 text-slate-700 hover:text-blue-600 border-slate-200 hover:bg-slate-50 bg-white cursor-pointer"
+                      className="rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 bg-white dark:bg-slate-900 cursor-pointer"
                       title="Previous Channel"
                     >
                       <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -318,13 +354,13 @@ export default function LiveTvClient({
                       variant="outline"
                       size="icon"
                       onClick={handleNextChannel}
-                      className="rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 text-slate-700 hover:text-blue-600 border-slate-200 hover:bg-slate-50 bg-white cursor-pointer"
+                      className="rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 bg-white dark:bg-slate-900 cursor-pointer"
                       title="Next Channel"
                     >
                       <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
                     </Button>
 
-                    <div className="h-6 w-px bg-slate-200 mx-0.5 sm:mx-1" />
+                    <div className="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-0.5 sm:mx-1" />
 
                     {/* Favorite Toggle Button */}
                     <Button
@@ -333,8 +369,8 @@ export default function LiveTvClient({
                       onClick={() => handleToggleFavorite(activeChannel.url)}
                       className={`rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 cursor-pointer ${
                         favorites.includes(activeChannel.url)
-                          ? "bg-rose-50 border-rose-200 text-rose-600 hover:text-rose-700"
-                          : "text-slate-500 hover:text-rose-500 border-slate-200 hover:bg-slate-50 bg-white"
+                          ? "bg-rose-50 dark:bg-rose-950/20 border-rose-200 dark:border-rose-900/30 text-rose-600 dark:text-rose-400 hover:text-rose-700"
+                          : "text-slate-500 dark:text-slate-400 hover:text-rose-500 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 bg-white dark:bg-slate-900"
                       }`}
                       title={
                         favorites.includes(activeChannel.url)
@@ -351,7 +387,7 @@ export default function LiveTvClient({
                       variant="outline"
                       size="icon"
                       onClick={handleShare}
-                      className="rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 text-slate-500 hover:text-blue-600 border-slate-200 hover:bg-slate-50 bg-white cursor-pointer"
+                      className="rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 bg-white dark:bg-slate-900 cursor-pointer"
                       title="Share Channel"
                     >
                       <Share2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
