@@ -7,11 +7,29 @@ interface HeaderProps {
   favoritesCount: number;
   onShowFavorites: () => void;
   showingFavorites: boolean;
+  onSelectCategory: (category: string) => void;
+  onSearch: (query: string) => void;
+  selectedCategory: string;
+  searchQuery: string;
 }
 
-export default function Header({ favoritesCount, onShowFavorites, showingFavorites }: HeaderProps) {
+export default function Header({
+  favoritesCount,
+  onShowFavorites,
+  showingFavorites,
+  onSelectCategory,
+  onSearch,
+  selectedCategory,
+  searchQuery,
+}: HeaderProps) {
+  const isHomeActive = selectedCategory === "All" && !showingFavorites && !searchQuery;
+  const isCricketActive = selectedCategory === "Sports" && searchQuery.toLowerCase() === "cricket" && !showingFavorites;
+  const isFootballActive = selectedCategory === "Sports" && searchQuery.toLowerCase() === "football" && !showingFavorites;
+  const isNewsActive = selectedCategory === "News" && !showingFavorites && !searchQuery;
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-100/80 shadow-xs">
+    <div className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-100/80 shadow-xs">
+      {/* Upper Brand & Profile Row */}
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">
@@ -29,37 +47,105 @@ export default function Header({ favoritesCount, onShowFavorites, showingFavorit
           </div>
         </div>
 
-        {/* Center - Stats badge */}
-        <div className="hidden md:flex items-center gap-2.5 bg-slate-50 border border-slate-100 px-3 py-1.5 rounded-full text-xs font-semibold text-slate-600">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          Streaming 7,000+ Channels Free
-        </div>
-
-        {/* Right Nav */}
-        <div className="flex items-center gap-2 sm:gap-4">
-          {/* Favorites Button */}
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
           <button
-            onClick={onShowFavorites}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-              showingFavorites
-                ? "bg-rose-50 border-rose-200 text-rose-600 shadow-xs"
-                : "bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+            onClick={() => {
+              onSelectCategory("All");
+              onSearch("");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              isHomeActive
+                ? "bg-slate-100 text-slate-900"
+                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
             }`}
           >
-            <Heart className={`h-4 w-4 ${showingFavorites ? "fill-rose-500 text-rose-500" : ""}`} />
-            <span className="hidden sm:inline">Favorites</span>
+            <span>🏠</span> Home
+          </button>
+          
+          <button
+            onClick={() => {
+              onSelectCategory("All");
+              onSearch("");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              isHomeActive
+                ? "bg-slate-100 text-slate-900"
+                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+            }`}
+          >
+            <span>📺</span> Live TV
+          </button>
+
+          <button
+            onClick={() => {
+              onSelectCategory("Sports");
+              onSearch("cricket");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              isCricketActive
+                ? "bg-slate-100 text-slate-900"
+                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+            }`}
+          >
+            <span>🏏</span> Cricket
+          </button>
+
+          <button
+            onClick={() => {
+              onSelectCategory("Sports");
+              onSearch("football");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              isFootballActive
+                ? "bg-slate-100 text-slate-900"
+                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+            }`}
+          >
+            <span>⚽</span> Football
+          </button>
+
+          <button
+            onClick={() => {
+              onSelectCategory("News");
+              onSearch("");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              isNewsActive
+                ? "bg-slate-100 text-slate-900"
+                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+            }`}
+          >
+            <span>📰</span> News
+          </button>
+
+          <button
+            onClick={() => {
+              if (!showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              showingFavorites
+                ? "bg-rose-50 text-rose-600 border border-rose-100"
+                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+            }`}
+          >
+            <span>❤️</span> Favorites
             {favoritesCount > 0 && (
               <span className="bg-rose-500 text-white rounded-full text-[9px] h-4 min-w-4 px-1 flex items-center justify-center font-bold">
                 {favoritesCount}
               </span>
             )}
           </button>
+        </nav>
 
-          {/* User Badge */}
-          <div className="flex items-center gap-2 border-l border-slate-200 pl-2 sm:pl-4">
+        {/* Right User Badge */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 pl-2 border-slate-200">
             <div className="h-9 w-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600">
               <User className="h-4 w-4" />
             </div>
@@ -73,6 +159,106 @@ export default function Header({ favoritesCount, onShowFavorites, showingFavorit
           </div>
         </div>
       </div>
-    </header>
+
+      {/* Mobile Secondary Navigation Row (Scrollable) */}
+      <div className="md:hidden border-t border-slate-100/60 bg-slate-50/50">
+        <div className="container mx-auto px-2 py-1.5 flex gap-1.5 overflow-x-auto no-scrollbar scroll-smooth">
+          <button
+            onClick={() => {
+              onSelectCategory("All");
+              onSearch("");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
+              isHomeActive
+                ? "bg-white text-slate-900 border-slate-200 shadow-xs"
+                : "text-slate-600 bg-transparent border-transparent"
+            }`}
+          >
+            <span>🏠</span> Home
+          </button>
+
+          <button
+            onClick={() => {
+              onSelectCategory("All");
+              onSearch("");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
+              isHomeActive
+                ? "bg-white text-slate-900 border-slate-200 shadow-xs"
+                : "text-slate-600 bg-transparent border-transparent"
+            }`}
+          >
+            <span>📺</span> Live TV
+          </button>
+
+          <button
+            onClick={() => {
+              onSelectCategory("Sports");
+              onSearch("cricket");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
+              isCricketActive
+                ? "bg-white text-slate-900 border-slate-200 shadow-xs"
+                : "text-slate-600 bg-transparent border-transparent"
+            }`}
+          >
+            <span>🏏</span> Cricket
+          </button>
+
+          <button
+            onClick={() => {
+              onSelectCategory("Sports");
+              onSearch("football");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
+              isFootballActive
+                ? "bg-white text-slate-900 border-slate-200 shadow-xs"
+                : "text-slate-600 bg-transparent border-transparent"
+            }`}
+          >
+            <span>⚽</span> Football
+          </button>
+
+          <button
+            onClick={() => {
+              onSelectCategory("News");
+              onSearch("");
+              if (showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
+              isNewsActive
+                ? "bg-white text-slate-900 border-slate-200 shadow-xs"
+                : "text-slate-600 bg-transparent border-transparent"
+            }`}
+          >
+            <span>📰</span> News
+          </button>
+
+          <button
+            onClick={() => {
+              if (!showingFavorites) onShowFavorites();
+            }}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
+              showingFavorites
+                ? "bg-rose-500 text-white border-rose-500 shadow-xs"
+                : "text-rose-600 bg-rose-50/50 border-rose-100/50"
+            }`}
+          >
+            <span>❤️</span> Favorites
+            {favoritesCount > 0 && (
+              <span className={`rounded-full text-[9px] h-3.5 min-w-3.5 px-1 flex items-center justify-center font-bold ml-1 ${
+                showingFavorites ? "bg-white text-rose-600" : "bg-rose-500 text-white"
+              }`}>
+                {favoritesCount}
+              </span>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

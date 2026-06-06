@@ -89,7 +89,7 @@ export default function LiveTvClient({
   const totalPages = Math.ceil(filteredChannels.length / channelsPerPage);
   const paginatedChannels = filteredChannels.slice(
     0,
-    sidebarPage * channelsPerPage
+    sidebarPage * channelsPerPage,
   );
 
   // Initialize categories and default active channel from props
@@ -97,7 +97,7 @@ export default function LiveTvClient({
     if (channels.length > 0) {
       // Get unique groups/categories
       const uniqueGroups = Array.from(
-        new Set(channels.map((c) => c.group || "Others"))
+        new Set(channels.map((c) => c.group || "Others")),
       );
 
       // Sort categories to put Bangla, Sports, News at the beginning
@@ -119,71 +119,36 @@ export default function LiveTvClient({
 
       setCategories(["All", ...sortedGroups]);
 
-      // Determine active channel from slug or fallback
-      if (initialSlug) {
-        const matched = channels.find((c) => slugify(c.name) === initialSlug);
-        if (matched) {
-          setActiveChannel(matched);
-          setSelectedCategory("All");
-          setShowFavoritesOnly(false);
-        } else {
-          // Fallback if slug doesn't match
-          if (channels.length > 0) {
+      // Determine active channel from slug or fallback on mount
+      if (!activeChannel) {
+        if (initialSlug) {
+          const matched = channels.find((c) => slugify(c.name) === initialSlug);
+          if (matched) {
+            setActiveChannel(matched);
+          } else if (channels.length > 0) {
             setActiveChannel(channels[0]);
-            setSelectedCategory("All");
-            setShowFavoritesOnly(false);
           }
-        }
-      } else {
-        // No slug - check localStorage first!
-        let lastWatchedChannel: Channel | null = null;
-
-        if (typeof window !== "undefined") {
-          const savedSlug = localStorage.getItem("lastWatchedChannelSlug");
-
-          if (savedSlug) {
-            const matched = channels.find((c) => slugify(c.name) === savedSlug);
-            if (matched) {
-              lastWatchedChannel = matched;
-            }
-          }
-        }
-
-        if (lastWatchedChannel) {
-          setActiveChannel(lastWatchedChannel);
-          setSelectedCategory("All");
-          setShowFavoritesOnly(false);
         } else if (channels.length > 0) {
           setActiveChannel(channels[0]);
-          setSelectedCategory("All");
-          setShowFavoritesOnly(false);
         }
       }
     }
-  }, [channels, initialSlug]);
+  }, [channels]);
 
-  // Save last watched channel to localStorage
+  // Maintain a ref of activeChannel to avoid race condition/dependency loops in the sync effect
+  const activeChannelRef = useRef<Channel | null>(null);
   useEffect(() => {
-    if (typeof window !== "undefined" && activeChannel) {
-      localStorage.setItem(
-        "lastWatchedChannelSlug",
-        slugify(activeChannel.name)
-      );
-    }
+    activeChannelRef.current = activeChannel;
   }, [activeChannel]);
 
   // Synchronize active channel when slug changes (e.g. back navigation)
   useEffect(() => {
     if (!initialSlug || channels.length === 0) return;
     const matched = channels.find((c) => slugify(c.name) === initialSlug);
-    if (matched && activeChannel?.url !== matched.url) {
+    if (matched && activeChannelRef.current?.url !== matched.url) {
       setActiveChannel(matched);
-      if (matched.group) {
-        setSelectedCategory(matched.group);
-        setShowFavoritesOnly(false);
-      }
     }
-  }, [initialSlug, channels, activeChannel]);
+  }, [initialSlug, channels]);
 
   // Filter channels based on category, search query, and favorites status
   useEffect(() => {
@@ -202,7 +167,7 @@ export default function LiveTvClient({
       result = result.filter(
         (c) =>
           c.name.toLowerCase().includes(q) ||
-          (c.group && c.group.toLowerCase().includes(q))
+          (c.group && c.group.toLowerCase().includes(q)),
       );
     }
 
@@ -232,7 +197,7 @@ export default function LiveTvClient({
   const handlePrevChannel = () => {
     if (!activeChannel || filteredChannels.length === 0) return;
     const currentIndex = filteredChannels.findIndex(
-      (c) => c.url === activeChannel.url
+      (c) => c.url === activeChannel.url,
     );
     if (currentIndex > 0) {
       handleChannelSelect(filteredChannels[currentIndex - 1]);
@@ -244,7 +209,7 @@ export default function LiveTvClient({
   const handleNextChannel = () => {
     if (!activeChannel || filteredChannels.length === 0) return;
     const currentIndex = filteredChannels.findIndex(
-      (c) => c.url === activeChannel.url
+      (c) => c.url === activeChannel.url,
     );
     if (currentIndex < filteredChannels.length - 1) {
       handleChannelSelect(filteredChannels[currentIndex + 1]);
@@ -275,7 +240,7 @@ export default function LiveTvClient({
         },
         () => {
           toast.error("Failed to copy link.");
-        }
+        },
       );
     }
   };
@@ -289,9 +254,13 @@ export default function LiveTvClient({
           setSelectedCategory("All");
         }}
         showingFavorites={showFavoritesOnly}
+        onSelectCategory={setSelectedCategory}
+        onSearch={setSearchQuery}
+        selectedCategory={selectedCategory}
+        searchQuery={searchQuery}
       />
 
-      <main className="flex-grow container mx-auto space-y-3.5 md:space-y-8 px-2 sm:px-4 py-4 md:py-8">
+      <main className="grow container mx-auto space-y-3.5 md:space-y-8 px-2 sm:px-4 py-4 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 md:gap-8">
           {/* Main Video Player (Left 7 Cols) */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-3 md:space-y-4">
@@ -367,9 +336,15 @@ export default function LiveTvClient({
                           ? "bg-rose-50 border-rose-200 text-rose-600 hover:text-rose-700"
                           : "text-slate-500 hover:text-rose-500 border-slate-200 hover:bg-slate-50 bg-white"
                       }`}
-                      title={favorites.includes(activeChannel.url) ? "Remove from Favorites" : "Add to Favorites"}
+                      title={
+                        favorites.includes(activeChannel.url)
+                          ? "Remove from Favorites"
+                          : "Add to Favorites"
+                      }
                     >
-                      <Heart className={`h-4 w-4 sm:h-5 sm:w-5 ${favorites.includes(activeChannel.url) ? "fill-rose-500 text-rose-500" : ""}`} />
+                      <Heart
+                        className={`h-4 w-4 sm:h-5 sm:w-5 ${favorites.includes(activeChannel.url) ? "fill-rose-500 text-rose-500" : ""}`}
+                      />
                     </Button>
 
                     <Button
