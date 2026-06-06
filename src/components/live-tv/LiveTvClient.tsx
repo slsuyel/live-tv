@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Tv, Share2, ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import { Tv, Share2, ChevronLeft, ChevronRight, Heart, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -501,26 +501,33 @@ export default function LiveTvClient({
               </div>
             )}
 
-            {/* Movie Streaming Site Shelves */}
-            {selectedCategory === "All" &&
-              !searchQuery.trim() &&
-              !showFavoritesOnly && (
-                <div className="space-y-6 pt-4">
-                  {renderMovieShelf("Trending Streams", "🔥", trendingChannels)}
-                  {renderMovieShelf("Sports Live", "🏏", sportsChannels)}
-                  {renderMovieShelf("Bangla Channels", "🇧🇩", banglaChannels)}
-                  {renderMovieShelf("Live News Updates", "📰", newsChannels)}
-                  {renderMovieShelf(
-                    "Movies & Entertainment",
-                    "🎬",
-                    movieChannels,
-                  )}
-                </div>
-              )}
+            {/* Mobile/Tablet Search Bar */}
+            {selectedCategory === "All" && !searchQuery.trim() && !showFavoritesOnly && (
+              <div className="lg:hidden relative">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    if (e.target.value.trim()) {
+                      setSelectedCategory("All");
+                      setShowFavoritesOnly(false);
+                    }
+                  }}
+                  placeholder="Search channels..."
+                  className="w-full pl-10 pr-4 py-2.5 border border-slate-200 dark:border-slate-800/80 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 shadow-xs"
+                />
+              </div>
+            )}
           </div>
 
           {/* Channels Selector Sidebar (Right 5 Cols) */}
-          <div className="lg:col-span-5 xl:col-span-4 space-y-3 md:space-y-4">
+          <div className={`${
+            selectedCategory === "All" && !searchQuery.trim() && !showFavoritesOnly
+              ? "hidden lg:block"
+              : "block"
+          } lg:col-span-5 xl:col-span-4 space-y-3 md:space-y-4`}>
             <ChannelSidebar
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
@@ -541,6 +548,19 @@ export default function LiveTvClient({
             />
           </div>
         </div>
+
+        {/* Movie Streaming Site Shelves */}
+        {selectedCategory === "All" &&
+          !searchQuery.trim() &&
+          !showFavoritesOnly && (
+            <div className="space-y-8 pt-8 border-t border-slate-200/50 dark:border-slate-800/60 mt-8">
+              {renderMovieShelf("Trending Streams", "🔥", trendingChannels)}
+              {renderMovieShelf("Sports Live", "🏏", sportsChannels)}
+              {renderMovieShelf("Bangla Channels", "🇧🇩", banglaChannels)}
+              {renderMovieShelf("Live News Updates", "📰", newsChannels)}
+              {renderMovieShelf("Movies & Entertainment", "🎬", movieChannels)}
+            </div>
+          )}
       </main>
 
       <Footer />

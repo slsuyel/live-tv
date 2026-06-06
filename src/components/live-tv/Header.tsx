@@ -199,21 +199,6 @@ export default function Header({
             }}
             className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
               isHomeActive
-                ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-250 dark:border-slate-700 shadow-xs"
-                : "text-slate-600 dark:text-slate-400 bg-transparent border-transparent"
-            }`}
-          >
-            <span>🏠</span> Home
-          </button>
-
-          <button
-            onClick={() => {
-              onSelectCategory("All");
-              onSearch("");
-              if (showingFavorites) onShowFavorites();
-            }}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
-              isHomeActive
                 ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-255 dark:border-slate-700 shadow-xs"
                 : "text-slate-600 dark:text-slate-400 bg-transparent border-transparent"
             }`}
