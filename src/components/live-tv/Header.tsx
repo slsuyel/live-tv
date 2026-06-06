@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Tv, ShieldCheck, User, Activity, Sun, Moon } from "lucide-react";
+import Image from "next/image";
 
 interface HeaderProps {
   favoritesCount: number;
@@ -48,30 +49,24 @@ export default function Header({
           onClick={() => {
             onSelectCategory("All");
             onSearch("");
-            if (showingFavorites) onShowFavorites();
-            if (typeof window !== "undefined") {
-              window.history.pushState(null, "", "/");
-            }
-          }}
-          className="flex items-center gap-2 cursor-pointer text-left focus:outline-none"
-        >
-          <div className="h-10 w-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-md shadow-blue-500/20 text-white">
-            <Tv className="h-5 w-5" />
-          </div>
-          <div>
-            <span className="font-extrabold text-slate-900 dark:text-white text-lg sm:text-xl tracking-tight">
-              QoraPlay
-              <span className="text-blue-600 font-semibold text-sm ml-0.5">
-                TV
-              </span>
-            </span>
-            <div className="flex items-center gap-1 text-[9px] text-emerald-600 dark:text-emerald-400 font-bold -mt-1 bg-emerald-50 dark:bg-emerald-950/30 px-1 py-px rounded-sm border border-emerald-100/50 dark:border-emerald-900/20 w-fit">
-              <Activity className="h-2 w-2 animate-pulse" />
-              <span>ONLINE</span>
-            </div>
-          </div>
-        </button>
 
+            if (showingFavorites) {
+              onShowFavorites();
+            }
+
+            window.history.pushState({}, "", "/");
+          }}
+          className="flex items-center gap-2 cursor-pointer focus:outline-none"
+        >
+          <Image
+            src="/logo.png"
+            alt="QoraPlay TV"
+            width={250}
+            height={58}
+            priority
+            className="h-14 w-auto"
+          />
+        </button>
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-1 lg:gap-2">
           <button
