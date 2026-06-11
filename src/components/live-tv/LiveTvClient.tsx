@@ -440,10 +440,23 @@ export default function LiveTvClient({
           onShowFavorites={() => {
             setShowFavoritesOnly(!showFavoritesOnly);
             setSelectedCategory("All");
+            if (typeof window !== "undefined" && window.innerWidth < 1024) {
+              setShowMobileSidebar(true);
+            }
           }}
           showingFavorites={showFavoritesOnly}
-          onSelectCategory={setSelectedCategory}
-          onSearch={setSearchQuery}
+          onSelectCategory={(category) => {
+            setSelectedCategory(category);
+            if (typeof window !== "undefined" && window.innerWidth < 1024) {
+              setShowMobileSidebar(true);
+            }
+          }}
+          onSearch={(query) => {
+            setSearchQuery(query);
+            if (typeof window !== "undefined" && window.innerWidth < 1024) {
+              setShowMobileSidebar(true);
+            }
+          }}
           selectedCategory={selectedCategory}
           searchQuery={searchQuery}
           theme={theme}
