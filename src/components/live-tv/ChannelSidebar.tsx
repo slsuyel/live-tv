@@ -135,7 +135,7 @@ export default function ChannelSidebar({
                   className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl border text-left transition-all w-full group cursor-pointer focus:outline-none ${
                     isActive
                       ? "bg-blue-50/70 dark:bg-violet-600/10 border-blue-200 dark:border-violet-500/40 text-blue-600 dark:text-violet-400 shadow-sm"
-                      : "bg-white dark:bg-white/[0.02] border-slate-100 dark:border-white/10 hover:border-slate-200 dark:hover:border-white/20 hover:bg-slate-50/50 dark:hover:bg-white/[0.05] text-slate-600 dark:text-zinc-300 hover:text-slate-955 dark:hover:text-white"
+                      : "bg-white dark:bg-white/2 border-slate-100 dark:border-white/10 hover:border-slate-200 dark:hover:border-white/20 hover:bg-slate-50/50 dark:hover:bg-white/[0.05] text-slate-600 dark:text-zinc-300 hover:text-slate-955 dark:hover:text-white"
                   }`}
                 >
                   <div className="relative h-8 w-8 sm:h-10 sm:w-10 bg-slate-50 dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-md sm:rounded-lg p-1 flex items-center justify-center shrink-0">

@@ -359,7 +359,7 @@ export default function LiveTvClient({
             {shelfChannels.length} Streams
           </span>
         </div>
-        <div className="flex gap-4 overflow-x-auto pb-3 pt-1 px-1 no-scrollbar scroll-smooth">
+        <div className="flex gap-4 overflow-x-auto pb-4 pt-1.5 px-1 no-scrollbar scroll-smooth">
           {shelfChannels.map((c, idx) => (
             <button
               key={idx}
@@ -367,52 +367,43 @@ export default function LiveTvClient({
                 handleChannelSelect(c);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="group shrink-0 w-36 sm:w-48 aspect-video bg-white dark:bg-white/[0.01] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden hover:border-blue-500/50 dark:hover:border-violet-500/55 hover:scale-[1.03] transition-all duration-300 relative text-left cursor-pointer flex flex-col justify-between"
+              className="group shrink-0 w-[185px] sm:w-[225px] h-[72px] sm:h-[84px] bg-white dark:bg-[#13112a]/45 border border-slate-200 dark:border-white/10 rounded-2xl p-2.5 flex items-center gap-3 hover:border-blue-500/40 dark:hover:border-violet-500/40 hover:scale-[1.03] hover:bg-slate-50/50 dark:hover:bg-[#13112a]/70 transition-all duration-300 relative text-left cursor-pointer shadow-xs hover:shadow-md dark:shadow-none overflow-hidden"
             >
-              {/* Bottom gradient fade for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent dark:from-[#070414] dark:via-[#070414]/40 dark:to-transparent z-10" />
+              {/* Background gradient glow on hover */}
+              <div className="absolute inset-0 bg-linear-to-r from-blue-600/2 to-cyan-500/2 dark:from-violet-600/5 dark:to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-              {/* Corner Live Badge */}
-              <div className="absolute top-2.5 left-2.5 z-20 flex items-center gap-1 bg-rose-600 text-white font-extrabold text-[8px] px-2 py-0.5 rounded-full shadow-xs tracking-wider">
-                <span className="h-1.5 w-1.5 bg-white rounded-full animate-pulse" />
-                <span>LIVE</span>
+              {/* Logo Container */}
+              <div className="relative h-11 w-11 sm:h-14 sm:w-14 bg-slate-50 dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-xl p-1.5 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform duration-300">
+                {c.logo ? (
+                  <img
+                    src={c.logo}
+                    alt={c.name}
+                    width="48"
+                    height="48"
+                    className="max-h-full max-w-full object-contain filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.08)] dark:drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = "none";
+                    }}
+                  />
+                ) : (
+                  <Tv className="h-5 w-5 text-slate-400 dark:text-zinc-500" />
+                )}
               </div>
 
-              {/* Centered Circular Medallion Logo */}
-              <div className="absolute inset-0 flex items-center justify-center pb-8 pt-4 z-0">
-                <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-white dark:bg-white/5 shadow-md p-2 flex items-center justify-center transition-all duration-300 group-hover:scale-105 border border-slate-150 dark:border-white/10">
-                  {c.logo ? (
-                    <img
-                      src={c.logo}
-                      alt={c.name}
-                      width="56"
-                      height="56"
-                      className="max-h-full max-w-full object-contain filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]"
-                      onError={(e) => {
-                        (e.target as HTMLElement).style.display = "none";
-                      }}
-                    />
-                  ) : (
-                    <Tv className="h-5 w-5 text-zinc-500" />
-                  )}
-                </div>
-              </div>
-
-              {/* Title & Group Overlays */}
-              <div className="absolute bottom-0 inset-x-0 p-3 z-20 min-w-0">
-                <h4 className="text-[10px] sm:text-xs font-bold text-slate-800 dark:text-zinc-200 group-hover:text-blue-600 dark:group-hover:text-violet-400 truncate pr-2 tracking-wide">
+              {/* Text/Details */}
+              <div className="min-w-0 flex-1 flex flex-col justify-center pr-3">
+                <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-zinc-200 group-hover:text-blue-600 dark:group-hover:text-violet-400 truncate leading-snug transition-colors duration-200">
                   {c.name}
                 </h4>
-                <span className="text-[8px] sm:text-[9px] text-slate-450 dark:text-zinc-500 font-semibold uppercase tracking-wider block mt-0.5">
+                <span className="text-[9px] sm:text-[10px] text-slate-450 dark:text-zinc-500 font-semibold uppercase tracking-wider block mt-0.5">
                   {c.group}
                 </span>
               </div>
 
-              {/* Play Hover Overlay */}
-              <div className="absolute inset-0 bg-blue-600/[0.02] dark:bg-violet-600/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 flex items-center justify-center">
-                <div className="h-8 w-8 rounded-full bg-blue-600 dark:bg-violet-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/20 dark:shadow-violet-500/20 scale-75 group-hover:scale-100 transition-all duration-300">
-                  <span className="text-xs">▶</span>
-                </div>
+              {/* Subtle Top-Right Live Badge */}
+              <div className="absolute top-2 right-2 flex items-center gap-1 bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 text-[8px] font-black tracking-wider uppercase px-1.5 py-0.5 rounded border border-rose-100 dark:border-rose-500/20">
+                <span className="h-1 w-1 bg-rose-600 dark:bg-rose-500 rounded-full animate-pulse" />
+                <span>LIVE</span>
               </div>
             </button>
           ))}

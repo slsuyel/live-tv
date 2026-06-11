@@ -66,7 +66,7 @@ export default function Header({
             width={220}
             height={50}
             priority
-            className="h-8 sm:h-12 w-auto dark:[filter:invert(1)_hue-rotate(180deg)]"
+            className="h-8 sm:h-12 w-auto dark:filter-[invert(1)_hue-rotate(180deg)]"
           />
         </button>
 
@@ -177,9 +177,9 @@ export default function Header({
             }
           >
             {theme === "light" ? (
-              <Moon className="h-4.5 w-4.5" />
+              <Sun className="h-4.5 w-4.5 text-amber-500 fill-amber-500/10" />
             ) : (
-              <Sun className="h-4.5 w-4.5 text-amber-400 fill-amber-400/10" />
+              <Moon className="h-4.5 w-4.5 text-slate-300" />
             )}
           </button>
 

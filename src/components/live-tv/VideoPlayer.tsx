@@ -205,7 +205,9 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
 
     const handleOnline = () => {
       if (hls) {
-        console.log("Network back online. Attempting to recover stream loading...");
+        console.log(
+          "Network back online. Attempting to recover stream loading...",
+        );
         hls.startLoad();
       }
     };
@@ -264,8 +266,12 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
             case Hls.ErrorTypes.NETWORK_ERROR:
               const statusCode = data.response?.code;
               if (statusCode === 404 || statusCode === 403) {
-                console.error(`Fatal stream error (${statusCode}): Stream is offline or unauthorized.`);
-                setError(`Playback failed: Stream returned status ${statusCode}.`);
+                console.error(
+                  `Fatal stream error (${statusCode}): Stream is offline or unauthorized.`,
+                );
+                setError(
+                  `Playback failed: Stream returned status ${statusCode}.`,
+                );
                 setLoading(false);
                 hls?.destroy();
                 break;
@@ -273,11 +279,18 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
 
               if (networkRetryCount < 3) {
                 networkRetryCount++;
-                console.warn(`Fatal network error encountered (attempt ${networkRetryCount}/3), retrying...`, data);
+                console.warn(
+                  `Fatal network error encountered (attempt ${networkRetryCount}/3), retrying...`,
+                  data,
+                );
                 hls?.startLoad();
               } else {
-                console.error("Fatal network error: reached maximum retry limit.");
-                setError("Playback failed: Stream is offline or blocked by original server CORS policy.");
+                console.error(
+                  "Fatal network error: reached maximum retry limit.",
+                );
+                setError(
+                  "Playback failed: Stream is offline or blocked by original server CORS policy.",
+                );
                 setLoading(false);
                 hls?.destroy();
               }
@@ -285,17 +298,26 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
             case Hls.ErrorTypes.MEDIA_ERROR:
               if (mediaRetryCount < 3) {
                 mediaRetryCount++;
-                console.warn(`Fatal media error encountered (attempt ${mediaRetryCount}/3), recovering...`, data);
+                console.warn(
+                  `Fatal media error encountered (attempt ${mediaRetryCount}/3), recovering...`,
+                  data,
+                );
                 hls?.recoverMediaError();
               } else {
-                console.error("Fatal media error: reached maximum recovery limit.");
-                setError("Playback failed: Stream decoding issues. Please try reloading.");
+                console.error(
+                  "Fatal media error: reached maximum recovery limit.",
+                );
+                setError(
+                  "Playback failed: Stream decoding issues. Please try reloading.",
+                );
                 setLoading(false);
                 hls?.destroy();
               }
               break;
             default:
-              setError("Playback failed. This stream is offline or blocked by original server CORS policy.");
+              setError(
+                "Playback failed. This stream is offline or blocked by original server CORS policy.",
+              );
               setLoading(false);
               hls?.destroy();
               break;
@@ -418,7 +440,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     const video = videoRef.current;
     if (!video) return;
     try {
-      video.currentTime = Math.max(0, Math.min(video.duration || 99999, video.currentTime + seconds));
+      video.currentTime = Math.max(
+        0,
+        Math.min(video.duration || 99999, video.currentTime + seconds),
+      );
     } catch (err) {
       console.warn("Seeking failed:", err);
     }
@@ -505,7 +530,8 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     resetControlsTimeout();
   };
 
-  const isPipSupported = typeof document !== "undefined" && document.pictureInPictureEnabled;
+  const isPipSupported =
+    typeof document !== "undefined" && document.pictureInPictureEnabled;
 
   return (
     <div
@@ -549,7 +575,8 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
           <div className="space-y-2 max-w-sm pointer-events-auto">
             <p className="text-sm font-bold text-amber-400">Connection Delay</p>
             <p className="text-[10px] text-zinc-400 leading-relaxed">
-              This channel is taking longer than usual to load. It may be offline or limited by your network connection.
+              This channel is taking longer than usual to load. It may be
+              offline or limited by your network connection.
             </p>
             <div className="flex gap-2 justify-center pt-2">
               <button
@@ -577,7 +604,8 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
           <div className="space-y-2 max-w-md pointer-events-auto">
             <p className="text-sm font-bold text-rose-400">{error}</p>
             <p className="text-[10px] text-zinc-500 leading-relaxed">
-              Broadcasters sometimes alter paths or restrict streaming outside their systems. You can copy the URL to try in a player like VLC.
+              Broadcasters sometimes alter paths or restrict streaming outside
+              their systems. You can copy the URL to try in a player like VLC.
             </p>
             <div className="flex gap-2 justify-center pt-2">
               <button
@@ -648,12 +676,16 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
             {activeSeekIndicator.side === "left" ? (
               <>
                 <ChevronsLeft className="h-5 w-5 text-violet-400 animate-pulse" />
-                <span className="text-[10px] font-black tracking-widest">-10s</span>
+                <span className="text-[10px] font-black tracking-widest">
+                  -10s
+                </span>
               </>
             ) : (
               <>
                 <ChevronsRight className="h-5 w-5 text-violet-400 animate-pulse" />
-                <span className="text-[10px] font-black tracking-widest">+10s</span>
+                <span className="text-[10px] font-black tracking-widest">
+                  +10s
+                </span>
               </>
             )}
           </div>
@@ -663,8 +695,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
       {/* Custom controls overlay bar */}
       {!loading && !error && (
         <div
-          className={`player-controls-container absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex items-center justify-between transition-all duration-300 z-20 ${
-            showControls ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
+          className={`player-controls-container absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-linear-to-t from-black/95 via-black/40 to-transparent flex items-center justify-between transition-all duration-300 z-20 ${
+            showControls
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-2 pointer-events-none"
           }`}
         >
           {/* Left Controls */}
@@ -673,7 +707,11 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
               onClick={handlePlayPause}
               className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer"
             >
-              {isPaused ? <Play size={16} className="fill-white" /> : <Pause size={16} className="fill-white" />}
+              {isPaused ? (
+                <Play size={16} className="fill-white" />
+              ) : (
+                <Pause size={16} className="fill-white" />
+              )}
             </button>
 
             <div className="flex items-center gap-1 group/volume">
@@ -681,7 +719,11 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
                 onClick={handleMuteUnmute}
                 className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer"
               >
-                {isMuted || volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                {isMuted || volume === 0 ? (
+                  <VolumeX size={16} />
+                ) : (
+                  <Volume2 size={16} />
+                )}
               </button>
               <input
                 type="range"
@@ -714,7 +756,9 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
                   className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer flex items-center gap-1 text-[10px] font-semibold"
                   title="Stream Quality"
                 >
-                  <Settings className={`h-4 w-4 ${showSettings ? "animate-spin" : ""}`} />
+                  <Settings
+                    className={`h-4 w-4 ${showSettings ? "animate-spin" : ""}`}
+                  />
                   <span className="hidden sm:inline">
                     {selectedLevel === -1
                       ? `Auto${currentLevel >= 0 && levels[currentLevel] ? ` (${getLevelLabel(levels[currentLevel], currentLevel)})` : ""}`
@@ -725,28 +769,38 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
                 {showSettings && (
                   <div className="absolute bottom-8 right-0 w-36 bg-zinc-950/95 border border-zinc-800 rounded-lg shadow-xl backdrop-blur-md overflow-hidden py-1 z-30">
                     <div className="px-3 py-1 border-b border-zinc-900">
-                      <span className="text-[9px] uppercase tracking-wider text-zinc-500 font-bold">Quality</span>
+                      <span className="text-[9px] uppercase tracking-wider text-zinc-500 font-bold">
+                        Quality
+                      </span>
                     </div>
                     <div className="max-h-40 overflow-y-auto custom-scrollbar">
                       <button
                         onClick={() => handleQualityChange(-1)}
                         className={`w-full flex items-center justify-between px-3 py-1.5 text-left text-xs transition-colors hover:bg-white/10 cursor-pointer ${
-                          selectedLevel === -1 ? "text-violet-400 font-bold" : "text-zinc-350"
+                          selectedLevel === -1
+                            ? "text-violet-400 font-bold"
+                            : "text-zinc-350"
                         }`}
                       >
                         <span>Auto</span>
-                        {selectedLevel === -1 && <Check className="h-3 w-3 text-violet-500" />}
+                        {selectedLevel === -1 && (
+                          <Check className="h-3 w-3 text-violet-500" />
+                        )}
                       </button>
                       {levels.map((level, idx) => (
                         <button
                           key={idx}
                           onClick={() => handleQualityChange(idx)}
                           className={`w-full flex items-center justify-between px-3 py-1.5 text-left text-xs transition-colors hover:bg-white/10 cursor-pointer ${
-                            selectedLevel === idx ? "text-violet-400 font-bold" : "text-zinc-350"
+                            selectedLevel === idx
+                              ? "text-violet-400 font-bold"
+                              : "text-zinc-350"
                           }`}
                         >
                           <span>{getLevelLabel(level, idx)}</span>
-                          {selectedLevel === idx && <Check className="h-3 w-3 text-violet-500" />}
+                          {selectedLevel === idx && (
+                            <Check className="h-3 w-3 text-violet-500" />
+                          )}
                         </button>
                       ))}
                     </div>
@@ -761,7 +815,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
                 className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer"
                 title="Picture in Picture"
               >
-                <PictureInPicture size={16} className={isPip ? "text-violet-400" : ""} />
+                <PictureInPicture
+                  size={16}
+                  className={isPip ? "text-violet-400" : ""}
+                />
               </button>
             )}
 
