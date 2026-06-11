@@ -42,12 +42,12 @@ export default function ChannelSidebar({
   setShowFavoritesOnly,
 }: ChannelSidebarProps) {
   return (
-    <div className="glass-card border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden h-full lg:h-[calc(100vh-180px)] flex flex-col bg-white/[0.01] transition-all duration-300">
+    <div className="glass-card rounded-2xl md:rounded-3xl overflow-hidden h-full lg:h-[calc(100vh-180px)] flex flex-col transition-all duration-350 shadow-sm">
       {/* Search & Category Filter Header */}
-      <div className="p-3 sm:p-4 border-b border-white/10 space-y-2.5 sm:space-y-3 bg-white/[0.02]">
+      <div className="p-3 sm:p-4 border-b border-slate-100 dark:border-white/10 space-y-2.5 sm:space-y-3 bg-slate-50/50 dark:bg-white/[0.02]">
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-zinc-400" />
+          <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 sm:h-4 sm:w-4 text-slate-400 dark:text-zinc-400" />
           <input
             type="text"
             value={searchQuery}
@@ -59,7 +59,7 @@ export default function ChannelSidebar({
               }
             }}
             placeholder="Search channel by name..."
-            className="w-full pl-8 sm:pl-9 pr-4 py-1.5 sm:py-2 border border-white/10 focus:border-violet-500/50 rounded-lg sm:rounded-xl text-xs sm:text-sm focus:outline-none transition-all bg-white/5 text-white placeholder-zinc-500"
+            className="w-full pl-8 sm:pl-9 pr-4 py-1.5 sm:py-2 border border-slate-200 dark:border-white/10 focus:border-blue-500/50 dark:focus:border-violet-500/50 rounded-lg sm:rounded-xl text-xs sm:text-sm focus:outline-none transition-all bg-white dark:bg-white/5 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500"
           />
         </div>
 
@@ -75,14 +75,14 @@ export default function ChannelSidebar({
               className={`px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap border transition-all cursor-pointer flex items-center gap-1 shrink-0 ${
                 showFavoritesOnly
                   ? "bg-rose-500 text-white border-rose-500 shadow-md shadow-rose-500/10"
-                  : "bg-rose-500/10 text-rose-400 border-rose-500/20 hover:border-rose-500/30"
+                  : "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-100 dark:border-rose-500/20 hover:border-rose-200 dark:hover:border-rose-500/30"
               }`}
             >
               <Heart className={`h-3 w-3 ${showFavoritesOnly ? "fill-white text-white" : "fill-rose-500 text-rose-450"}`} />
               Favorites ({favorites.length})
             </button>
 
-            <div className="h-4 w-px bg-white/10 shrink-0" />
+            <div className="h-4 w-px bg-slate-200 dark:bg-white/10 shrink-0" />
 
             {categories.map((cat) => {
               const isSelected = selectedCategory === cat && !showFavoritesOnly;
@@ -95,8 +95,8 @@ export default function ChannelSidebar({
                   }}
                   className={`px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap border transition-all cursor-pointer shrink-0 ${
                     isSelected
-                      ? "bg-violet-600 text-white border-violet-600 shadow-md shadow-violet-500/10"
-                      : "bg-white/5 text-zinc-400 border-white/10 hover:border-white/20 hover:text-white"
+                      ? "bg-blue-600 dark:bg-violet-600 text-white border-blue-600 dark:border-violet-600 shadow-md shadow-blue-500/10 dark:shadow-violet-500/10"
+                      : "bg-white dark:bg-white/5 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-white/10 hover:border-slate-350 dark:hover:border-white/20 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {cat}
@@ -132,11 +132,11 @@ export default function ChannelSidebar({
                   tabIndex={0}
                   className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl border text-left transition-all w-full group cursor-pointer focus:outline-none ${
                     isActive
-                      ? "bg-violet-600/10 border-violet-500/40 text-violet-400 shadow-lg shadow-violet-500/5"
-                      : "bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.05] text-zinc-300 hover:text-white"
+                      ? "bg-blue-50/70 dark:bg-violet-600/10 border-blue-200 dark:border-violet-500/40 text-blue-600 dark:text-violet-400 shadow-sm"
+                      : "bg-white dark:bg-white/[0.02] border-slate-100 dark:border-white/10 hover:border-slate-200 dark:hover:border-white/20 hover:bg-slate-50/50 dark:hover:bg-white/[0.05] text-slate-655 dark:text-zinc-300 hover:text-slate-955 dark:hover:text-white"
                   }`}
                 >
-                  <div className="relative h-8 w-8 sm:h-10 sm:w-10 bg-white/5 border border-white/10 rounded-md sm:rounded-lg p-1 flex items-center justify-center shrink-0">
+                  <div className="relative h-8 w-8 sm:h-10 sm:w-10 bg-slate-50 dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-md sm:rounded-lg p-1 flex items-center justify-center shrink-0">
                     {channel.logo ? (
                       <img
                         src={channel.logo}
@@ -149,16 +149,16 @@ export default function ChannelSidebar({
                         }}
                       />
                     ) : (
-                      <Tv className="h-4 w-4 sm:h-[18px] sm:w-[18px] text-zinc-500" />
+                      <Tv className="h-4 w-4 sm:h-[18px] sm:w-[18px] text-slate-400 dark:text-zinc-500" />
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
                     <h4
-                      className={`text-[11px] sm:text-xs font-bold leading-snug truncate pr-1 ${isActive ? "text-violet-400" : "text-zinc-200 group-hover:text-white"}`}
+                      className={`text-[11px] sm:text-xs font-bold leading-snug truncate pr-1 ${isActive ? "text-blue-600 dark:text-violet-404" : "text-slate-700 dark:text-zinc-200 group-hover:text-slate-900 group-hover:dark:text-white"}`}
                     >
                       {channel.name}
                     </h4>
-                    <span className="text-[9px] sm:text-[10px] text-zinc-500 font-medium">
+                    <span className="text-[9px] sm:text-[10px] text-slate-400 dark:text-zinc-500 font-medium">
                       {channel.group}
                     </span>
                   </div>
@@ -170,7 +170,7 @@ export default function ChannelSidebar({
                         e.stopPropagation();
                         onToggleFavorite(channel.url);
                       }}
-                      className="p-1.5 rounded-lg hover:bg-white/10 text-zinc-500 hover:text-rose-400 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 text-slate-350 dark:text-zinc-500 hover:text-rose-500 dark:hover:text-rose-400 transition-colors cursor-pointer"
                       title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                     >
                       <Heart className={`h-3.5 w-3.5 ${isFavorite ? "fill-rose-500 text-rose-500" : ""}`} />
@@ -178,7 +178,7 @@ export default function ChannelSidebar({
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity">
                       <Play
                         className={`h-3 w-3 sm:h-3.5 sm:w-3.5 fill-current ${
-                          isActive ? "text-violet-400 animate-pulse" : "text-zinc-500 group-hover:text-white"
+                          isActive ? "text-blue-600 dark:text-violet-400" : "text-slate-400 dark:text-zinc-500 group-hover:text-slate-600 group-hover:dark:text-white"
                         }`}
                       />
                     </div>
@@ -188,7 +188,7 @@ export default function ChannelSidebar({
             })}
           </div>
         ) : (
-          <div className="py-20 text-center text-zinc-500 text-sm">
+          <div className="py-20 text-center text-slate-400 dark:text-zinc-500 text-sm">
             {showFavoritesOnly 
               ? "You haven't added any channels to your favorites yet. Click the heart icon on any channel to save it!" 
               : "No channels found matching current filter."}
@@ -198,7 +198,7 @@ export default function ChannelSidebar({
 
       {/* Sidebar Infinite loading footer */}
       {sidebarPage < totalPages && (
-        <div className="py-2 text-center text-[10px] text-zinc-500 font-semibold animate-pulse bg-white/[0.02] border-t border-white/10 shrink-0">
+        <div className="py-2 text-center text-[10px] text-slate-400 dark:text-zinc-500 font-semibold animate-pulse bg-slate-50 dark:bg-white/[0.02] border-t border-slate-100 dark:border-white/10 shrink-0">
           Loading more channels...
         </div>
       )}

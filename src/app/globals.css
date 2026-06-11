@@ -3,22 +3,31 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-background: #070414;
   --color-primary: #8b5cf6;
   --color-primary-dark: #7c3aed;
   --color-secondary: #06b6d4;
-  --color-card: rgba(255, 255, 255, 0.05);
-  --color-card-border: rgba(255, 255, 255, 0.08);
 }
 
 :root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(15, 23, 42, 0.08);
+}
+
+.dark {
   --background: #070414;
   --foreground: #f8fafc;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.07);
 }
 
 body {
-  background-color: #070414;
-  color: #f8fafc;
+  background-color: var(--background);
+  color: var(--foreground);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   font-family:
     var(--font-geist-sans),
     ui-sans-serif,
@@ -35,10 +44,10 @@ body {
 
 /* Glassmorphism Styles */
 .glass-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--card-border);
 }
 
 .gradient-text {
@@ -58,8 +67,7 @@ body {
   height: 6px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.01);
-  border-radius: 9999px;
+  background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: rgba(139, 92, 246, 0.2);
@@ -70,7 +78,7 @@ body {
 }
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(139, 92, 246, 0.2) rgba(255, 255, 255, 0.01);
+  scrollbar-color: rgba(139, 92, 246, 0.2) transparent;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -91,8 +99,11 @@ body {
   background: transparent;
 }
 .mini-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 9999px;
+}
+.dark .mini-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
 }
 .mini-scrollbar {
   scrollbar-width: thin;
