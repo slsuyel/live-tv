@@ -23,44 +23,46 @@ function getLocalChannels() {
 
 // Server-Side Data Fetching (SSR/ISR)
 async function getChannels() {
-  const primaryUrl =
+  const githubUrl =
     "https://raw.githubusercontent.com/SHAJON-404/iptv/refs/heads/main/app/data/channels.json";
 
   const baseUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL ||
     "https://server.nextqora.com/api/v1";
-  const fallbackUrl = `${baseUrl}/stream/all?limit=8000`;
+  const apiDbUrl = `${baseUrl}/stream/all?limit=8000`;
 
   const localChannels = getLocalChannels();
   let fetchedChannels: any[] = [];
 
+  // Try to load from API Database first
   try {
-    const res = await fetch(primaryUrl, {
-      next: { revalidate: 1800 }, // Cache for 30 minutes
+    const res = await fetch(apiDbUrl, {
+      next: { revalidate: 10 }, // Cache API for 10 seconds
     });
-    if (!res.ok) throw new Error("Failed to fetch primary channels");
-    const data = await res.json();
+    if (!res.ok) throw new Error("Failed to fetch API database channels");
+    const json = await res.json();
+    const data = json?.data || [];
     if (Array.isArray(data) && data.length > 0) {
       fetchedChannels = data;
     } else {
-      throw new Error("Primary URL returned empty or invalid data");
+      throw new Error("API database returned empty or invalid data");
     }
-  } catch (primaryError) {
+  } catch (apiError) {
     console.error(
-      "Failed to fetch primary IPTV channels on server, trying fallback:",
-      primaryError,
+      "Failed to fetch channels from API database, trying GitHub fallback:",
+      apiError,
     );
     try {
-      const res = await fetch(fallbackUrl, {
-        next: { revalidate: 10 }, // Cache fallback for 10 seconds
+      const res = await fetch(githubUrl, {
+        next: { revalidate: 1800 }, // Cache GitHub for 30 minutes
       });
-      if (!res.ok) throw new Error("Fallback fetch failed");
-      const json = await res.json();
-      fetchedChannels = json?.data || [];
-    } catch (fallbackError) {
+      if (!res.ok) throw new Error("GitHub fetch failed");
+      const data = await res.json();
+      fetchedChannels = Array.isArray(data) ? data : [];
+    } catch (githubError) {
       console.error(
-        "Failed to fetch fallback IPTV channels on server:",
-        fallbackError,
+        "Failed to fetch fallback channels from GitHub:",
+        githubError,
       );
       fetchedChannels = [];
     }
