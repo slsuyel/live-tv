@@ -247,11 +247,11 @@ export default function FifaLivePage() {
           </Link>
           <div className="h-4 w-px bg-white/10 hidden sm:block" />
           <div className="flex items-center gap-2">
-            <div className="relative flex items-center justify-center h-7.5 w-7.5 rounded-lg bg-gradient-to-tr from-purple-600 to-cyan-500 shadow-lg shadow-purple-500/20">
+            <div className="relative flex items-center justify-center h-7.5 w-7.5 rounded-lg bg-linear-to-tr from-purple-600 to-cyan-500 shadow-lg shadow-purple-500/20">
               <Tv size={15} className="text-white" />
             </div>
             <div>
-              <h1 className="text-xs sm:text-base font-black tracking-tight bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
+              <h1 className="text-xs sm:text-base font-black tracking-tight bg-linear-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
                 FIFA MULTIVIEW LIVE
               </h1>
               <div className="flex items-center gap-1.5">
@@ -680,7 +680,7 @@ function MultiviewPlayerElement({
         </div>
       )}
 
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-2 opacity-0 group-hover/player:opacity-100 transition-opacity duration-200 flex items-center justify-between z-10">
+      <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/85 via-black/40 to-transparent p-2 opacity-0 group-hover/player:opacity-100 transition-opacity duration-200 flex items-center justify-between z-10">
         <button
           onClick={togglePlayPause}
           className="p-1 rounded hover:bg-white/10 text-white transition-colors"
