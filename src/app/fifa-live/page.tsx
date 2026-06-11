@@ -462,7 +462,7 @@ export default function FifaLivePage() {
     </div>
   );
 }
-
+/*  */
 interface MultiviewPlayerElementProps {
   url: string;
   isMuted: boolean;
