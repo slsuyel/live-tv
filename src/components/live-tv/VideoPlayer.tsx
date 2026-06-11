@@ -48,6 +48,20 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
 
   // Custom Controls UI states
   const [isPaused, setIsPaused] = useState(true);
+  const isPausedRef = useRef(isPaused);
+  useEffect(() => {
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
+
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsTouchDevice(
+        "ontouchstart" in window || navigator.maxTouchPoints > 0,
+      );
+    }
+  }, []);
+
   const [isMuted, setIsMuted] = useState(true);
   const [volume, setVolume] = useState(0.8);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -144,13 +158,21 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
 
     const handlePlay = () => setIsPaused(false);
     const handlePause = () => setIsPaused(true);
+    const handlePlaying = () => setIsPaused(false);
+    const handleTimeUpdate = () => {
+      if (video.paused !== isPausedRef.current) {
+        setIsPaused(video.paused);
+      }
+    };
     const handleVolumeChange = () => {
       setIsMuted(video.muted);
       setVolume(video.volume);
     };
 
     video.addEventListener("play", handlePlay);
+    video.addEventListener("playing", handlePlaying);
     video.addEventListener("pause", handlePause);
+    video.addEventListener("timeupdate", handleTimeUpdate);
     video.addEventListener("volumechange", handleVolumeChange);
 
     setIsPaused(video.paused);
@@ -159,7 +181,9 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
 
     return () => {
       video.removeEventListener("play", handlePlay);
+      video.removeEventListener("playing", handlePlaying);
       video.removeEventListener("pause", handlePause);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
       video.removeEventListener("volumechange", handleVolumeChange);
     };
   }, [channel.url, reloadCount]);
@@ -509,20 +533,32 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     resetControlsTimeout();
   };
 
-  // Handle Single Click -> Play/Pause
+  // Handle Single Click -> Play/Pause on Desktop, Toggle Controls on Mobile
   const handlePlayerClick = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest(".player-controls-container")) {
+    // Ignore click if it was on controls or settings/dropdowns
+    if (
+      (e.target as HTMLElement).closest(".player-controls-container") ||
+      (e.target as HTMLElement).closest(".settings-dropdown")
+    ) {
       return;
     }
-    if (clickTimeoutRef.current) {
-      clearTimeout(clickTimeoutRef.current);
-      clickTimeoutRef.current = null;
-      return;
+
+    if (isTouchDevice) {
+      // On mobile/touch devices, single click toggles controls visibility instead of playing/pausing
+      setShowControls((prev) => !prev);
+      resetControlsTimeout();
+    } else {
+      // On desktop, single click toggles play/pause with 200ms delay to detect double click
+      if (clickTimeoutRef.current) {
+        clearTimeout(clickTimeoutRef.current);
+        clickTimeoutRef.current = null;
+        return;
+      }
+      clickTimeoutRef.current = setTimeout(() => {
+        handlePlayPause();
+        clickTimeoutRef.current = null;
+      }, 200);
     }
-    clickTimeoutRef.current = setTimeout(() => {
-      handlePlayPause();
-      clickTimeoutRef.current = null;
-    }, 200);
   };
 
   // Handle Double Click -> Seek 10s
@@ -599,7 +635,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
 
       {/* Slow Connection / Timeout Overlay */}
       {loadTimeout && loading && !error && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/95 text-white p-4 z-20 text-center">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="absolute inset-0 flex flex-col items-center justify-center bg-black/95 text-white p-4 z-20 text-center"
+        >
           <AlertCircle className="text-amber-500 h-10 w-10 animate-pulse mb-3" />
           <div className="space-y-2 max-w-sm pointer-events-auto">
             <p className="text-sm font-bold text-amber-400">Connection Delay</p>
@@ -628,7 +667,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
 
       {/* Error Overlay */}
       {error && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/95 text-white p-4 z-20 text-center">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="absolute inset-0 flex flex-col items-center justify-center bg-black/95 text-white p-4 z-20 text-center"
+        >
           <AlertCircle className="text-rose-500 h-10 w-10 animate-bounce mb-3" />
           <div className="space-y-2 max-w-md pointer-events-auto">
             <p className="text-sm font-bold text-rose-400">{error}</p>
@@ -668,7 +710,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
       {!loading && !error && isPaused && (
         <div
           className="absolute inset-0 flex items-center justify-center bg-black/20 z-10 cursor-pointer hover:bg-black/30 transition-colors"
-          onClick={handlePlayPause}
+          onClick={(e) => {
+            e.stopPropagation();
+            handlePlayPause();
+          }}
         >
           <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-violet-600/90 hover:bg-violet-600 hover:scale-105 text-white flex items-center justify-center shadow-lg shadow-violet-500/20 border border-white/10 transition-all">
             <Play size={24} className="fill-white translate-x-0.5" />
