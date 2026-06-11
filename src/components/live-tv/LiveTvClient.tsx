@@ -20,6 +20,7 @@ import ChannelSidebar from "./ChannelSidebar";
 import Header from "./Header";
 import Footer from "./Footer";
 import BackgroundScene from "./BackgroundScene";
+import CommunityNotice from "./CommunityNotice";
 
 interface LiveTvClientProps {
   initialChannels: Channel[];
@@ -192,13 +193,7 @@ export default function LiveTvClient({
     );
 
     const sortedGroups = uniqueGroups.sort((a, b) => {
-      const priority = [
-        "Sports",
-        "Bangla",
-        "News",
-        "Movies",
-        "Entertainment",
-      ];
+      const priority = ["Sports", "Bangla", "News", "Movies", "Entertainment"];
       const idxA = priority.indexOf(a);
       const idxB = priority.indexOf(b);
       if (idxA !== -1 && idxB !== -1) return idxA - idxB;
@@ -477,6 +472,9 @@ export default function LiveTvClient({
                   </p>
                 </div>
               )}
+
+              {/* Community Notice / Developer Info */}
+              <CommunityNotice />
 
               {/* Active Channel Details */}
               {activeChannel && (
