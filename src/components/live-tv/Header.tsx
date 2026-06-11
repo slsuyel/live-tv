@@ -133,7 +133,7 @@ export default function Header({
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-500/5 hover:border-purple-200 dark:hover:border-purple-500/20 active:scale-95"
           >
             <span>⚽</span> FIFA Multiview
-            <span className="bg-gradient-to-r from-rose-500 to-amber-500 text-white rounded text-[8px] px-1 py-0.5 font-bold uppercase tracking-wider scale-90 ml-1 animate-pulse">
+            <span className="bg-linear-to-r from-rose-500 to-amber-500 text-white rounded text-[8px] px-1 py-0.5 font-bold uppercase tracking-wider scale-90 ml-1 animate-pulse">
               Live
             </span>
           </Link>
