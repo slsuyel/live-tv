@@ -1,9 +1,25 @@
 import LiveTvClient from "@/components/live-tv/LiveTvClient";
 import { Metadata } from "next";
+import fs from "fs";
+import path from "path";
 
 export const dynamic = "force-dynamic";
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://live.nextqora.com";
+
+// Helper to load local custom channels safely
+function getLocalChannels() {
+  try {
+    const filePath = path.join(process.cwd(), "src", "data", "local_channels.json");
+    if (fs.existsSync(filePath)) {
+      const fileContent = fs.readFileSync(filePath, "utf8");
+      return JSON.parse(fileContent);
+    }
+  } catch (error) {
+    console.error("Error reading local custom channels:", error);
+  }
+  return [];
+}
 
 // Server-Side Data Fetching (SSR/ISR)
 async function getChannels() {
@@ -15,6 +31,9 @@ async function getChannels() {
     "https://server.nextqora.com/api/v1";
   const fallbackUrl = `${baseUrl}/stream/all?limit=8000`;
 
+  const localChannels = getLocalChannels();
+  let fetchedChannels: any[] = [];
+
   try {
     const res = await fetch(primaryUrl, {
       next: { revalidate: 1800 }, // Cache for 30 minutes
@@ -22,9 +41,10 @@ async function getChannels() {
     if (!res.ok) throw new Error("Failed to fetch primary channels");
     const data = await res.json();
     if (Array.isArray(data) && data.length > 0) {
-      return data;
+      fetchedChannels = data;
+    } else {
+      throw new Error("Primary URL returned empty or invalid data");
     }
-    throw new Error("Primary URL returned empty or invalid data");
   } catch (primaryError) {
     console.error(
       "Failed to fetch primary IPTV channels on server, trying fallback:",
@@ -36,15 +56,25 @@ async function getChannels() {
       });
       if (!res.ok) throw new Error("Fallback fetch failed");
       const json = await res.json();
-      return json?.data || [];
+      fetchedChannels = json?.data || [];
     } catch (fallbackError) {
       console.error(
         "Failed to fetch fallback IPTV channels on server:",
         fallbackError,
       );
-      return [];
+      fetchedChannels = [];
     }
   }
+
+  // Merge local custom channels, avoiding duplicates by name or URL
+  const existingNames = new Set(fetchedChannels.map((c: any) => c.name.toLowerCase().trim()));
+  const existingUrls = new Set(fetchedChannels.map((c: any) => c.url.trim()));
+
+  const uniqueLocal = localChannels.filter((c: any) => {
+    return !existingNames.has(c.name.toLowerCase().trim()) && !existingUrls.has(c.url.trim());
+  });
+
+  return [...uniqueLocal, ...fetchedChannels];
 }
 
 interface PageProps {
