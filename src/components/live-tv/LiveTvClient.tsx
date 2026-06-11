@@ -424,10 +424,10 @@ export default function LiveTvClient({
   };
 
   return (
-    <div
-      className={`flex flex-col min-h-screen relative overflow-x-hidden bg-slate-50 dark:bg-[#070414] text-slate-900 dark:text-white transition-colors duration-250 ${mounted && theme === "dark" ? "dark" : ""}`}
-    >
-      {mounted && theme === "dark" && <BackgroundScene />}
+    <div className="flex flex-col min-h-screen relative overflow-x-hidden bg-slate-50 dark:bg-[#070414] text-slate-900 dark:text-white transition-colors duration-250">
+      <div className="hidden dark:block">
+        <BackgroundScene />
+      </div>
 
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header
