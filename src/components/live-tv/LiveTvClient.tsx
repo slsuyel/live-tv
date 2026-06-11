@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   Tv,
   Share2,
@@ -43,8 +43,6 @@ export default function LiveTvClient({
   const router = useRouter();
 
   const [channels] = useState<Channel[]>(initialChannels);
-  const [filteredChannels, setFilteredChannels] = useState<Channel[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
@@ -156,49 +154,74 @@ export default function LiveTvClient({
     }
   }, [selectedCategory, searchQuery, showFavoritesOnly]);
 
+  // Filter channels using useMemo (Optimized)
+  const filteredChannels = useMemo(() => {
+    let result = channels;
+
+    if (showFavoritesOnly) {
+      result = result.filter((c) => favorites.includes(c.url));
+    }
+
+    if (selectedCategory && selectedCategory !== "All" && !showFavoritesOnly) {
+      result = result.filter((c) => c.group === selectedCategory);
+    }
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      result = result.filter(
+        (c) =>
+          c.name.toLowerCase().includes(q) ||
+          (c.group && c.group.toLowerCase().includes(q)),
+      );
+    }
+
+    return result;
+  }, [selectedCategory, searchQuery, channels, showFavoritesOnly, favorites]);
+
   const totalPages = Math.ceil(filteredChannels.length / channelsPerPage);
   const paginatedChannels = filteredChannels.slice(
     0,
     sidebarPage * channelsPerPage,
   );
 
-  // Initialize categories and default active channel from props
+  // Compute categories array using useMemo (Optimized)
+  const categories = useMemo(() => {
+    if (channels.length === 0) return ["All"];
+    const uniqueGroups = Array.from(
+      new Set(channels.map((c) => c.group || "Others")),
+    );
+
+    const sortedGroups = uniqueGroups.sort((a, b) => {
+      const priority = [
+        "Sports",
+        "Bangla",
+        "News",
+        "Movies",
+        "Entertainment",
+      ];
+      const idxA = priority.indexOf(a);
+      const idxB = priority.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a.localeCompare(b);
+    });
+
+    return ["All", ...sortedGroups];
+  }, [channels]);
+
+  // Initialize default active channel from props
   useEffect(() => {
-    if (channels.length > 0) {
-      const uniqueGroups = Array.from(
-        new Set(channels.map((c) => c.group || "Others")),
-      );
-
-      // Sort categories prioritising Bangla, Sports, News
-      const sortedGroups = uniqueGroups.sort((a, b) => {
-        const priority = [
-          "Sports",
-          "Bangla",
-          "News",
-          "Movies",
-          "Entertainment",
-        ];
-        const idxA = priority.indexOf(a);
-        const idxB = priority.indexOf(b);
-        if (idxA !== -1 && idxB !== -1) return idxA - idxB;
-        if (idxA !== -1) return -1;
-        if (idxB !== -1) return 1;
-        return a.localeCompare(b);
-      });
-
-      setCategories(["All", ...sortedGroups]);
-
-      if (!activeChannel) {
-        if (initialSlug) {
-          const matched = channels.find((c) => slugify(c.name) === initialSlug);
-          if (matched) {
-            setActiveChannel(matched);
-          } else if (channels.length > 0) {
-            setActiveChannel(channels[0]);
-          }
-        } else if (channels.length > 0) {
+    if (channels.length > 0 && !activeChannel) {
+      if (initialSlug) {
+        const matched = channels.find((c) => slugify(c.name) === initialSlug);
+        if (matched) {
+          setActiveChannel(matched);
+        } else {
           setActiveChannel(channels[0]);
         }
+      } else {
+        setActiveChannel(channels[0]);
       }
     }
   }, [channels, initialSlug, activeChannel]);
@@ -239,30 +262,6 @@ export default function LiveTvClient({
   useEffect(() => {
     setLogoError(false);
   }, [activeChannel]);
-
-  // Filter channels
-  useEffect(() => {
-    let result = channels;
-
-    if (showFavoritesOnly) {
-      result = result.filter((c) => favorites.includes(c.url));
-    }
-
-    if (selectedCategory && selectedCategory !== "All" && !showFavoritesOnly) {
-      result = result.filter((c) => c.group === selectedCategory);
-    }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      result = result.filter(
-        (c) =>
-          c.name.toLowerCase().includes(q) ||
-          (c.group && c.group.toLowerCase().includes(q)),
-      );
-    }
-
-    setFilteredChannels(result);
-  }, [selectedCategory, searchQuery, channels, showFavoritesOnly, favorites]);
 
   const handleScroll = () => {
     const container = listContainerRef.current;
@@ -337,17 +336,26 @@ export default function LiveTvClient({
     }
   };
 
-  const trendingChannels = channels.slice(10, 25);
-  const sportsChannels = channels
-    .filter((c) => c.group === "Sports")
-    .slice(0, 15);
-  const banglaChannels = channels
-    .filter((c) => c.group === "Bangla")
-    .slice(0, 15);
-  const newsChannels = channels.filter((c) => c.group === "News").slice(0, 15);
-  const movieChannels = channels
-    .filter((c) => c.group === "Movies" || c.group === "Entertainment")
-    .slice(0, 15);
+  const trendingChannels = useMemo(() => channels.slice(10, 25), [channels]);
+  const sportsChannels = useMemo(
+    () => channels.filter((c) => c.group === "Sports").slice(0, 15),
+    [channels],
+  );
+  const banglaChannels = useMemo(
+    () => channels.filter((c) => c.group === "Bangla").slice(0, 15),
+    [channels],
+  );
+  const newsChannels = useMemo(
+    () => channels.filter((c) => c.group === "News").slice(0, 15),
+    [channels],
+  );
+  const movieChannels = useMemo(
+    () =>
+      channels
+        .filter((c) => c.group === "Movies" || c.group === "Entertainment")
+        .slice(0, 15),
+    [channels],
+  );
 
   const renderMovieShelf = (
     title: string,

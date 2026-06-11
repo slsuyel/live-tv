@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Search, Tv, Play, Heart } from "lucide-react";
+import Image from "next/image";
 import { Channel } from "./types";
 
 interface ChannelSidebarProps {
@@ -138,16 +139,17 @@ export default function ChannelSidebar({
                       : "bg-white dark:bg-white/2 border-slate-100 dark:border-white/10 hover:border-slate-200 dark:hover:border-white/20 hover:bg-slate-50/50 dark:hover:bg-white/5 text-slate-600 dark:text-zinc-300 hover:text-slate-955 dark:hover:text-white"
                   }`}
                 >
-                  <div className="relative h-8 w-8 sm:h-10 sm:w-10 bg-slate-50 dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-md sm:rounded-lg p-1 flex items-center justify-center shrink-0">
+                  <div className="relative h-8 w-8 sm:h-10 sm:w-10 bg-slate-50 dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-md sm:rounded-lg p-1 flex items-center justify-center shrink-0 overflow-hidden">
                     {channel.logo ? (
-                      <img
+                      <Image
                         src={channel.logo}
                         alt={channel.name}
-                        width="40"
-                        height="40"
+                        width={40}
+                        height={40}
                         className="max-h-full max-w-full object-contain"
+                        unoptimized={true}
                         onError={(e) => {
-                          (e.target as HTMLElement).style.display = "none";
+                          e.currentTarget.style.display = "none";
                         }}
                       />
                     ) : (

@@ -37,7 +37,7 @@ async function getChannels() {
   // Try to load from API Database first
   try {
     const res = await fetch(apiDbUrl, {
-      next: { revalidate: 10 }, // Cache API for 10 seconds
+      next: { revalidate: 600 }, // Cache API for 10 minutes (600 seconds)
     });
     if (!res.ok) throw new Error("Failed to fetch API database channels");
     const json = await res.json();
