@@ -17,7 +17,7 @@ export default function Footer() {
                 alt="QoraPlay TV"
                 width={220}
                 height={50}
-                className="h-8 sm:h-12 w-auto dark:[filter:invert(1)_hue-rotate(180deg)]"
+                className="h-8 sm:h-12 w-auto dark:filter-[invert(1)_hue-rotate(180deg)]"
               />
             </div>
             <p className="text-xs text-slate-550 dark:text-zinc-400 leading-relaxed max-w-sm">

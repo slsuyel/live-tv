@@ -40,7 +40,7 @@ export default function RelatedChannels({
           <button
             key={idx}
             onClick={() => handleChannelSelect(related)}
-            className="group flex flex-col items-center justify-center p-2.5 bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-violet-500/50 hover:bg-slate-50 dark:hover:bg-white/[0.05] rounded-xl transition-all duration-200 text-center space-y-1.5 relative overflow-hidden shrink-0 w-24 sm:w-28 cursor-pointer"
+            className="group flex flex-col items-center justify-center p-2.5 bg-white dark:bg-white/2 border border-slate-200 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-violet-500/50 hover:bg-slate-50 dark:hover:bg-white/5 rounded-xl transition-all duration-200 text-center space-y-1.5 relative overflow-hidden shrink-0 w-24 sm:w-28 cursor-pointer"
           >
             <div className="h-8 w-8 sm:h-9 sm:w-9 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg p-1 flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform">
               {related.logo ? (

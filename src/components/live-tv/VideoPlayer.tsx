@@ -177,11 +177,31 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     setSelectedLevel(-1);
     setShowSettings(false);
 
-    const handleWaiting = () => setLoading(true);
+    let stallTimer: NodeJS.Timeout | null = null;
+
+    const handleWaiting = () => {
+      setLoading(true);
+      if (stallTimer) clearTimeout(stallTimer);
+      // If the player remains in a waiting state for over 3 seconds, nudge the playhead to bypass the buffer stall
+      stallTimer = setTimeout(() => {
+        if (video && !video.paused) {
+          console.warn(
+            "Stall watchdog triggered: Nudging playback slightly to recover from buffering...",
+          );
+          video.currentTime += 0.25;
+        }
+      }, 3000);
+    };
+
     const handlePlaying = () => {
       setLoading(false);
       setHasPlayed(true);
+      if (stallTimer) {
+        clearTimeout(stallTimer);
+        stallTimer = null;
+      }
     };
+
     const handleCanPlay = () => {
       setLoading(false);
       setHasPlayed(true);
@@ -190,7 +210,7 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     const handleStalled = () => {
       console.warn("Playback stalled, attempting gap-jump stall recovery...");
       if (video.buffered.length > 0) {
-        video.currentTime += 0.1;
+        video.currentTime += 0.2;
       }
     };
 
@@ -220,23 +240,24 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
         progressive: true,
         startLevel: -1,
         capLevelToPlayerSize: true,
-        maxBufferLength: 30,
-        maxMaxBufferLength: 60,
-        maxBufferSize: 50 * 1024 * 1024,
-        liveSyncDuration: 12,
-        liveMaxLatencyDuration: 25,
+        maxBufferLength: 20, // Keep buffer small to avoid latency bloat
+        maxMaxBufferLength: 40,
+        maxBufferSize: 60 * 1024 * 1024,
+        liveSyncDuration: 8, // Target playhead to be 8 seconds behind the live edge (low latency)
+        liveMaxLatencyDuration: 15,
         abrEwmaFastLive: 1.0,
         abrEwmaSlowLive: 3.0,
-        abrBandWidthFactor: 0.95,
-        abrBandWidthUpFactor: 0.5,
-        abrEwmaDefaultEstimate: 300000,
-        maxStarvationDelay: 1.5,
+        abrBandWidthFactor: 0.9,
+        abrBandWidthUpFactor: 0.6,
+        abrEwmaDefaultEstimate: 500000,
+        maxStarvationDelay: 2.0,
         manifestLoadingMaxRetry: 6,
         levelLoadingMaxRetry: 6,
         fragLoadingMaxRetry: 10,
-        fragLoadingTimeOut: 10000,
+        fragLoadingTimeOut: 12000,
         fragLoadingRetryDelay: 1000,
-        maxBufferHole: 2.0,
+        maxBufferHole: 0.5, // Automatically skip buffer holes larger than 0.5 seconds
+        nudgeMaxRetry: 8,
       });
       hlsRef.current = hls;
       hls.loadSource(channel.url);
@@ -322,6 +343,14 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
               hls?.destroy();
               break;
           }
+        } else {
+          // Automatic recovery for non-fatal buffer stalls
+          if (data.details === Hls.ErrorDetails.BUFFER_STALLED_ERROR) {
+            console.warn("Non-fatal buffer stall encountered, recovering...");
+            if (video && !video.paused) {
+              video.currentTime += 0.2;
+            }
+          }
         }
       });
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
@@ -343,6 +372,7 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     }
 
     return () => {
+      if (stallTimer) clearTimeout(stallTimer);
       video.removeEventListener("waiting", handleWaiting);
       video.removeEventListener("playing", handlePlaying);
       video.removeEventListener("canplay", handleCanPlay);
@@ -738,12 +768,6 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
                 }}
               />
             </div>
-          </div>
-
-          {/* Center Badge */}
-          <div className="flex items-center gap-1 bg-rose-600/90 text-white font-extrabold text-[8px] sm:text-[9px] tracking-wider uppercase px-2 py-0.5 rounded border border-rose-500/30 animate-pulse select-none">
-            <span className="h-1 w-1 rounded-full bg-white animate-ping"></span>
-            <span>LIVE</span>
           </div>
 
           {/* Right Controls */}
