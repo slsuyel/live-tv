@@ -3,6 +3,7 @@
 import React from "react";
 import { Tv, ShieldCheck, User, Moon, Sun, Heart } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface HeaderProps {
   favoritesCount: number;
@@ -31,14 +32,6 @@ export default function Header({
     selectedCategory === "All" && !showingFavorites && !searchQuery;
   const isSportsActive =
     selectedCategory === "Sports" && !searchQuery && !showingFavorites;
-  const isCricketActive =
-    selectedCategory === "Sports" &&
-    searchQuery.toLowerCase() === "cricket" &&
-    !showingFavorites;
-  const isFootballActive =
-    selectedCategory === "Sports" &&
-    searchQuery.toLowerCase() === "football" &&
-    !showingFavorites;
   const isNewsActive =
     selectedCategory === "News" && !showingFavorites && !searchQuery;
 
@@ -84,7 +77,7 @@ export default function Header({
                 : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
             }`}
           >
-            <span>📺</span> Live TV
+            <span>📺</span> All TV
           </button>
 
           <button
@@ -100,36 +93,6 @@ export default function Header({
             }`}
           >
             <span>🏆</span> Sports
-          </button>
-
-          <button
-            onClick={() => {
-              onSelectCategory("Sports");
-              onSearch("cricket");
-              if (showingFavorites) onShowFavorites();
-            }}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              isCricketActive
-                ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15"
-                : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
-            }`}
-          >
-            <span>🏏</span> Cricket
-          </button>
-
-          <button
-            onClick={() => {
-              onSelectCategory("Sports");
-              onSearch("football");
-              if (showingFavorites) onShowFavorites();
-            }}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              isFootballActive
-                ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15"
-                : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
-            }`}
-          >
-            <span>⚽</span> Football
           </button>
 
           <button
@@ -164,6 +127,16 @@ export default function Header({
               </span>
             )}
           </button>
+
+          <Link
+            href="/fifa-live"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-500/5 hover:border-purple-200 dark:hover:border-purple-500/20 active:scale-95"
+          >
+            <span>⚽</span> FIFA Multiview
+            <span className="bg-gradient-to-r from-rose-500 to-amber-500 text-white rounded text-[8px] px-1 py-0.5 font-bold uppercase tracking-wider scale-90 ml-1 animate-pulse">
+              Live
+            </span>
+          </Link>
         </nav>
 
         {/* Right Section (Theme Toggle + User Badge) */}
@@ -216,7 +189,7 @@ export default function Header({
                 : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
             }`}
           >
-            <span>📺</span> Live TV
+            <span>📺</span> All TV
           </button>
 
           <button
@@ -232,36 +205,6 @@ export default function Header({
             }`}
           >
             <span>🏆</span> Sports
-          </button>
-
-          <button
-            onClick={() => {
-              onSelectCategory("Sports");
-              onSearch("cricket");
-              if (showingFavorites) onShowFavorites();
-            }}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
-              isCricketActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
-                : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
-            }`}
-          >
-            <span>🏏</span> Cricket
-          </button>
-
-          <button
-            onClick={() => {
-              onSelectCategory("Sports");
-              onSearch("football");
-              if (showingFavorites) onShowFavorites();
-            }}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
-              isFootballActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
-                : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
-            }`}
-          >
-            <span>⚽</span> Football
           </button>
 
           <button
@@ -302,6 +245,16 @@ export default function Header({
               </span>
             )}
           </button>
+
+          <Link
+            href="/fifa-live"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border border-purple-250 dark:border-purple-500/25 bg-purple-50 dark:bg-purple-500/5 text-purple-600 dark:text-purple-400 active:scale-95"
+          >
+            <span>⚽</span> FIFA Multiview
+            <span className="bg-rose-600 text-white text-[7.5px] font-extrabold uppercase rounded px-1 ml-1 scale-90 animate-pulse">
+              Live
+            </span>
+          </Link>
         </div>
       </div>
     </div>
