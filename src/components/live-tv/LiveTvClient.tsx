@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { toast } from "sonner";
 import { Channel } from "./types";
 import VideoPlayer from "./VideoPlayer";
@@ -47,6 +48,7 @@ export default function LiveTvClient({
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
+  const [logoError, setLogoError] = useState(false);
 
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
@@ -233,6 +235,11 @@ export default function LiveTvClient({
     }
   }, [activeChannel]);
 
+  // Reset logo error when active channel changes
+  useEffect(() => {
+    setLogoError(false);
+  }, [activeChannel]);
+
   // Filter channels
   useEffect(() => {
     let result = channels;
@@ -373,16 +380,17 @@ export default function LiveTvClient({
               <div className="absolute inset-0 bg-linear-to-r from-blue-600/2 to-cyan-500/2 dark:from-violet-600/5 dark:to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
               {/* Logo Container */}
-              <div className="relative h-11 w-11 sm:h-14 sm:w-14 bg-slate-50 dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-xl p-1.5 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform duration-300">
+              <div className="relative h-11 w-11 sm:h-14 sm:w-14 bg-slate-50 dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-xl p-1.5 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform duration-300 overflow-hidden">
                 {c.logo ? (
-                  <img
+                  <Image
                     src={c.logo}
                     alt={c.name}
-                    width="48"
-                    height="48"
+                    width={48}
+                    height={48}
                     className="max-h-full max-w-full object-contain filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.08)] dark:drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+                    unoptimized={true}
                     onError={(e) => {
-                      (e.target as HTMLElement).style.display = "none";
+                      e.currentTarget.style.display = "none";
                     }}
                   />
                 ) : (
@@ -454,17 +462,16 @@ export default function LiveTvClient({
                 <div className="glass-card p-4 rounded-2xl md:rounded-3xl shadow-lg space-y-4">
                   <div className="flex items-start justify-between gap-2 sm:gap-4">
                     <div className="flex items-center gap-2.5 sm:gap-4">
-                      <div className="relative h-11 w-11 sm:h-14 sm:w-14 rounded-lg sm:rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-1.5 flex items-center justify-center shrink-0">
-                        {activeChannel.logo ? (
-                          <img
+                      <div className="relative h-11 w-11 sm:h-14 sm:w-14 rounded-lg sm:rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 p-1.5 flex items-center justify-center shrink-0 overflow-hidden">
+                        {activeChannel.logo && !logoError ? (
+                          <Image
                             src={activeChannel.logo}
                             alt={activeChannel.name}
-                            width="56"
-                            height="56"
+                            width={56}
+                            height={56}
                             className="max-h-full max-w-full object-contain"
-                            onError={(e) => {
-                              (e.target as HTMLElement).style.display = "none";
-                            }}
+                            unoptimized={true}
+                            onError={() => setLogoError(true)}
                           />
                         ) : (
                           <Tv className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 dark:text-zinc-400" />

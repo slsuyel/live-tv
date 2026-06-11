@@ -240,23 +240,22 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
         progressive: true,
         startLevel: -1,
         capLevelToPlayerSize: true,
-        maxBufferLength: 20, // Keep buffer small to avoid latency bloat
-        maxMaxBufferLength: 40,
-        maxBufferSize: 60 * 1024 * 1024,
-        liveSyncDuration: 8, // Target playhead to be 8 seconds behind the live edge (low latency)
-        liveMaxLatencyDuration: 15,
+        maxBufferLength: 10, // Buffer 10s max initially to start playing faster
+        maxMaxBufferLength: 20,
+        maxBufferSize: 30 * 1024 * 1024, // 30MB limit to prevent heavy downloads before start
+        liveSyncDurationCount: 2, // Play 2 segments behind live edge for instant startup
         abrEwmaFastLive: 1.0,
         abrEwmaSlowLive: 3.0,
         abrBandWidthFactor: 0.9,
         abrBandWidthUpFactor: 0.6,
-        abrEwmaDefaultEstimate: 500000,
-        maxStarvationDelay: 2.0,
-        manifestLoadingMaxRetry: 6,
-        levelLoadingMaxRetry: 6,
-        fragLoadingMaxRetry: 10,
-        fragLoadingTimeOut: 12000,
-        fragLoadingRetryDelay: 1000,
-        maxBufferHole: 0.5, // Automatically skip buffer holes larger than 0.5 seconds
+        abrEwmaDefaultEstimate: 1500000, // 1.5 Mbps starting estimate to skip bandwidth testing delays
+        maxStarvationDelay: 1.5,
+        manifestLoadingMaxRetry: 3,
+        levelLoadingMaxRetry: 3,
+        fragLoadingMaxRetry: 4,
+        fragLoadingTimeOut: 5000, // Timeout slow segments in 5s to trigger fast retries
+        fragLoadingRetryDelay: 500,
+        maxBufferHole: 0.5,
         nudgeMaxRetry: 8,
       });
       hlsRef.current = hls;
@@ -583,7 +582,7 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
       />
 
       {/* Loading Overlay */}
-      {loading && !error && !loadTimeout && (
+      {loading && !hasPlayed && !error && !loadTimeout && (
         <div className="absolute inset-0 bg-black/85 flex flex-col items-center justify-center gap-4 z-20 pointer-events-none">
           <div className="relative flex items-center justify-center h-12 w-12">
             <div className="absolute inset-0 rounded-full border-4 border-violet-500/25 animate-pulse" />

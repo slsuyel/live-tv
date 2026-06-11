@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Tv, Play } from "lucide-react";
+import Image from "next/image";
 import { Channel } from "./types";
 
 interface RelatedChannelsProps {
@@ -24,14 +25,10 @@ export default function RelatedChannels({
   if (relatedList.length === 0) return null;
 
   return (
-    <div className="border-t pt-4 border-slate-200 dark:border-white/10 space-y-3 transition-colors duration-250">
-      <div className="flex justify-between items-center">
-        <h3 className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-zinc-200 flex items-center gap-1.5">
-          <Tv className="h-4 w-4 text-blue-600 dark:text-violet-400" />
-          More {activeChannel.group} Channels
-        </h3>
-        <span className="text-[10px] text-slate-500 dark:text-zinc-400 font-semibold bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 px-2.5 py-0.5 rounded-full">
-          Related Streams
+    <div className="space-y-3 shrink-0">
+      <div className="flex items-center justify-between">
+        <span className="text-xs sm:text-sm font-bold text-slate-800 dark:text-zinc-200 tracking-tight">
+          Related Channels
         </span>
       </div>
 
@@ -42,16 +39,17 @@ export default function RelatedChannels({
             onClick={() => handleChannelSelect(related)}
             className="group flex flex-col items-center justify-center p-2.5 bg-white dark:bg-white/2 border border-slate-200 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-violet-500/50 hover:bg-slate-50 dark:hover:bg-white/5 rounded-xl transition-all duration-200 text-center space-y-1.5 relative overflow-hidden shrink-0 w-24 sm:w-28 cursor-pointer"
           >
-            <div className="h-8 w-8 sm:h-9 sm:w-9 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg p-1 flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform">
+            <div className="h-8 w-8 sm:h-9 sm:w-9 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg p-1 flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform overflow-hidden relative">
               {related.logo ? (
-                <img
+                <Image
                   src={related.logo}
                   alt={related.name}
-                  width="36"
-                  height="36"
+                  width={36}
+                  height={36}
                   className="max-h-full max-w-full object-contain"
+                  unoptimized={true}
                   onError={(e) => {
-                    (e.target as HTMLElement).style.display = "none";
+                    e.currentTarget.style.display = "none";
                   }}
                 />
               ) : (
