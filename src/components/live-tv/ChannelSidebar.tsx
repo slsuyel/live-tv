@@ -78,7 +78,9 @@ export default function ChannelSidebar({
                   : "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-100 dark:border-rose-500/20 hover:border-rose-200 dark:hover:border-rose-500/30"
               }`}
             >
-              <Heart className={`h-3 w-3 ${showFavoritesOnly ? "fill-white text-white" : "fill-rose-500 text-rose-450"}`} />
+              <Heart
+                className={`h-3 w-3 ${showFavoritesOnly ? "fill-white text-white" : "fill-rose-500 text-rose-450"}`}
+              />
               Favorites ({favorites.length})
             </button>
 
@@ -133,7 +135,7 @@ export default function ChannelSidebar({
                   className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl border text-left transition-all w-full group cursor-pointer focus:outline-none ${
                     isActive
                       ? "bg-blue-50/70 dark:bg-violet-600/10 border-blue-200 dark:border-violet-500/40 text-blue-600 dark:text-violet-400 shadow-sm"
-                      : "bg-white dark:bg-white/[0.02] border-slate-100 dark:border-white/10 hover:border-slate-200 dark:hover:border-white/20 hover:bg-slate-50/50 dark:hover:bg-white/[0.05] text-slate-655 dark:text-zinc-300 hover:text-slate-955 dark:hover:text-white"
+                      : "bg-white dark:bg-white/[0.02] border-slate-100 dark:border-white/10 hover:border-slate-200 dark:hover:border-white/20 hover:bg-slate-50/50 dark:hover:bg-white/[0.05] text-slate-600 dark:text-zinc-300 hover:text-slate-955 dark:hover:text-white"
                   }`}
                 >
                   <div className="relative h-8 w-8 sm:h-10 sm:w-10 bg-slate-50 dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-md sm:rounded-lg p-1 flex items-center justify-center shrink-0">
@@ -154,7 +156,7 @@ export default function ChannelSidebar({
                   </div>
                   <div className="min-w-0 flex-1">
                     <h4
-                      className={`text-[11px] sm:text-xs font-bold leading-snug truncate pr-1 ${isActive ? "text-blue-600 dark:text-violet-404" : "text-slate-700 dark:text-zinc-200 group-hover:text-slate-900 group-hover:dark:text-white"}`}
+                      className={`text-[11px] sm:text-xs font-bold leading-snug truncate pr-1 ${isActive ? "text-blue-600 dark:text-violet-400" : "text-slate-700 dark:text-zinc-200 group-hover:text-slate-900 group-hover:dark:text-white"}`}
                     >
                       {channel.name}
                     </h4>
@@ -162,7 +164,7 @@ export default function ChannelSidebar({
                       {channel.group}
                     </span>
                   </div>
-                  
+
                   {/* Actions (Favorite + Play Icon) */}
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
@@ -171,14 +173,22 @@ export default function ChannelSidebar({
                         onToggleFavorite(channel.url);
                       }}
                       className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 text-slate-350 dark:text-zinc-500 hover:text-rose-500 dark:hover:text-rose-400 transition-colors cursor-pointer"
-                      title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                      title={
+                        isFavorite
+                          ? "Remove from Favorites"
+                          : "Add to Favorites"
+                      }
                     >
-                      <Heart className={`h-3.5 w-3.5 ${isFavorite ? "fill-rose-500 text-rose-500" : ""}`} />
+                      <Heart
+                        className={`h-3.5 w-3.5 ${isFavorite ? "fill-rose-500 text-rose-500" : ""}`}
+                      />
                     </button>
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity">
                       <Play
                         className={`h-3 w-3 sm:h-3.5 sm:w-3.5 fill-current ${
-                          isActive ? "text-blue-600 dark:text-violet-400" : "text-slate-400 dark:text-zinc-500 group-hover:text-slate-600 group-hover:dark:text-white"
+                          isActive
+                            ? "text-blue-600 dark:text-violet-400"
+                            : "text-slate-400 dark:text-zinc-500 group-hover:text-slate-600 group-hover:dark:text-white"
                         }`}
                       />
                     </div>
@@ -189,8 +199,8 @@ export default function ChannelSidebar({
           </div>
         ) : (
           <div className="py-20 text-center text-slate-400 dark:text-zinc-500 text-sm">
-            {showFavoritesOnly 
-              ? "You haven't added any channels to your favorites yet. Click the heart icon on any channel to save it!" 
+            {showFavoritesOnly
+              ? "You haven't added any channels to your favorites yet. Click the heart icon on any channel to save it!"
               : "No channels found matching current filter."}
           </div>
         )}

@@ -171,7 +171,7 @@ export default function Header({
           {/* Theme Toggle Button */}
           <button
             onClick={onToggleTheme}
-            className="h-9 w-9 rounded-xl border border-slate-250 dark:border-white/10 bg-white dark:bg-white/5 text-slate-600 dark:text-zinc-450 hover:text-slate-900 hover:bg-slate-50 dark:hover:text-white dark:hover:bg-white/10 flex items-center justify-center transition-all cursor-pointer"
+            className="h-9 w-9 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 text-slate-600 dark:text-zinc-400 hover:text-slate-900 hover:bg-slate-50 dark:hover:text-white dark:hover:bg-white/10 flex items-center justify-center transition-all cursor-pointer"
             title={
               theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"
             }
@@ -212,7 +212,7 @@ export default function Header({
             }}
             className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
               isHomeActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-250 dark:border-white/15 shadow-sm"
+                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
                 : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
             }`}
           >
@@ -227,7 +227,7 @@ export default function Header({
             }}
             className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
               isSportsActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-255 dark:border-white/15 shadow-sm"
+                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
                 : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
             }`}
           >
@@ -242,7 +242,7 @@ export default function Header({
             }}
             className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
               isCricketActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-255 dark:border-white/15 shadow-sm"
+                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
                 : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
             }`}
           >
@@ -257,7 +257,7 @@ export default function Header({
             }}
             className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
               isFootballActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-255 dark:border-white/15 shadow-sm"
+                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
                 : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
             }`}
           >
@@ -272,7 +272,7 @@ export default function Header({
             }}
             className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
               isNewsActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-255 dark:border-white/15 shadow-sm"
+                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
                 : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
             }`}
           >

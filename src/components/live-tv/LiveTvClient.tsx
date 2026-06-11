@@ -52,6 +52,7 @@ export default function LiveTvClient({
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
   const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [mounted, setMounted] = useState(false);
 
   const [sidebarPage, setSidebarPage] = useState(1);
   const channelsPerPage = 30;
@@ -63,6 +64,7 @@ export default function LiveTvClient({
 
   // Sync favorites on mount
   useEffect(() => {
+    setMounted(true);
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("qoraplay_tv_favorites");
       if (saved) {
@@ -349,7 +351,7 @@ export default function LiveTvClient({
     return (
       <div className="space-y-3 pt-6 border-t border-slate-200 dark:border-white/10 first:border-0 transition-colors">
         <div className="flex justify-between items-center px-1">
-          <h3 className="text-sm sm:text-base font-black text-slate-905 dark:text-zinc-100 flex items-center gap-2 tracking-tight">
+          <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-zinc-100 flex items-center gap-2 tracking-tight">
             <span>{icon}</span>
             {title}
           </h3>
@@ -408,7 +410,7 @@ export default function LiveTvClient({
 
               {/* Play Hover Overlay */}
               <div className="absolute inset-0 bg-blue-600/[0.02] dark:bg-violet-600/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30 flex items-center justify-center">
-                <div className="h-8 w-8 rounded-full bg-blue-600 dark:bg-violet-655 text-white flex items-center justify-center shadow-lg shadow-blue-500/20 dark:shadow-violet-500/20 scale-75 group-hover:scale-100 transition-all duration-300">
+                <div className="h-8 w-8 rounded-full bg-blue-600 dark:bg-violet-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/20 dark:shadow-violet-500/20 scale-75 group-hover:scale-100 transition-all duration-300">
                   <span className="text-xs">▶</span>
                 </div>
               </div>
@@ -420,8 +422,10 @@ export default function LiveTvClient({
   };
 
   return (
-    <div className="flex flex-col min-h-screen relative overflow-x-hidden text-slate-900 dark:text-white transition-colors duration-250">
-      {theme === "dark" && <BackgroundScene />}
+    <div
+      className={`flex flex-col min-h-screen relative overflow-x-hidden bg-slate-50 dark:bg-[#070414] text-slate-900 dark:text-white transition-colors duration-250 ${mounted && theme === "dark" ? "dark" : ""}`}
+    >
+      {mounted && theme === "dark" && <BackgroundScene />}
 
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header
@@ -447,7 +451,7 @@ export default function LiveTvClient({
                 <VideoPlayer channel={activeChannel} />
               ) : (
                 <div className="aspect-video w-full bg-slate-100 dark:bg-[#0d1127]/30 rounded-2xl flex flex-col items-center justify-center text-slate-700 dark:text-white border border-slate-200 dark:border-white/10 p-4 backdrop-blur-md">
-                  <Tv className="text-zinc-400 dark:text-zinc-605 animate-bounce mb-2 h-10 w-10" />
+                  <Tv className="text-zinc-400 dark:text-zinc-600 animate-bounce mb-2 h-10 w-10" />
                   <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 font-semibold text-center">
                     Select a channel from the list to start watching
                   </p>
@@ -524,7 +528,7 @@ export default function LiveTvClient({
 
                       <button
                         onClick={handleShare}
-                        className="rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 text-slate-505 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-white border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 bg-white dark:bg-white/5 flex items-center justify-center transition-all cursor-pointer"
+                        className="rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 text-slate-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-white border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 bg-white dark:bg-white/5 flex items-center justify-center transition-all cursor-pointer"
                         title="Share Channel"
                       >
                         <Share2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />

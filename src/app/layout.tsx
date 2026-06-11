@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Live TV Portal - Stream 7000+ Channels Free",
-  description: "Watch live television channels from around the world. Stream sports, news, movies, and entertainment.",
+  description:
+    "Watch live television channels from around the world. Stream sports, news, movies, and entertainment.",
 };
 
 export default function RootLayout({
@@ -28,7 +29,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#f8fafc] text-slate-900 overflow-x-hidden">
+      <body className="min-h-full flex flex-col overflow-x-hidden">
         {children}
         <Toaster position="top-right" theme="light" richColors />
       </body>
