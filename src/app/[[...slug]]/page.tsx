@@ -68,15 +68,30 @@ async function getChannels() {
     }
   }
 
-  // Merge local custom channels, avoiding duplicates by name or URL
-  const existingNames = new Set(fetchedChannels.map((c: any) => c.name.toLowerCase().trim()));
-  const existingUrls = new Set(fetchedChannels.map((c: any) => c.url.trim()));
+  // Merge local custom channels, prioritizing local ones (which may have DRM keys)
+  // and merging properties when there's a match.
+  const localByName = new Map(localChannels.map((c: any) => [c.name.toLowerCase().trim(), c]));
+  const localByUrl = new Map(localChannels.map((c: any) => [c.url.trim(), c]));
 
-  const uniqueLocal = localChannels.filter((c: any) => {
-    return !existingNames.has(c.name.toLowerCase().trim()) && !existingUrls.has(c.url.trim());
+  const mergedFetched = fetchedChannels.map((fetched: any) => {
+    const localMatch = localByUrl.get(fetched.url.trim()) || localByName.get(fetched.name.toLowerCase().trim());
+    if (localMatch) {
+      return {
+        ...fetched,
+        ...localMatch, // Local properties (type, kid, key, logo, group) take precedence
+      };
+    }
+    return fetched;
   });
 
-  return [...uniqueLocal, ...fetchedChannels];
+  const fetchedNames = new Set(fetchedChannels.map((c: any) => c.name.toLowerCase().trim()));
+  const fetchedUrls = new Set(fetchedChannels.map((c: any) => c.url.trim()));
+
+  const uniqueLocal = localChannels.filter((c: any) => {
+    return !fetchedNames.has(c.name.toLowerCase().trim()) && !fetchedUrls.has(c.url.trim());
+  });
+
+  return [...uniqueLocal, ...mergedFetched];
 }
 
 interface PageProps {

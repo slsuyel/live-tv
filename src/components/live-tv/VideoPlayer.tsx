@@ -30,6 +30,7 @@ interface VideoPlayerProps {
 export default function VideoPlayer({ channel }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const hlsRef = useRef<Hls | null>(null);
+  const shakaRef = useRef<any>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -244,8 +245,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     video.addEventListener("stalled", handleStalled);
 
     let hls: Hls | null = null;
+    let shakaPlayerInstance: any = null;
     let networkRetryCount = 0;
     let mediaRetryCount = 0;
+    let active = true;
 
     const handleOnline = () => {
       if (hls) {
@@ -257,7 +260,130 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     };
     window.addEventListener("online", handleOnline);
 
-    if (Hls.isSupported()) {
+    // Detect if this is a DASH stream
+    const isDash =
+      channel.type === "dash" ||
+      channel.url.toLowerCase().endsWith(".mpd") ||
+      channel.url.toLowerCase().includes(".mpd?") ||
+      channel.url.toLowerCase().includes("/index.mpd");
+
+    if (isDash) {
+      (async () => {
+        try {
+          const shakaModule = await import("shaka-player");
+          const shaka = shakaModule.default || shakaModule;
+
+          if (!active) return;
+
+          shaka.polyfill.installAll();
+
+          if (!shaka.Player.isBrowserSupported()) {
+            setError("Your browser does not support DASH playback.");
+            setLoading(false);
+            return;
+          }
+
+          shakaPlayerInstance = new shaka.Player();
+          shakaRef.current = shakaPlayerInstance;
+          await shakaPlayerInstance.attach(video);
+
+          shakaPlayerInstance.configure({
+            manifest: {
+              defaultPresentationDelay: 8,
+              ignoreDrmInfo: true,
+              dash: {
+                ignoreMinBufferTime: true,
+                ignoreSuggestedPresentationDelay: true,
+                autoCorrectDrift: true,
+              },
+            },
+            streaming: {
+              bufferingGoal: 10,
+              rebufferingGoal: 0.8,
+              bufferBehind: 12,
+              stallEnabled: true,
+              stallThreshold: 1,
+              stallSkip: 0.15,
+              retryParameters: {
+                maxAttempts: 12,
+                baseDelay: 500,
+                backoffFactor: 1.6,
+                fuzzFactor: 0.35,
+                timeout: 15000,
+              },
+            },
+            abr: {
+              enabled: true,
+              defaultBandwidthEstimate: 4500000,
+              switchInterval: 1,
+              clearBufferSwitch: false,
+              restrictToElementSize: true,
+              restrictToScreenSize: true,
+              bandwidthDowngradeTarget: 0.92,
+              bandwidthUpgradeTarget: 0.72,
+            },
+          });
+
+          // Apply ClearKey DRM keys if provided
+          if (channel.kid && channel.key) {
+            shakaPlayerInstance.configure({
+              drm: {
+                clearKeys: {
+                  [String(channel.kid).toLowerCase()]: String(
+                    channel.key,
+                  ).toLowerCase(),
+                },
+              },
+            });
+          }
+
+          shakaPlayerInstance.addEventListener("error", (event: any) => {
+            if (!active) return;
+            const detail = event?.detail;
+            console.error("[SHAKA] Setup error detail:", JSON.stringify(detail));
+
+            let errMsg = "DASH / MPD load failed";
+            if (detail) {
+              if (detail.code === 6007 || detail.code === 6008) {
+                errMsg =
+                  "Playback failed: DRM decryption key is incorrect or missing.";
+              } else if (detail.code === 1001 || detail.code === 1002) {
+                errMsg =
+                  "Playback failed: Stream is offline or original server is unreachable.";
+              } else {
+                errMsg = `Playback failed: Shaka Player Error ${detail.code} (${
+                  detail.message || "Unknown error"
+                })`;
+              }
+            }
+            setError(errMsg);
+            setLoading(false);
+          });
+
+          shakaPlayerInstance.addEventListener("buffering", (event: any) => {
+            if (!active) return;
+            setLoading(event.buffering);
+          });
+
+          await shakaPlayerInstance.load(channel.url);
+
+          if (!active) return;
+          setLoading(false);
+
+          // Autoplay stream
+          video.muted = true;
+          setIsMuted(true);
+          video.play().catch((err) => {
+            console.warn("Autoplay was prevented:", err);
+          });
+        } catch (shakaErr: any) {
+          if (!active) return;
+          console.error("[SHAKA] Setup catch error:", shakaErr);
+          setError(shakaErr?.message || "Failed to initialize Shaka Player.");
+          setLoading(false);
+        }
+      })();
+    } else if (Hls.isSupported()) {
       hls = new Hls({
         enableWorker: true,
         lowLatencyMode: true,
@@ -395,6 +521,7 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     }
 
     return () => {
+      active = false;
       if (stallTimer) clearTimeout(stallTimer);
       video.removeEventListener("waiting", handleWaiting);
       video.removeEventListener("playing", handlePlaying);
@@ -405,6 +532,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
         hls.destroy();
       }
       hlsRef.current = null;
+      if (shakaPlayerInstance) {
+        shakaPlayerInstance.destroy().catch(() => {});
+      }
+      shakaRef.current = null;
     };
   }, [channel.url, reloadCount]);
 
