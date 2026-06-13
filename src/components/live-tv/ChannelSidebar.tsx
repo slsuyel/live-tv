@@ -22,6 +22,8 @@ interface ChannelSidebarProps {
   onToggleFavorite: (url: string) => void;
   showFavoritesOnly: boolean;
   setShowFavoritesOnly: (val: boolean) => void;
+  hasMore?: boolean;
+  isFetchingMore?: boolean;
 }
 
 export default function ChannelSidebar({
@@ -41,6 +43,8 @@ export default function ChannelSidebar({
   onToggleFavorite,
   showFavoritesOnly,
   setShowFavoritesOnly,
+  hasMore = true,
+  isFetchingMore = false,
 }: ChannelSidebarProps) {
   return (
     <div className="glass-card rounded-2xl md:rounded-3xl overflow-hidden h-full lg:h-[calc(100vh-180px)] flex flex-col transition-all duration-350 shadow-sm">
@@ -209,9 +213,11 @@ export default function ChannelSidebar({
       </div>
 
       {/* Sidebar Infinite loading footer */}
-      {sidebarPage < totalPages && (
+      {(sidebarPage < totalPages || isFetchingMore) && (
         <div className="py-2 text-center text-[10px] text-slate-400 dark:text-zinc-500 font-semibold animate-pulse bg-slate-50 dark:bg-white/2 border-t border-slate-100 dark:border-white/10 shrink-0">
-          Loading more channels...
+          {isFetchingMore
+            ? "Fetching next batch..."
+            : "Loading more channels..."}
         </div>
       )}
     </div>

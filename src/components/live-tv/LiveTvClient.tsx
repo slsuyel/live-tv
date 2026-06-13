@@ -43,7 +43,7 @@ export default function LiveTvClient({
 }: LiveTvClientProps) {
   const router = useRouter();
 
-  const [channels] = useState<Channel[]>(initialChannels);
+  const [channels, setChannels] = useState<Channel[]>(initialChannels);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
@@ -57,6 +57,10 @@ export default function LiveTvClient({
 
   const [sidebarPage, setSidebarPage] = useState(1);
   const channelsPerPage = 30;
+
+  const [loadedPage, setLoadedPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
 
   const listContainerRef = useRef<HTMLDivElement>(null);
   const sidebarContainerRef = useRef<HTMLDivElement>(null);
@@ -77,6 +81,47 @@ export default function LiveTvClient({
       }
     }
   }, []);
+
+  // Fetch next batch of channels from the database
+  const fetchNextBatch = async () => {
+    if (isFetchingMore || !hasMore) return;
+    setIsFetchingMore(true);
+    try {
+      const nextPage = loadedPage + 1;
+      const baseUrl =
+        process.env.NEXT_PUBLIC_API_BASE_URL ||
+        "https://server.nextqora.com/api/v1";
+      const apiDbUrl = `${baseUrl}/stream/all?page=${nextPage}&limit=150`;
+
+      const res = await fetch(apiDbUrl);
+      if (res.ok) {
+        const json = await res.json();
+        const data = json?.data || [];
+        const meta = json?.meta;
+
+        if (Array.isArray(data) && data.length > 0) {
+          const existingUrls = new Set(channels.map((c) => c.url));
+          const newChannels = data.filter((c: any) => !existingUrls.has(c.url));
+          if (newChannels.length > 0) {
+            setChannels((prev) => [...prev, ...newChannels]);
+          }
+          setLoadedPage(nextPage);
+
+          if (meta && nextPage >= meta.totalPages) {
+            setHasMore(false);
+          }
+        } else {
+          setHasMore(false);
+        }
+      } else {
+        setHasMore(false);
+      }
+    } catch (err) {
+      console.error("Error fetching next channel batch:", err);
+    } finally {
+      setIsFetchingMore(false);
+    }
+  };
 
   const handleToggleFavorite = (url: string) => {
     let updated;
@@ -268,6 +313,8 @@ export default function LiveTvClient({
     ) {
       if (sidebarPage < totalPages) {
         setSidebarPage((prev) => prev + 1);
+      } else if (hasMore && !isFetchingMore) {
+        fetchNextBatch();
       }
     }
   };
@@ -585,6 +632,8 @@ export default function LiveTvClient({
                 onToggleFavorite={handleToggleFavorite}
                 showFavoritesOnly={showFavoritesOnly}
                 setShowFavoritesOnly={setShowFavoritesOnly}
+                hasMore={hasMore}
+                isFetchingMore={isFetchingMore}
               />
             </div>
           </div>
@@ -643,6 +692,8 @@ export default function LiveTvClient({
                     onToggleFavorite={handleToggleFavorite}
                     showFavoritesOnly={showFavoritesOnly}
                     setShowFavoritesOnly={setShowFavoritesOnly}
+                    hasMore={hasMore}
+                    isFetchingMore={isFetchingMore}
                   />
                 </div>
               </div>

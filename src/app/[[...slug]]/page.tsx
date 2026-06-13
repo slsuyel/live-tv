@@ -1,37 +1,20 @@
 import LiveTvClient from "@/components/live-tv/LiveTvClient";
 import { Metadata } from "next";
-import fs from "fs";
-import path from "path";
 
 export const dynamic = "force-dynamic";
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://live.nextqora.com";
 
-// Helper to load local custom channels safely
-function getLocalChannels() {
-  try {
-    const filePath = path.join(process.cwd(), "src", "data", "local_channels.json");
-    if (fs.existsSync(filePath)) {
-      const fileContent = fs.readFileSync(filePath, "utf8");
-      return JSON.parse(fileContent);
-    }
-  } catch (error) {
-    console.error("Error reading local custom channels:", error);
-  }
-  return [];
-}
-
 // Server-Side Data Fetching (SSR/ISR)
-async function getChannels() {
+async function getChannels(slug?: string | null) {
   const githubUrl =
     "https://raw.githubusercontent.com/SHAJON-404/iptv/refs/heads/main/app/data/channels.json";
 
   const baseUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL ||
     "https://server.nextqora.com/api/v1";
-  const apiDbUrl = `${baseUrl}/stream/all?limit=8000`;
+  const apiDbUrl = `${baseUrl}/stream/all?limit=150`;
 
-  const localChannels = getLocalChannels();
   let fetchedChannels: any[] = [];
 
   // Try to load from API Database first
@@ -68,30 +51,42 @@ async function getChannels() {
     }
   }
 
-  // Merge local custom channels, prioritizing local ones (which may have DRM keys)
-  // and merging properties when there's a match.
-  const localByName = new Map(localChannels.map((c: any) => [c.name.toLowerCase().trim(), c]));
-  const localByUrl = new Map(localChannels.map((c: any) => [c.url.trim(), c]));
+  // If there is a slug, make sure that channel is fetched and prepended if not already present
+  if (slug && fetchedChannels.length > 0) {
+    const slugify = (text: string) => {
+      return text
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, "")
+        .replace(/[\s_-]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    };
 
-  const mergedFetched = fetchedChannels.map((fetched: any) => {
-    const localMatch = localByUrl.get(fetched.url.trim()) || localByName.get(fetched.name.toLowerCase().trim());
-    if (localMatch) {
-      return {
-        ...fetched,
-        ...localMatch, // Local properties (type, kid, key, logo, group) take precedence
-      };
+    const hasSlugChannel = fetchedChannels.some(
+      (c: any) => slugify(c.name) === slug,
+    );
+    if (!hasSlugChannel) {
+      try {
+        const channelNameQuery = slug.split("-").join(" ");
+        const searchUrl = `${baseUrl}/stream/all?searchTerm=${encodeURIComponent(channelNameQuery)}&limit=5`;
+        const res = await fetch(searchUrl);
+        if (res.ok) {
+          const json = await res.json();
+          const data = json?.data || [];
+          const matchedChannel = data.find(
+            (c: any) => slugify(c.name) === slug,
+          );
+          if (matchedChannel) {
+            fetchedChannels = [matchedChannel, ...fetchedChannels];
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch custom slug channel for SSR:", err);
+      }
     }
-    return fetched;
-  });
+  }
 
-  const fetchedNames = new Set(fetchedChannels.map((c: any) => c.name.toLowerCase().trim()));
-  const fetchedUrls = new Set(fetchedChannels.map((c: any) => c.url.trim()));
-
-  const uniqueLocal = localChannels.filter((c: any) => {
-    return !fetchedNames.has(c.name.toLowerCase().trim()) && !fetchedUrls.has(c.url.trim());
-  });
-
-  return [...uniqueLocal, ...mergedFetched];
+  return fetchedChannels;
 }
 
 interface PageProps {
@@ -152,7 +147,7 @@ export default async function LiveTvPage({ params }: PageProps) {
   const slugList = resolvedParams.slug || [];
   const lastSlug = slugList[slugList.length - 1] || null;
   const slug = lastSlug === "live-tv" ? null : lastSlug;
-  const channels = await getChannels();
+  const channels = await getChannels(slug);
 
   // Helper function to create URL-friendly slug
   const slugify = (text: string) => {
