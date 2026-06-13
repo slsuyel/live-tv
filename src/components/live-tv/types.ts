@@ -3,4 +3,7 @@ export interface Channel {
   logo?: string;
   group: string;
   url: string;
+  type?: string;
+  kid?: string;
+  key?: string;
 }
