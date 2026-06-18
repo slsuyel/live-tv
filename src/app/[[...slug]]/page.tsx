@@ -1,5 +1,8 @@
 import LiveTvClient from "@/components/live-tv/LiveTvClient";
 import { Metadata } from "next";
+import { fetchUgbyChannels } from "@/utils/ugby";
+import fs from "fs";
+import path from "path";
 
 export const dynamic = "force-dynamic";
 
@@ -7,32 +10,47 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://live.nextqora.com";
 
 // Server-Side Data Fetching (SSR/ISR)
 async function getChannels(slug?: string | null) {
-
-  const fifaUrl =
-    "https://raw.githubusercontent.com/SHAJON-404/iptv-playlist/main/app/data/fifa.json";
-
   const baseUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL ||
     "https://server.nextqora.com/api/v1";
   const apiDbUrl = `${baseUrl}/stream/all?limit=150`;
 
   let fetchedChannels: any[] = [];
-  let fifaChannels: any[] = [];
+  let ugbyChannels: any[] = [];
 
-  // 1. Fetch FIFA channels (always merge)
+  // 1. Fetch livekhelatv (ugby) channels
   try {
-    const fifaRes = await fetch(fifaUrl, {
-      next: { revalidate: 300 }, // Cache FIFA channels for 5 minutes
-    });
-    if (fifaRes.ok) {
-      const data = await fifaRes.json();
-      fifaChannels = Array.isArray(data) ? data : [];
+    ugbyChannels = await fetchUgbyChannels();
+    try {
+      const cachePath = path.join(process.cwd(), "scratch", "channels.json");
+      fs.writeFileSync(cachePath, JSON.stringify(ugbyChannels, null, 2), "utf8");
+    } catch (writeErr) {
+      // Ignore write errors on SSR
     }
   } catch (err) {
-    console.error("Failed to fetch FIFA playlist:", err);
+    console.error("Failed to fetch livekhelatv channels on SSR, trying fallback:", err);
+    try {
+      const cachePath = path.join(process.cwd(), "scratch", "channels.json");
+      if (fs.existsSync(cachePath)) {
+        ugbyChannels = JSON.parse(fs.readFileSync(cachePath, "utf8"));
+      }
+    } catch (fallbackErr) {
+      console.error("Failed to read channels fallback file:", fallbackErr);
+    }
   }
 
-  // 2. Try to load from API Database first
+  // Map ugby channels to portal channel structure
+  const mappedUgby = ugbyChannels.map((ch: any) => ({
+    name: ch.name,
+    logo: ch.image,
+    group: "Sports", // Group live sports channels under "Sports" category
+    url: "", // Decrypted on the client when selected
+    type: "dash",
+    play_token: ch.play_token,
+    ugby_key: ch.key,
+  }));
+
+  // 2. Fetch API Database channels
   try {
     const res = await fetch(apiDbUrl, {
       next: { revalidate: 600 }, // Cache API for 10 minutes
@@ -53,15 +71,11 @@ async function getChannels(slug?: string | null) {
     fetchedChannels = [];
   }
 
-  // 3. Merge FIFA channels at the beginning, filtering out duplicates
-  if (fifaChannels.length > 0) {
-    const fifaUrls = new Set(fifaChannels.map((c) => c.url));
-    const uniqueFetched = fetchedChannels.filter((c) => !fifaUrls.has(c.url));
-    fetchedChannels = [...fifaChannels, ...uniqueFetched];
-  }
+  // 3. Merge dynamic livekhelatv channels at the beginning
+  let allChannels = [...mappedUgby, ...fetchedChannels];
 
   // If there is a slug, make sure that channel is fetched and prepended if not already present
-  if (slug && fetchedChannels.length > 0) {
+  if (slug && allChannels.length > 0) {
     const slugify = (text: string) => {
       return text
         .toLowerCase()
@@ -71,7 +85,7 @@ async function getChannels(slug?: string | null) {
         .replace(/^-+|-+$/g, "");
     };
 
-    const hasSlugChannel = fetchedChannels.some(
+    const hasSlugChannel = allChannels.some(
       (c: any) => slugify(c.name) === slug,
     );
     if (!hasSlugChannel) {
@@ -86,7 +100,7 @@ async function getChannels(slug?: string | null) {
             (c: any) => slugify(c.name) === slug,
           );
           if (matchedChannel) {
-            fetchedChannels = [matchedChannel, ...fetchedChannels];
+            allChannels = [matchedChannel, ...allChannels];
           }
         }
       } catch (err) {
@@ -95,7 +109,7 @@ async function getChannels(slug?: string | null) {
     }
   }
 
-  return fetchedChannels;
+  return allChannels;
 }
 
 interface PageProps {

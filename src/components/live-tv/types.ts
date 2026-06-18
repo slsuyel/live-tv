@@ -6,4 +6,7 @@ export interface Channel {
   type?: string;
   kid?: string;
   key?: string;
+  play_token?: string;
+  ugby_key?: string;
+  _id?: string;
 }

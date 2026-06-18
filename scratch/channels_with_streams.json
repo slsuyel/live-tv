@@ -1,0 +1,2151 @@
+[
+  {
+    "key": "dsports",
+    "name": "D Sports",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/DSports.png",
+    "category": "Sports",
+    "quality": "HD",
+    "status": "live",
+    "sort": 0,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.bb199c3c98a30355b85714c575205b481c73e44806547b491691b1fb710aab0a",
+    "play_exp": 1781829647,
+    "source_types": [
+      "dash"
+    ],
+    "source_count": 1,
+    "type": "dash",
+    "url": "https://otte.live.fly.ww.aiv-cdn.net/gru-nitro/live/clients/dash/enc/ubehitlwzo/out/v1/8e09c381a51f4366a19e979418112e8f/cenc.mpd",
+    "urls": [
+      "https://otte.live.fly.ww.aiv-cdn.net/gru-nitro/live/clients/dash/enc/ubehitlwzo/out/v1/8e09c381a51f4366a19e979418112e8f/cenc.mpd"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "https://otte.live.fly.ww.aiv-cdn.net/gru-nitro/live/clients/dash/enc/ubehitlwzo/out/v1/8e09c381a51f4366a19e979418112e8f/cenc.mpd",
+        "type": "dash",
+        "is_primary": true
+      }
+    ],
+    "drm": "clearkey",
+    "clearkey": {
+      "kid": "a7d11d37a1f7611ee88d4db880171f32",
+      "key": "68f96d618b0b956b008c445896a25a79",
+      "key_id": "a7d11d37a1f7611ee88d4db880171f32",
+      "key_value": "68f96d618b0b956b008c445896a25a79",
+      "keys": {
+        "a7d11d37a1f7611ee88d4db880171f32": "68f96d618b0b956b008c445896a25a79"
+      }
+    },
+    "key_id": "a7d11d37a1f7611ee88d4db880171f32",
+    "key_value": "68f96d618b0b956b008c445896a25a79",
+    "license_type": "clearkey",
+    "expires_in": 180,
+    "exp": 1781808315
+  },
+  {
+    "key": "golive",
+    "name": "GOLIVE - English",
+    "image": "https://rtb-images.glueapi.io/320x0/live/GoLiveNew.png",
+    "category": "Sports",
+    "quality": "HD",
+    "status": "live",
+    "sort": 1,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.7fe4ae11645cf40b5e9bb622b9d703db2df9ccd613c7412457c4f69f91ca4c03",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls"
+    ],
+    "source_count": 1,
+    "type": "hls",
+    "url": "https://d1211whpimeups.cloudfront.net/smil:rtbgo/chunklist.m3u8",
+    "urls": [
+      "https://d1211whpimeups.cloudfront.net/smil:rtbgo/chunklist.m3u8"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "https://d1211whpimeups.cloudfront.net/smil:rtbgo/chunklist.m3u8",
+        "type": "hls",
+        "is_primary": true
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808316
+  },
+  {
+    "key": "ios3",
+    "name": "iOS - FIFA 2026 Server 3",
+    "image": "https://i.guim.co.uk/img/media/993d3ff63f81efb3bd6d4a93be34a98a815a2453/0_0_5000_3297/master/5000.jpg?width=1900&dpr=2&s=none&crop=none",
+    "category": "Sports",
+    "quality": "HD",
+    "status": "live",
+    "sort": 2,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.10f820e1a4ce7205182d1f87dfa89b2e29246f1e6b5eddfd9fb020b3bc8e8aa5",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls"
+    ],
+    "source_count": 1,
+    "type": "hls",
+    "url": "https://live.thebosstv.com:30443/dwlive/Somoy-TV/chunks.m3u8",
+    "urls": [
+      "https://live.thebosstv.com:30443/dwlive/Somoy-TV/chunks.m3u8"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "https://live.thebosstv.com:30443/dwlive/Somoy-TV/chunks.m3u8",
+        "type": "hls",
+        "is_primary": true
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808316
+  },
+  {
+    "key": "beinsports",
+    "name": "iOS - beIN SPORTS 1 (Arabic)",
+    "image": "https://i.ibb.co.com/S7tZS6cg/Bein-Sports-1-Direct.png",
+    "category": "Sports",
+    "quality": "HD",
+    "status": "live",
+    "sort": 2,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.db62e18053055cfd9457f8b68f16a1a4011c3dbd34530844475a9c954b9b12a7",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls"
+    ],
+    "source_count": 1,
+    "type": "hls",
+    "url": "https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8",
+    "urls": [
+      "https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8",
+        "type": "hls",
+        "is_primary": true
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808317
+  },
+  {
+    "key": "cazetv",
+    "name": "CazéTV 1080p 60Fps",
+    "image": "https://upload.wikimedia.org/wikipedia/en/thumb/6/64/Caz%C3%A9TV_logo.svg/1280px-Caz%C3%A9TV_logo.svg.png",
+    "category": "Sports",
+    "quality": "HD",
+    "status": "live",
+    "sort": 4,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.56bbfa3a5715bc46c852ac05d9017d918cdf4f2477e1262298bd2ee483d5dc24",
+    "play_exp": 1781829647,
+    "source_types": [
+      "dash"
+    ],
+    "source_count": 1,
+    "type": "dash",
+    "url": "https://otte-qw.live.pv-cdn.net/lhr-nitro/live/clients/dash/enc/iayg0kyrof/out/v1/91dc04907f56415b897faccfa9d252da/cenc.mpd",
+    "urls": [
+      "https://otte-qw.live.pv-cdn.net/lhr-nitro/live/clients/dash/enc/iayg0kyrof/out/v1/91dc04907f56415b897faccfa9d252da/cenc.mpd"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "https://otte-qw.live.pv-cdn.net/lhr-nitro/live/clients/dash/enc/iayg0kyrof/out/v1/91dc04907f56415b897faccfa9d252da/cenc.mpd",
+        "type": "dash",
+        "is_primary": true
+      }
+    ],
+    "drm": "clearkey",
+    "clearkey": {
+      "kid": "1223d5105392cabf1bb9c2c1fdf6539a",
+      "key": "340b409f4b8f78a343e0363a7938df38",
+      "key_id": "1223d5105392cabf1bb9c2c1fdf6539a",
+      "key_value": "340b409f4b8f78a343e0363a7938df38",
+      "keys": {
+        "1223d5105392cabf1bb9c2c1fdf6539a": "340b409f4b8f78a343e0363a7938df38"
+      }
+    },
+    "key_id": "1223d5105392cabf1bb9c2c1fdf6539a",
+    "key_value": "340b409f4b8f78a343e0363a7938df38",
+    "license_type": "clearkey",
+    "expires_in": 180,
+    "exp": 1781808318
+  },
+  {
+    "key": "iptv-729668",
+    "name": "AR: beIN SPORTS Pop Up FHD",
+    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-int.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7000,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.39196776e7a1ecb96b2bd42df44f2af0c6d03517578d23b3ae6b83578a5c249c",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729668.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729668.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729668.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729668.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729668.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729668"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729668.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729668.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729668.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729668.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729668",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808318
+  },
+  {
+    "key": "iptv-729021",
+    "name": "AR: beIN SPORTS NEWS FHD (H.265)",
+    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-news-arabic-int.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7001,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.0fd6e303524062483aa1ad56148d4a4a8c24ed326c548e025b43016156bad7f1",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729021.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729021.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729021.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729021.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729021.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729021"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729021.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729021.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729021.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729021.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729021",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808319
+  },
+  {
+    "key": "iptv-729022",
+    "name": "AR: beIN SPORTS NEWS HD",
+    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-news-arabic-int.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "HD",
+    "status": "live",
+    "sort": 7002,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.09e0a8fc8c648db9799606ccc72adadcca04071ab79eb34acbaab84223fbfca1",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729022.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729022.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729022.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729022.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729022.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729022"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729022.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729022.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729022.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729022.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729022",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808320
+  },
+  {
+    "key": "iptv-729023",
+    "name": "AR: beIN SPORTS FHD (H.265)",
+    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-int.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7003,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.ec3f379e5809254f4f6c576ddf1a520f57df82ece0676eacb16e827907b82864",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729023.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729023.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729023.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729023.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729023.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729023"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729023.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729023.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729023.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729023.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729023",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808320
+  },
+  {
+    "key": "iptv-729024",
+    "name": "AR: beIN SPORTS HD",
+    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-int.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "HD",
+    "status": "live",
+    "sort": 7004,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.8c47946bae4f523caaef82e129301e4cb9081afa477be0e9b291f7b5eccb8df9",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729024.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729024.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729024.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729024.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729024.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729024"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729024.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729024.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729024.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729024.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729024",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808321
+  },
+  {
+    "key": "iptv-729453",
+    "name": "TOD WC 01: Arabic Feed: FIFA World Cup 2026: Argentina vs. Algeria",
+    "image": "https://i.imgur.com/rIIIAi2.jpeg",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "HD",
+    "status": "live",
+    "sort": 7005,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.3b91cb1a18ecf6d2d079aedf614b13c10b5e7f72e753b64a613eb5b8befa8b84",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729453.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729453.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729453.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729453.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729453.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729453"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729453.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729453.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729453.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729453.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729453",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808321
+  },
+  {
+    "key": "iptv-729454",
+    "name": "TOD WC 02: Arabic Feed: FIFA World Cup 2026: Argentina vs. Algeria - HD",
+    "image": "https://i.imgur.com/rIIIAi2.jpeg",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "HD",
+    "status": "live",
+    "sort": 7006,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.4dc01502d4ba93aebf455be50123b4d12ca25d4a7c4311046769bd906d2606ca",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729454.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729454.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729454.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729454.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729454.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729454"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729454.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729454.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729454.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729454.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729454",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808322
+  },
+  {
+    "key": "iptv-729558",
+    "name": "TOD WC 03: : كأس العالم: الأرجنتين ضد الجزائر - HDR [EN-AR]",
+    "image": "https://i.imgur.com/rIIIAi2.jpeg",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "4K",
+    "status": "live",
+    "sort": 7007,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.531cbf168766c6f51d20e48325eaa973222d6a5fd89639a9f32ef250f105000b",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729558.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729558.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729558.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729558.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729558.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729558"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729558.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729558.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729558.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729558.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729558",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808323
+  },
+  {
+    "key": "iptv-729576",
+    "name": "TOD WC 04: كأس العالم: السعودية ضد أوروغواي - HD",
+    "image": "https://i.imgur.com/rIIIAi2.jpeg",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "HD",
+    "status": "live",
+    "sort": 7008,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.72d4c0c18148009610c99fe55ad54824160411e46bab7e3fc934a23860f997fa",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729576.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729576.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729576.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729576.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729576.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729576"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729576.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729576.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729576.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729576.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729576",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808323
+  },
+  {
+    "key": "iptv-729429",
+    "name": "beIN SPORTS 4K HDR",
+    "image": "https://assets.bein.com/mena/sites/4/2026/05/4K-HDR-200x200-1.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "4K",
+    "status": "live",
+    "sort": 7010,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.da8f8eb15f521adcfceaf3eadfe7807c499c51a636d0cc3c68862047ea39a5aa",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729429.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729429.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729429.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729429.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729429.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729429"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729429.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729429.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729429.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729429.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729429",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808324
+  },
+  {
+    "key": "iptv-729578",
+    "name": "beIN SPORTS 4K HDR*",
+    "image": "https://assets.bein.com/mena/sites/4/2026/05/4K-HDR-200x200-1.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "4K",
+    "status": "live",
+    "sort": 7011,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.349d27ec52645926ccc8a3a034329e41736580d04edb229854f583c1ed42c343",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729578.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729578.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729578.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729578.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729578.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729578"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729578.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729578.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729578.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729578.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729578",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808325
+  },
+  {
+    "key": "iptv-727604",
+    "name": "beIN SPORTS MAX 1 FHD HEVC Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7012,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.438e969cf27a8b7f4a28503a7602561943fe3cf40a6f0f64ed5c5dfe6d539482",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727604.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727604.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727604.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727604.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727604.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727604"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727604.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727604.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727604.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727604.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727604",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808326
+  },
+  {
+    "key": "iptv-727606",
+    "name": "beIN SPORTS MAX 1 FHD Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7013,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.b01a25c678d3fc789fae82a629fc516ae732dd9bd2258c99e6597298abccdb70",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727606.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727606.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727606.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727606.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727606.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727606"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727606.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727606.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727606.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727606.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727606",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808326
+  },
+  {
+    "key": "iptv-727607",
+    "name": "beIN SPORTS MAX 1 HD Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "HD",
+    "status": "live",
+    "sort": 7014,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.cb9f362a68193a54cd72c68c966e9563e248ddda5ea4dc846712b3116d2eca5d",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727607.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727607.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727607.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727607.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727607.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727607"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727607.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727607.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727607.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727607.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727607",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808327
+  },
+  {
+    "key": "iptv-727608",
+    "name": "beIN SPORTS MAX 1 SD+ Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "SD",
+    "status": "live",
+    "sort": 7015,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.ce530b975254fe3bf2d832c63b543fb4447d78730a4daa960991ea284189cdc3",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727608.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727608.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727608.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727608.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727608.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727608"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727608.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727608.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727608.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727608.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727608",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808327
+  },
+  {
+    "key": "iptv-727605",
+    "name": "beIN SPORTS MAX 2 FHD HEVC Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX2_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7016,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.fee6a30110805de433fae23d0379fe62e892d8c5e07cf18d909c95a81626314a",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727605.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727605.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727605.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727605.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727605.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727605"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727605.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727605.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727605.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727605.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727605",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808328
+  },
+  {
+    "key": "iptv-727609",
+    "name": "beIN SPORTS MAX 2 FHD Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX2_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7017,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.8d1293a6c3691d0363f162749ff3125a3160e6c330da0f2b08db7cb5e2be9611",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727609.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727609.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727609.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727609.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727609.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727609"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727609.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727609.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727609.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727609.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727609",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808329
+  },
+  {
+    "key": "iptv-727610",
+    "name": "beIN SPORTS MAX 2 HD Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX2_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "HD",
+    "status": "live",
+    "sort": 7018,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.b280ddef8f9a03604b8dbb24f54571075b12660922fb1340b68eba10ba9493b8",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727610.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727610.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727610.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727610.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727610.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727610"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727610.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727610.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727610.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727610.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727610",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808329
+  },
+  {
+    "key": "iptv-727611",
+    "name": "beIN SPORTS MAX 2 SD+ Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX2_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "SD",
+    "status": "live",
+    "sort": 7019,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.68532ac14ead4346958583affd8c7e03117041b7e0145232546c9505f368a9e2",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727611.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727611.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727611.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727611.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727611.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727611"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727611.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727611.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727611.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727611.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727611",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808330
+  },
+  {
+    "key": "iptv-727612",
+    "name": "beIN SPORTS MAX 3 FHD HEVC Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX3_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7020,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.0bf6ce3a651375a09479764c36aa279eefaaca17b08a874c35892b26326d3524",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727612.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727612.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727612.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727612.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727612.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727612"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727612.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727612.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727612.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727612.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727612",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808331
+  },
+  {
+    "key": "iptv-727613",
+    "name": "beIN SPORTS MAX 3 FHD Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX3_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7021,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.d46c8e826688c1a24aac41fb8305bac941f7c9213236fb94152acbc3fbc1b6c2",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727613.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727613.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727613.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727613.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727613.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727613"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727613.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727613.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727613.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727613.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727613",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808331
+  },
+  {
+    "key": "iptv-727614",
+    "name": "beIN SPORTS MAX 3 HD Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX3_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "HD",
+    "status": "live",
+    "sort": 7022,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.e16de78fc35594247f51341a15ef26b2f5fc772996d679d91b7a34cd3b0761f9",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727614.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727614.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727614.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727614.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727614.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727614"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727614.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727614.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727614.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727614.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727614",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808332
+  },
+  {
+    "key": "iptv-727615",
+    "name": "beIN SPORTS MAX 3 SD+ Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX3_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "SD",
+    "status": "live",
+    "sort": 7023,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.10ea5a06057f5430beab76747422c6611e015acacbde71b56f7e04ec16901fbc",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727615.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727615.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727615.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727615.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727615.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727615"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727615.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727615.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727615.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727615.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727615",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808332
+  },
+  {
+    "key": "iptv-727616",
+    "name": "beIN SPORTS MAX 4 FHD HEVC Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX4_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7024,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.31579e985947b47d05332531c6d582d34561dcf766584891efe79620961c8612",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727616.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727616.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727616.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727616.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727616.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727616"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727616.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727616.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727616.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727616.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727616",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808333
+  },
+  {
+    "key": "iptv-727617",
+    "name": "beIN SPORTS MAX 4 FHD Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX4_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7025,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.601dffb037d75e23cfd7ca88f8049d6e07d20a7b1ac62bbb3b100d293fd7246b",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727617.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727617.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727617.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727617.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727617.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727617"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727617.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727617.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727617.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727617.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727617",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808334
+  },
+  {
+    "key": "iptv-727618",
+    "name": "beIN SPORTS MAX 4 HD Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX4_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "HD",
+    "status": "live",
+    "sort": 7026,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.4cd52eae1ff6f3868b23efc66dd6b609c92c9befa4f8c5f9ca50920618800733",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727618.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727618.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727618.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727618.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727618.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727618"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727618.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727618.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727618.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727618.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727618",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808334
+  },
+  {
+    "key": "iptv-727619",
+    "name": "beIN SPORTS MAX 4 SD+ Ⓖ",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX4_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "SD",
+    "status": "live",
+    "sort": 7027,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.09a07ba266efcce2ed0f1113e6070f264042910db57776d89f5fa4de94571751",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727619.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727619.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727619.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727619.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727619.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727619"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727619.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727619.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/727619.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727619.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/727619",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808335
+  },
+  {
+    "key": "iptv-729433",
+    "name": "beIN SPORTS MAX 1 FHD [♣]",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7028,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.ab4d16e6c0d89b14babc244cda8303e33a12a494ed033646a2f1dac6202e5629",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729433.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729433.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729433.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729433.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729433.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729433"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729433.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729433.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729433.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729433.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729433",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808335
+  },
+  {
+    "key": "iptv-729432",
+    "name": "beIN SPORTS MAX 1 FHD HEVC [♣]",
+    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
+    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
+    "quality": "FHD",
+    "status": "live",
+    "sort": 7029,
+    "views": 0,
+    "live": 0,
+    "resolution": "",
+    "play_token": "1781829647.18304a1f23b384f0d32909e5d1dced2757f0aa07b3b3a43b7acb6576bf3d2938",
+    "play_exp": 1781829647,
+    "source_types": [
+      "hls",
+      "file"
+    ],
+    "source_count": 5,
+    "type": "hls",
+    "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729432.m3u8",
+    "urls": [
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729432.m3u8",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729432.m3u8",
+      "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729432.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729432.ts",
+      "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729432"
+    ],
+    "sources": [
+      {
+        "index": 0,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729432.m3u8",
+        "type": "hls",
+        "is_primary": true
+      },
+      {
+        "index": 1,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729432.m3u8",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 2,
+        "url": "http://dmtn-tv.com:8080/live/w9CMkEw3s/5KrzqKS97f/729432.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 3,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729432.ts",
+        "type": "hls",
+        "is_primary": false
+      },
+      {
+        "index": 4,
+        "url": "http://dmtn-tv.com:8080/w9CMkEw3s/5KrzqKS97f/729432",
+        "type": "hls",
+        "is_primary": false
+      }
+    ],
+    "drm": "none",
+    "clearkey": null,
+    "key_id": "",
+    "key_value": "",
+    "license_type": "none",
+    "expires_in": 180,
+    "exp": 1781808336
+  }
+]

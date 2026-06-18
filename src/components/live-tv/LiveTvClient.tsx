@@ -1,26 +1,27 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
-  Tv,
-  Share2,
   ChevronLeft,
   ChevronRight,
   Heart,
   List,
+  RefreshCw,
+  Share2,
+  Tv,
   X,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
+import BackgroundScene from "./BackgroundScene";
+import ChannelSidebar from "./ChannelSidebar";
+import CommunityNotice from "./CommunityNotice";
+import Footer from "./Footer";
+import Header from "./Header";
+import RelatedChannels from "./RelatedChannels";
 import { Channel } from "./types";
 import VideoPlayer from "./VideoPlayer";
-import RelatedChannels from "./RelatedChannels";
-import ChannelSidebar from "./ChannelSidebar";
-import Header from "./Header";
-import Footer from "./Footer";
-import BackgroundScene from "./BackgroundScene";
-import CommunityNotice from "./CommunityNotice";
 
 interface LiveTvClientProps {
   initialChannels: Channel[];
@@ -303,6 +304,68 @@ export default function LiveTvClient({
     setLogoError(false);
   }, [activeChannel]);
 
+  // Decrypt dynamic channel streams on-demand
+  const [decryptedStream, setDecryptedStream] = useState<{
+    url: string;
+    type?: string;
+    kid?: string;
+    key?: string;
+  } | null>(null);
+  const [loadingStream, setLoadingStream] = useState(false);
+
+  useEffect(() => {
+    if (!activeChannel) {
+      setDecryptedStream(null);
+      return;
+    }
+
+    if (activeChannel.play_token) {
+      let isCurrent = true;
+      setLoadingStream(true);
+      setDecryptedStream(null);
+
+      const channelKey = activeChannel.ugby_key || activeChannel._id || "";
+      fetch(`/api/ugby/stream?key=${channelKey}&token=${activeChannel.play_token}`)
+        .then((res) => res.json())
+        .then((json) => {
+          if (!isCurrent) return;
+          if (json.success && json.data) {
+            setDecryptedStream({
+              url: json.data.url,
+              type: json.data.type,
+              kid: json.data.key_id,
+              key: json.data.key_value,
+            });
+          } else {
+            toast.error(`Could not decrypt stream for ${activeChannel.name}`);
+          }
+        })
+        .catch((err) => {
+          console.error("Stream decryption error:", err);
+          if (isCurrent) {
+            toast.error(`Error loading stream for ${activeChannel.name}`);
+          }
+        })
+        .finally(() => {
+          if (isCurrent) {
+            setLoadingStream(false);
+          }
+        });
+
+      return () => {
+        isCurrent = false;
+      };
+    } else {
+      setDecryptedStream({
+        url: activeChannel.url,
+        type: activeChannel.type,
+        kid: activeChannel.kid,
+        key: activeChannel.key,
+      });
+      setLoadingStream(false);
+    }
+  }, [activeChannel]);
+
   const handleScroll = () => {
     const container = listContainerRef.current;
     if (!container) return;
@@ -510,7 +573,30 @@ export default function LiveTvClient({
             {/* Main Video Player (Left 7/8 Cols) */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-4">
               {activeChannel ? (
-                <VideoPlayer channel={activeChannel} />
+                loadingStream ? (
+                  <div className="aspect-video w-full bg-slate-100 dark:bg-[#0d1127]/30 rounded-2xl flex flex-col items-center justify-center text-slate-700 dark:text-white border border-slate-200 dark:border-white/10 p-4 backdrop-blur-md">
+                    <RefreshCw className="animate-spin text-violet-500 h-10 w-10 mb-2" />
+                    <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 font-semibold">
+                      Decrypting Secure Stream...
+                    </p>
+                  </div>
+                ) : decryptedStream ? (
+                  <VideoPlayer
+                    channel={{
+                      ...activeChannel,
+                      url: decryptedStream.url,
+                      type: decryptedStream.type,
+                      kid: decryptedStream.kid,
+                      key: decryptedStream.key,
+                    }}
+                  />
+                ) : (
+                  <div className="aspect-video w-full bg-slate-100 dark:bg-[#0d1127]/30 rounded-2xl flex flex-col items-center justify-center text-slate-700 dark:text-white border border-slate-200 dark:border-white/10 p-4 backdrop-blur-md">
+                    <p className="text-xs sm:text-sm text-red-500 font-semibold">
+                      Failed to load stream. Please select another channel.
+                    </p>
+                  </div>
+                )
               ) : (
                 <div className="aspect-video w-full bg-slate-100 dark:bg-[#0d1127]/30 rounded-2xl flex flex-col items-center justify-center text-slate-700 dark:text-white border border-slate-200 dark:border-white/10 p-4 backdrop-blur-md">
                   <Tv className="text-zinc-400 dark:text-zinc-600 animate-bounce mb-2 h-10 w-10" />
@@ -574,11 +660,10 @@ export default function LiveTvClient({
                       {/* Favorite Toggle Button */}
                       <button
                         onClick={() => handleToggleFavorite(activeChannel.url)}
-                        className={`rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center transition-all cursor-pointer border ${
-                          favorites.includes(activeChannel.url)
+                        className={`rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center transition-all cursor-pointer border ${favorites.includes(activeChannel.url)
                             ? "bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400 hover:text-rose-500"
                             : "text-slate-500 dark:text-zinc-400 hover:text-rose-500 border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 bg-white dark:bg-white/5"
-                        }`}
+                          }`}
                         title={
                           favorites.includes(activeChannel.url)
                             ? "Remove from Favorites"

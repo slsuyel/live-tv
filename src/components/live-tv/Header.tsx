@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { Tv, ShieldCheck, User, Moon, Sun, Heart } from "lucide-react";
+import { Moon, ShieldCheck, Sun, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -71,11 +70,10 @@ export default function Header({
               onSearch("");
               if (showingFavorites) onShowFavorites();
             }}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              isHomeActive
-                ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15"
-                : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
-            }`}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${isHomeActive
+              ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15"
+              : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
+              }`}
           >
             <span>📺</span> All TV
           </button>
@@ -86,11 +84,10 @@ export default function Header({
               onSearch("");
               if (showingFavorites) onShowFavorites();
             }}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              isSportsActive
-                ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15"
-                : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
-            }`}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${isSportsActive
+              ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15"
+              : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
+              }`}
           >
             <span>🏆</span> Sports
           </button>
@@ -101,11 +98,10 @@ export default function Header({
               onSearch("");
               if (showingFavorites) onShowFavorites();
             }}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              isNewsActive
-                ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15"
-                : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
-            }`}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${isNewsActive
+              ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15"
+              : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
+              }`}
           >
             <span>📰</span> News
           </button>
@@ -114,11 +110,10 @@ export default function Header({
             onClick={() => {
               if (!showingFavorites) onShowFavorites();
             }}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
-              showingFavorites
-                ? "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-500/30"
-                : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border-transparent"
-            }`}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border ${showingFavorites
+              ? "bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-500/30"
+              : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border-transparent"
+              }`}
           >
             <span>❤️</span> Favorites
             {favoritesCount > 0 && (
@@ -129,14 +124,12 @@ export default function Header({
           </button>
 
           <Link
-            href="/fifa-live"
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all border border-transparent text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-500/5 hover:border-purple-200 dark:hover:border-purple-500/20 active:scale-95"
+            href="/livekhelatv"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent transition-all cursor-pointer"
           >
-            <span>⚽</span> FIFA Multiview
-            <span className="bg-linear-to-r from-rose-500 to-amber-500 text-white rounded text-[8px] px-1 py-0.5 font-bold uppercase tracking-wider scale-90 ml-1 animate-pulse">
-              Live
-            </span>
+            <span>⚽</span> LiveKhela TV
           </Link>
+
         </nav>
 
         {/* Right Section (Theme Toggle + User Badge) */}
@@ -183,11 +176,10 @@ export default function Header({
               onSearch("");
               if (showingFavorites) onShowFavorites();
             }}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
-              isHomeActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
-                : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
-            }`}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${isHomeActive
+              ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
+              : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
+              }`}
           >
             <span>📺</span> All TV
           </button>
@@ -198,11 +190,10 @@ export default function Header({
               onSearch("");
               if (showingFavorites) onShowFavorites();
             }}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
-              isSportsActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
-                : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
-            }`}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${isSportsActive
+              ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
+              : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
+              }`}
           >
             <span>🏆</span> Sports
           </button>
@@ -213,11 +204,10 @@ export default function Header({
               onSearch("");
               if (showingFavorites) onShowFavorites();
             }}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
-              isNewsActive
-                ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
-                : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
-            }`}
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${isNewsActive
+              ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
+              : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
+              }`}
           >
             <span>📰</span> News
           </button>
@@ -226,20 +216,18 @@ export default function Header({
             onClick={() => {
               if (!showingFavorites) onShowFavorites();
             }}
-            className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${
-              showingFavorites
-                ? "bg-rose-500 text-white border-rose-500 shadow-sm"
-                : "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/5 border-rose-200 dark:border-rose-500/10"
-            }`}
+            className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${showingFavorites
+              ? "bg-rose-500 text-white border-rose-500 shadow-sm"
+              : "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-500/5 border-rose-200 dark:border-rose-500/10"
+              }`}
           >
             <span>❤️</span> Favorites
             {favoritesCount > 0 && (
               <span
-                className={`rounded-full text-[9px] h-4 min-w-4 px-1 flex items-center justify-center font-bold ml-1 ${
-                  showingFavorites
-                    ? "bg-white text-rose-600"
-                    : "bg-rose-500 text-white"
-                }`}
+                className={`rounded-full text-[9px] h-4 min-w-4 px-1 flex items-center justify-center font-bold ml-1 ${showingFavorites
+                  ? "bg-white text-rose-600"
+                  : "bg-rose-500 text-white"
+                  }`}
               >
                 {favoritesCount}
               </span>
@@ -247,14 +235,12 @@ export default function Header({
           </button>
 
           <Link
-            href="/fifa-live"
-            className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border border-purple-250 dark:border-purple-500/25 bg-purple-50 dark:bg-purple-500/5 text-purple-600 dark:text-purple-400 active:scale-95"
+            href="/livekhelatv"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
           >
-            <span>⚽</span> FIFA Multiview
-            <span className="bg-rose-600 text-white text-[7.5px] font-extrabold uppercase rounded px-1 ml-1 scale-90 animate-pulse">
-              Live
-            </span>
+            <span>⚽</span> LiveKhela TV
           </Link>
+
         </div>
       </div>
     </div>
