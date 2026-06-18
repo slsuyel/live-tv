@@ -31,8 +31,7 @@ export default function Header({
     selectedCategory === "All" && !showingFavorites && !searchQuery;
   const isSportsActive =
     selectedCategory === "Sports" && !searchQuery && !showingFavorites;
-  const isNewsActive =
-    selectedCategory === "News" && !showingFavorites && !searchQuery;
+
 
   return (
     <div className="sticky top-0 z-50 w-full bg-white/80 dark:bg-[#070414]/75 backdrop-blur-xl border-b border-slate-100 dark:border-white/10 shadow-sm transition-all">
@@ -92,19 +91,6 @@ export default function Header({
             <span>🏆</span> Sports
           </button>
 
-          <button
-            onClick={() => {
-              onSelectCategory("News");
-              onSearch("");
-              if (showingFavorites) onShowFavorites();
-            }}
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${isNewsActive
-              ? "bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white border border-slate-200 dark:border-white/15"
-              : "text-slate-600 dark:text-zinc-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white border border-transparent"
-              }`}
-          >
-            <span>📰</span> News
-          </button>
 
           <button
             onClick={() => {
@@ -198,19 +184,6 @@ export default function Header({
             <span>🏆</span> Sports
           </button>
 
-          <button
-            onClick={() => {
-              onSelectCategory("News");
-              onSearch("");
-              if (showingFavorites) onShowFavorites();
-            }}
-            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold whitespace-nowrap transition-all border ${isNewsActive
-              ? "bg-white dark:bg-white/10 text-slate-900 dark:text-white border-slate-200 dark:border-white/15 shadow-sm"
-              : "text-slate-600 dark:text-zinc-400 bg-transparent border-transparent"
-              }`}
-          >
-            <span>📰</span> News
-          </button>
 
           <button
             onClick={() => {

@@ -1,7 +1,7 @@
 import LiveTvClient from "@/components/live-tv/LiveTvClient";
-import { Metadata } from "next";
 import { fetchUgbyChannels } from "@/utils/ugby";
 import fs from "fs";
+import { Metadata } from "next";
 import path from "path";
 
 export const dynamic = "force-dynamic";
@@ -48,6 +48,7 @@ async function getChannels(slug?: string | null) {
     type: "dash",
     play_token: ch.play_token,
     ugby_key: ch.key,
+    status: ch.status,
   }));
 
   // 2. Fetch API Database channels
@@ -73,6 +74,15 @@ async function getChannels(slug?: string | null) {
 
   // 3. Merge dynamic livekhelatv channels at the beginning
   let allChannels = [...mappedUgby, ...fetchedChannels];
+
+  // Sort channels so that status === "down" is pushed to the bottom
+  allChannels.sort((a, b) => {
+    const aDown = a.status === "down";
+    const bDown = b.status === "down";
+    if (aDown && !bDown) return 1;
+    if (!aDown && bDown) return -1;
+    return 0;
+  });
 
   // If there is a slug, make sure that channel is fetched and prepended if not already present
   if (slug && allChannels.length > 0) {

@@ -9,4 +9,5 @@ export interface Channel {
   play_token?: string;
   ugby_key?: string;
   _id?: string;
+  status?: string;
 }

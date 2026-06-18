@@ -88,7 +88,16 @@ export async function fetchUgbyChannels(): Promise<UgbyChannel[]> {
   }
 }
 
+const streamCache = new Map<string, { data: DecryptedStream; expiresAt: number }>();
+
 export async function fetchUgbyStream(key: string, playToken: string): Promise<DecryptedStream | null> {
+  const cacheKey = `${key}_${playToken}`;
+  const now = Date.now();
+  const cached = streamCache.get(cacheKey);
+  if (cached && cached.expiresAt > now) {
+    return cached.data;
+  }
+
   const PLAY_API_URL = "https://ugby.livekhelatv.com/v1/mks/channel";
   const params = new URLSearchParams();
   params.set("key", key);
@@ -120,13 +129,21 @@ export async function fetchUgbyStream(key: string, playToken: string): Promise<D
       throw new Error("Decryption of stream payload failed");
     }
 
-    return {
+    const result: DecryptedStream = {
       url: decrypted.url,
       type: decrypted.type || "hls",
       drm: decrypted.drm || "none",
       key_id: decrypted.key_id || decrypted.clearkey?.kid || undefined,
       key_value: decrypted.key_value || decrypted.clearkey?.key || undefined
     };
+
+    // Cache stream details for 5 minutes (300,000 ms)
+    streamCache.set(cacheKey, {
+      data: result,
+      expiresAt: now + 5 * 60 * 1000
+    });
+
+    return result;
   } catch (err: any) {
     console.error(`fetchUgbyStream error for key ${key}:`, err.message);
     return null;

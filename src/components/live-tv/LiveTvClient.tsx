@@ -50,6 +50,16 @@ export default function LiveTvClient({
   const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
   const [logoError, setLogoError] = useState(false);
 
+  // Decrypt dynamic channel streams on-demand
+  const [decryptedStream, setDecryptedStream] = useState<{
+    url: string;
+    type?: string;
+    kid?: string;
+    key?: string;
+  } | null>(null);
+  const [loadingStream, setLoadingStream] = useState(false);
+  const [failedUrls, setFailedUrls] = useState<string[]>([]);
+
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
@@ -222,8 +232,18 @@ export default function LiveTvClient({
       );
     }
 
-    return result;
-  }, [selectedCategory, searchQuery, channels, showFavoritesOnly, favorites]);
+    // Sort: Push down or failed channels to the bottom
+    return [...result].sort((a, b) => {
+      const aId = a.ugby_key || a.url || "";
+      const bId = b.ugby_key || b.url || "";
+      const aFailed = a.status === "down" || failedUrls.includes(aId);
+      const bFailed = b.status === "down" || failedUrls.includes(bId);
+
+      if (aFailed && !bFailed) return 1;
+      if (!aFailed && bFailed) return -1;
+      return 0;
+    });
+  }, [selectedCategory, searchQuery, channels, showFavoritesOnly, favorites, failedUrls]);
 
   const totalPages = Math.ceil(filteredChannels.length / channelsPerPage);
   const paginatedChannels = filteredChannels.slice(
@@ -304,14 +324,7 @@ export default function LiveTvClient({
     setLogoError(false);
   }, [activeChannel]);
 
-  // Decrypt dynamic channel streams on-demand
-  const [decryptedStream, setDecryptedStream] = useState<{
-    url: string;
-    type?: string;
-    kid?: string;
-    key?: string;
-  } | null>(null);
-  const [loadingStream, setLoadingStream] = useState(false);
+
 
   useEffect(() => {
     if (!activeChannel) {
@@ -337,12 +350,14 @@ export default function LiveTvClient({
               key: json.data.key_value,
             });
           } else {
+            setFailedUrls((prev) => [...prev, channelKey]);
             toast.error(`Could not decrypt stream for ${activeChannel.name}`);
           }
         })
         .catch((err) => {
           console.error("Stream decryption error:", err);
           if (isCurrent) {
+            setFailedUrls((prev) => [...prev, channelKey]);
             toast.error(`Error loading stream for ${activeChannel.name}`);
           }
         })
@@ -387,6 +402,13 @@ export default function LiveTvClient({
     const slug = slugify(channel.name);
     if (typeof window !== "undefined") {
       window.history.pushState(null, "", `/live-tv/${slug}`);
+    }
+  };
+
+  const handleChannelMouseEnter = (channel: Channel) => {
+    if (channel.play_token) {
+      const channelKey = channel.ugby_key || channel._id || "";
+      fetch(`/api/ugby/stream?key=${channelKey}&token=${channel.play_token}`).catch(() => { });
     }
   };
 
@@ -589,6 +611,17 @@ export default function LiveTvClient({
                       kid: decryptedStream.kid,
                       key: decryptedStream.key,
                     }}
+                    channels={filteredChannels}
+                    onSelectChannel={handleChannelSelect}
+                    onError={(err) => {
+                      const channelKey = activeChannel.ugby_key || activeChannel.url || "";
+                      setFailedUrls((prev) => {
+                        if (!prev.includes(channelKey)) {
+                          return [...prev, channelKey];
+                        }
+                        return prev;
+                      });
+                    }}
                   />
                 ) : (
                   <div className="aspect-video w-full bg-slate-100 dark:bg-[#0d1127]/30 rounded-2xl flex flex-col items-center justify-center text-slate-700 dark:text-white border border-slate-200 dark:border-white/10 p-4 backdrop-blur-md">
@@ -661,8 +694,8 @@ export default function LiveTvClient({
                       <button
                         onClick={() => handleToggleFavorite(activeChannel.url)}
                         className={`rounded-lg sm:rounded-xl h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center transition-all cursor-pointer border ${favorites.includes(activeChannel.url)
-                            ? "bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400 hover:text-rose-500"
-                            : "text-slate-500 dark:text-zinc-400 hover:text-rose-500 border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 bg-white dark:bg-white/5"
+                          ? "bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400 hover:text-rose-500"
+                          : "text-slate-500 dark:text-zinc-400 hover:text-rose-500 border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 bg-white dark:bg-white/5"
                           }`}
                         title={
                           favorites.includes(activeChannel.url)
@@ -719,6 +752,8 @@ export default function LiveTvClient({
                 setShowFavoritesOnly={setShowFavoritesOnly}
                 hasMore={hasMore}
                 isFetchingMore={isFetchingMore}
+                failedUrls={failedUrls}
+                onChannelMouseEnter={handleChannelMouseEnter}
               />
             </div>
           </div>
@@ -779,6 +814,8 @@ export default function LiveTvClient({
                     setShowFavoritesOnly={setShowFavoritesOnly}
                     hasMore={hasMore}
                     isFetchingMore={isFetchingMore}
+                    failedUrls={failedUrls}
+                    onChannelMouseEnter={handleChannelMouseEnter}
                   />
                 </div>
               </div>

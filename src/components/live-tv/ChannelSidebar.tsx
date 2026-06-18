@@ -24,6 +24,8 @@ interface ChannelSidebarProps {
   setShowFavoritesOnly: (val: boolean) => void;
   hasMore?: boolean;
   isFetchingMore?: boolean;
+  failedUrls?: string[];
+  onChannelMouseEnter?: (channel: Channel) => void;
 }
 
 export default function ChannelSidebar({
@@ -45,6 +47,8 @@ export default function ChannelSidebar({
   setShowFavoritesOnly,
   hasMore = true,
   isFetchingMore = false,
+  failedUrls = [],
+  onChannelMouseEnter,
 }: ChannelSidebarProps) {
   return (
     <div className="glass-card rounded-2xl md:rounded-3xl overflow-hidden h-full lg:h-[calc(100vh-180px)] flex flex-col transition-all duration-350 shadow-sm">
@@ -125,10 +129,13 @@ export default function ChannelSidebar({
             {paginatedChannels.map((channel, index) => {
               const isActive = activeChannel?.url === channel.url;
               const isFavorite = favorites.includes(channel.url);
+              const channelId = channel.ugby_key || channel.url || "";
+              const isOffline = channel.status === "down" || failedUrls.includes(channelId);
               return (
                 <div
                   key={index}
                   onClick={() => handleChannelSelect(channel)}
+                  onMouseEnter={() => onChannelMouseEnter?.(channel)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
@@ -141,7 +148,7 @@ export default function ChannelSidebar({
                     isActive
                       ? "bg-blue-50/70 dark:bg-violet-600/10 border-blue-200 dark:border-violet-500/40 text-blue-600 dark:text-violet-400 shadow-sm"
                       : "bg-white dark:bg-white/2 border-slate-100 dark:border-white/10 hover:border-slate-200 dark:hover:border-white/20 hover:bg-slate-50/50 dark:hover:bg-white/5 text-slate-600 dark:text-zinc-300 hover:text-slate-955 dark:hover:text-white"
-                  }`}
+                  } ${isOffline ? "opacity-45" : ""}`}
                 >
                   <div className="relative h-8 w-8 sm:h-10 sm:w-10 bg-slate-50 dark:bg-white/5 border border-slate-150 dark:border-white/10 rounded-md sm:rounded-lg p-1 flex items-center justify-center shrink-0 overflow-hidden">
                     {channel.logo ? (
@@ -167,7 +174,7 @@ export default function ChannelSidebar({
                       {channel.name}
                     </h4>
                     <span className="text-[9px] sm:text-[10px] text-slate-400 dark:text-zinc-500 font-medium">
-                      {channel.group}
+                      {channel.group} {isOffline && <span className="text-red-500/80 dark:text-red-400/80 font-bold ml-1.5 uppercase text-[8px] tracking-wider">[Offline]</span>}
                     </span>
                   </div>
 

@@ -16,7 +16,8 @@ import {
   RefreshCw,
   Sliders,
   Volume2,
-  VolumeX
+  VolumeX,
+  Tv
 } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -27,6 +28,9 @@ interface VideoPlayerProps {
   isMuted?: boolean;
   onMuteChange?: (muted: boolean) => void;
   reloadCount?: number;
+  onError?: (errorMsg: string) => void;
+  channels?: Channel[];
+  onSelectChannel?: (channel: Channel) => void;
 }
 
 export default function VideoPlayer({
@@ -34,6 +38,9 @@ export default function VideoPlayer({
   isMuted: propsIsMuted,
   onMuteChange,
   reloadCount: propsReloadCount,
+  onError,
+  channels = [],
+  onSelectChannel,
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const hlsRef = useRef<Hls | null>(null);
@@ -72,6 +79,17 @@ export default function VideoPlayer({
   const [currentLevel, setCurrentLevel] = useState<number>(-1);
   const [selectedLevel, setSelectedLevel] = useState<number>(-1);
   const [showSettings, setShowSettings] = useState(false);
+
+  // Channel selector dropdown settings
+  const [showChannelDropdown, setShowChannelDropdown] = useState(false);
+  const [dropdownSearch, setDropdownSearch] = useState("");
+
+  // Notify parent on errors
+  useEffect(() => {
+    if (error) {
+      onError?.(error);
+    }
+  }, [error, onError]);
 
   // Audio settings
   const [audioTracks, setAudioTracks] = useState<UnifiedAudioTrack[]>([]);
@@ -1145,22 +1163,99 @@ export default function VideoPlayer({
 
           {/* Main Controls Row */}
           <div className="px-4 py-3 flex items-center justify-between gap-4">
-            {/* Left side: Channel details */}
-            <div className="flex items-center gap-2 min-w-0">
-              {channel.logo && (
-                <img
-                  src={channel.logo}
-                  alt={channel.name}
-                  className="h-6 w-6 rounded-md object-cover bg-white shrink-0 shadow-sm"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = "none";
-                  }}
+            {/* Left side: Channel details with Dropdown Trigger */}
+            <div className="relative">
+              {showChannelDropdown && (
+                <div
+                  className="fixed inset-0 z-40 cursor-default"
+                  onClick={() => setShowChannelDropdown(false)}
                 />
               )}
-              <span className="text-xs sm:text-sm font-bold text-white truncate max-w-[120px] sm:max-w-[200px] tracking-wide">
-                {channel.name}
-              </span>
-              <ChevronDown className="h-3.5 w-3.5 text-zinc-400 hover:text-white transition-colors cursor-pointer shrink-0" />
+              
+              <button
+                onClick={() => setShowChannelDropdown(!showChannelDropdown)}
+                className="flex items-center gap-1.5 sm:gap-2 min-w-0 bg-white/5 hover:bg-white/10 active:scale-95 px-2 py-1.5 rounded-xl border border-white/10 cursor-pointer text-left transition-all relative z-50 group/dropdown"
+              >
+                {channel.logo && (
+                  <img
+                    src={channel.logo}
+                    alt={channel.name}
+                    className="h-5.5 w-5.5 sm:h-6 sm:w-6 rounded-lg object-cover bg-white shrink-0 shadow-sm"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = "none";
+                    }}
+                  />
+                )}
+                <span className="text-[11px] sm:text-xs font-black text-white truncate max-w-[100px] sm:max-w-[180px] tracking-wide">
+                  {channel.name}
+                </span>
+                <ChevronDown className="h-3.5 w-3.5 text-zinc-400 group-hover/dropdown:text-white transition-colors shrink-0" />
+              </button>
+
+              {/* Channel Dropdown Menu */}
+              {showChannelDropdown && channels && channels.length > 0 && (
+                <div className="absolute bottom-full left-0 mb-3 w-64 max-h-72 bg-[#090721]/95 border border-white/10 rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden backdrop-blur-md animate-in fade-in slide-in-from-bottom-2 duration-200">
+                  {/* Dropdown Search */}
+                  <div className="p-2.5 border-b border-white/5 bg-[#0e0a2f]/50">
+                    <input
+                      type="text"
+                      value={dropdownSearch}
+                      onChange={(e) => setDropdownSearch(e.target.value)}
+                      placeholder="Search channel..."
+                      className="w-full px-3 py-1.5 bg-white/5 border border-white/10 focus:border-blue-500/50 rounded-xl text-xs text-white placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-blue-500/30 transition-all"
+                      onClick={(e) => e.stopPropagation()} // Prevent closing dropdown on input click
+                    />
+                  </div>
+                  {/* Dropdown List */}
+                  <div className="flex-1 overflow-y-auto p-1.5 space-y-0.5 custom-scrollbar max-h-56">
+                    {channels
+                      .filter((c) =>
+                        c.name.toLowerCase().includes(dropdownSearch.toLowerCase())
+                      )
+                      .map((c, idx) => {
+                        const isCurrent = c.name === channel.name;
+                        return (
+                          <button
+                            key={idx}
+                            onClick={() => {
+                              onSelectChannel?.(c);
+                              setShowChannelDropdown(false);
+                              setDropdownSearch("");
+                            }}
+                            className={`w-full flex items-center gap-2.5 p-2 rounded-xl text-left text-xs transition-all cursor-pointer ${
+                              isCurrent
+                                ? "bg-blue-600/20 border border-blue-500/30 text-blue-300 font-bold"
+                                : "bg-transparent border border-transparent hover:bg-white/5 text-zinc-400 hover:text-white"
+                            }`}
+                          >
+                            {c.logo ? (
+                              <img
+                                src={c.logo}
+                                alt=""
+                                className="h-5 w-5 rounded object-contain bg-white shrink-0"
+                                onError={(e) => {
+                                  (e.target as HTMLElement).style.display = "none";
+                                }}
+                              />
+                            ) : (
+                              <div className="h-5 w-5 rounded bg-white/5 flex items-center justify-center shrink-0">
+                                <Tv size={10} className="text-zinc-500" />
+                              </div>
+                            )}
+                            <span className="truncate">{c.name}</span>
+                          </button>
+                        );
+                      })}
+                    {channels.filter((c) =>
+                      c.name.toLowerCase().includes(dropdownSearch.toLowerCase())
+                    ).length === 0 && (
+                      <div className="py-6 text-center text-xs text-zinc-500 font-semibold uppercase tracking-wider">
+                        No channels found
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Center side: Actions buttons */}

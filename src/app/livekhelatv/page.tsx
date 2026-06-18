@@ -32,6 +32,7 @@ export default function LiveKhelaTvPage() {
   } | null>(null);
   const [loadingStream, setLoadingStream] = useState(false);
   const [reloadCount, setReloadCount] = useState(0);
+  const [failedKeys, setFailedKeys] = useState<string[]>([]);
 
   // Fetch list of channels
   useEffect(() => {
@@ -82,16 +83,26 @@ export default function LiveKhelaTvPage() {
             key: json.data.key_value,
           });
         } else {
+          setFailedKeys(prev => [...prev, ch.key]);
           toast.error(`Decryption failed for ${ch.name}`);
         }
       } else {
+        setFailedKeys(prev => [...prev, ch.key]);
         toast.error(`Unable to retrieve keys for ${ch.name}`);
       }
     } catch (err) {
+      setFailedKeys(prev => [...prev, ch.key]);
       console.error("Stream decryption error:", err);
       toast.error(`Error decrypting stream for ${ch.name}`);
     } finally {
       setLoadingStream(false);
+    }
+  };
+
+  // Pre-fetch stream decryption to warm up cache on hover
+  const handleChannelMouseEnter = (ch: UgbyChannel) => {
+    if (ch.play_token) {
+      fetch(`/api/ugby/stream?key=${ch.key}&token=${ch.play_token}`).catch(() => { });
     }
   };
 
@@ -137,12 +148,21 @@ export default function LiveKhelaTvPage() {
 
   // Filter channels list
   const filteredChannels = useMemo(() => {
-    return channels.filter(ch => {
+    const list = channels.filter(ch => {
       const matchesSearch = ch.name.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === "All" || ch.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [channels, searchQuery, selectedCategory]);
+
+    // Sort: Push down or failed channels to the bottom
+    return [...list].sort((a, b) => {
+      const aFailed = a.status === "down" || failedKeys.includes(a.key);
+      const bFailed = b.status === "down" || failedKeys.includes(b.key);
+      if (aFailed && !bFailed) return 1;
+      if (!aFailed && bFailed) return -1;
+      return 0;
+    });
+  }, [channels, searchQuery, selectedCategory, failedKeys]);
 
   return (
     <div className="min-h-screen bg-[#070518] text-white flex flex-col font-sans relative overflow-hidden">
@@ -209,6 +229,32 @@ export default function LiveKhelaTvPage() {
                     }}
                     isMuted={false}
                     reloadCount={reloadCount}
+                    channels={filteredChannels.map(ch => ({
+                      name: ch.name,
+                      logo: ch.image,
+                      group: ch.category || "Sports",
+                      url: "",
+                      type: "dash",
+                      play_token: ch.play_token,
+                      ugby_key: ch.key,
+                      status: ch.status,
+                    }))}
+                    onSelectChannel={(ch) => {
+                      const original = channels.find(c => c.key === ch.ugby_key);
+                      if (original) {
+                        handleChannelSelect(original);
+                      }
+                    }}
+                    onError={(err) => {
+                      if (activeChannel) {
+                        setFailedKeys((prev) => {
+                          if (!prev.includes(activeChannel.key)) {
+                            return [...prev, activeChannel.key];
+                          }
+                          return prev;
+                        });
+                      }
+                    }}
                   />
                 </div>
               ) : loadingStream ? (
@@ -309,8 +355,8 @@ export default function LiveKhelaTvPage() {
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3 py-1.5 rounded-xl border text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${selectedCategory === cat
-                      ? "bg-violet-600 border-violet-500 text-white shadow-md shadow-violet-500/20"
-                      : "bg-white/5 border-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
+                    ? "bg-violet-600 border-violet-500 text-white shadow-md shadow-violet-500/20"
+                    : "bg-white/5 border-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-200"
                     }`}
                 >
                   {cat}
@@ -328,14 +374,16 @@ export default function LiveKhelaTvPage() {
               </div>
             ) : filteredChannels.map((ch) => {
               const isSelected = activeChannel?.key === ch.key;
+              const isOffline = ch.status === "down" || failedKeys.includes(ch.key);
               return (
                 <button
                   key={ch.key}
                   onClick={() => handleChannelSelect(ch)}
+                  onMouseEnter={() => handleChannelMouseEnter(ch)}
                   className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-all duration-200 cursor-pointer ${isSelected
-                      ? "bg-violet-600/20 border-violet-500/40 text-violet-300 font-bold shadow-lg shadow-violet-950/20"
-                      : "bg-white/2 border-white/5 hover:border-white/15 hover:bg-white/5 text-zinc-350 hover:text-white"
-                    }`}
+                    ? "bg-violet-600/20 border-violet-500/40 text-violet-300 font-bold shadow-lg shadow-violet-950/20"
+                    : "bg-white/2 border-white/5 hover:border-white/15 hover:bg-white/5 text-zinc-350 hover:text-white"
+                    } ${isOffline ? "opacity-45" : ""}`}
                 >
                   <div className="relative h-10 w-10 bg-white/5 border border-white/10 rounded-lg p-1.5 flex items-center justify-center shrink-0 overflow-hidden">
                     {ch.image ? (
@@ -362,9 +410,15 @@ export default function LiveKhelaTvPage() {
                   </div>
 
                   <div className="flex flex-col items-end gap-1.5 shrink-0">
-                    <span className="bg-rose-500/25 border border-rose-500/40 text-rose-400 text-[8px] font-extrabold px-1.5 py-0.5 rounded-sm uppercase tracking-widest flex items-center gap-1">
-                      <span className="h-1 w-1 rounded-full bg-rose-500 animate-pulse" /> Live
-                    </span>
+                    {isOffline ? (
+                      <span className="bg-zinc-800 border border-zinc-700 text-zinc-400 text-[8px] font-extrabold px-1.5 py-0.5 rounded-sm uppercase tracking-widest">
+                        Offline
+                      </span>
+                    ) : (
+                      <span className="bg-rose-500/25 border border-rose-500/40 text-rose-400 text-[8px] font-extrabold px-1.5 py-0.5 rounded-sm uppercase tracking-widest flex items-center gap-1">
+                        <span className="h-1 w-1 rounded-full bg-rose-500 animate-pulse" /> Live
+                      </span>
+                    )}
                     {isSelected && (
                       <span className="text-[9px] text-violet-400 font-bold uppercase tracking-wider flex items-center gap-1">
                         Playing <Play size={8} className="fill-current animate-pulse" />
