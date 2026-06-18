@@ -15,9 +15,9 @@ import {
   Play,
   RefreshCw,
   Sliders,
+  Tv,
   Volume2,
-  VolumeX,
-  Tv
+  VolumeX
 } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -384,29 +384,29 @@ export default function VideoPlayer({
               },
             },
             streaming: {
-              bufferingGoal: 10,
-              rebufferingGoal: 0.8,
-              bufferBehind: 12,
+              bufferingGoal: 15,
+              rebufferingGoal: 2.5,
+              bufferBehind: 15,
               stallEnabled: true,
               stallThreshold: 1,
               stallSkip: 0.15,
               retryParameters: {
-                maxAttempts: 12,
-                baseDelay: 500,
-                backoffFactor: 1.6,
+                maxAttempts: 15,
+                baseDelay: 800,
+                backoffFactor: 1.8,
                 fuzzFactor: 0.35,
-                timeout: 15000,
+                timeout: 20000,
               },
             },
             abr: {
               enabled: true,
-              defaultBandwidthEstimate: 6500000, // 6.5 Mbps default bandwidth for immediate HD
+              defaultBandwidthEstimate: 800000, // 800 Kbps default to start instantly on slow internet
               switchInterval: 1,
               clearBufferSwitch: false,
               restrictToElementSize: false, // Set to false to allow HD quality on small grid containers
               restrictToScreenSize: false,
-              bandwidthDowngradeTarget: 0.92,
-              bandwidthUpgradeTarget: 0.72,
+              bandwidthDowngradeTarget: 0.85,
+              bandwidthUpgradeTarget: 0.60,
             },
           });
 
@@ -534,23 +534,23 @@ export default function VideoPlayer({
         progressive: true,
         startLevel: -1,
         capLevelToPlayerSize: false, // Disable to allow HD even on smaller/mobile screen sizes
-        maxBufferLength: 22,
-        maxMaxBufferLength: 36,
-        maxBufferSize: 48 * 1024 * 1024, // 48MB buffer limit
+        maxBufferLength: 30,
+        maxMaxBufferLength: 50,
+        maxBufferSize: 64 * 1024 * 1024, // 64MB buffer limit
         liveSyncDurationCount: 3,
         abrEwmaFastLive: 2.0,
         abrEwmaSlowLive: 5.0,
-        abrBandWidthFactor: 0.88,
-        abrBandWidthUpFactor: 0.72,
-        abrEwmaDefaultEstimate: 6500000, // 6.5 Mbps default estimate to force immediate HD selection
-        maxStarvationDelay: 3.0,
-        manifestLoadingMaxRetry: 3,
-        levelLoadingMaxRetry: 3,
-        fragLoadingMaxRetry: 4,
-        fragLoadingTimeOut: 10000,
-        fragLoadingRetryDelay: 700,
-        maxBufferHole: 0.7,
-        nudgeMaxRetry: 12,
+        abrBandWidthFactor: 0.75, // More conservative to prevent stalling on slow internet
+        abrBandWidthUpFactor: 0.55,
+        abrEwmaDefaultEstimate: 800000, // 800 Kbps default estimate for faster startup on slow internet
+        maxStarvationDelay: 4.0,
+        manifestLoadingMaxRetry: 5,
+        levelLoadingMaxRetry: 5,
+        fragLoadingMaxRetry: 6,
+        fragLoadingTimeOut: 15000,
+        fragLoadingRetryDelay: 1000,
+        maxBufferHole: 0.8,
+        nudgeMaxRetry: 15,
       });
       hlsRef.current = hls;
       hls.loadSource(channel.url);
@@ -1171,7 +1171,7 @@ export default function VideoPlayer({
                   onClick={() => setShowChannelDropdown(false)}
                 />
               )}
-              
+
               <button
                 onClick={() => setShowChannelDropdown(!showChannelDropdown)}
                 className="flex items-center gap-1.5 sm:gap-2 min-w-0 bg-white/5 hover:bg-white/10 active:scale-95 px-2 py-1.5 rounded-xl border border-white/10 cursor-pointer text-left transition-all relative z-50 group/dropdown"
@@ -1222,11 +1222,10 @@ export default function VideoPlayer({
                               setShowChannelDropdown(false);
                               setDropdownSearch("");
                             }}
-                            className={`w-full flex items-center gap-2.5 p-2 rounded-xl text-left text-xs transition-all cursor-pointer ${
-                              isCurrent
+                            className={`w-full flex items-center gap-2.5 p-2 rounded-xl text-left text-xs transition-all cursor-pointer ${isCurrent
                                 ? "bg-blue-600/20 border border-blue-500/30 text-blue-300 font-bold"
                                 : "bg-transparent border border-transparent hover:bg-white/5 text-zinc-400 hover:text-white"
-                            }`}
+                              }`}
                           >
                             {c.logo ? (
                               <img
@@ -1249,10 +1248,10 @@ export default function VideoPlayer({
                     {channels.filter((c) =>
                       c.name.toLowerCase().includes(dropdownSearch.toLowerCase())
                     ).length === 0 && (
-                      <div className="py-6 text-center text-xs text-zinc-500 font-semibold uppercase tracking-wider">
-                        No channels found
-                      </div>
-                    )}
+                        <div className="py-6 text-center text-xs text-zinc-500 font-semibold uppercase tracking-wider">
+                          No channels found
+                        </div>
+                      )}
                   </div>
                 </div>
               )}
