@@ -7,8 +7,9 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://live.nextqora.com";
 
 // Server-Side Data Fetching (SSR/ISR)
 async function getChannels(slug?: string | null) {
-  const githubUrl =
-    "https://raw.githubusercontent.com/SHAJON-404/iptv/refs/heads/main/app/data/channels.json";
+
+  const fifaUrl =
+    "https://raw.githubusercontent.com/SHAJON-404/iptv-playlist/main/app/data/fifa.json";
 
   const baseUrl =
     process.env.NEXT_PUBLIC_API_BASE_URL ||
@@ -16,11 +17,25 @@ async function getChannels(slug?: string | null) {
   const apiDbUrl = `${baseUrl}/stream/all?limit=150`;
 
   let fetchedChannels: any[] = [];
+  let fifaChannels: any[] = [];
 
-  // Try to load from API Database first
+  // 1. Fetch FIFA channels (always merge)
+  try {
+    const fifaRes = await fetch(fifaUrl, {
+      next: { revalidate: 300 }, // Cache FIFA channels for 5 minutes
+    });
+    if (fifaRes.ok) {
+      const data = await fifaRes.json();
+      fifaChannels = Array.isArray(data) ? data : [];
+    }
+  } catch (err) {
+    console.error("Failed to fetch FIFA playlist:", err);
+  }
+
+  // 2. Try to load from API Database first
   try {
     const res = await fetch(apiDbUrl, {
-      next: { revalidate: 600 }, // Cache API for 10 minutes (600 seconds)
+      next: { revalidate: 600 }, // Cache API for 10 minutes
     });
     if (!res.ok) throw new Error("Failed to fetch API database channels");
     const json = await res.json();
@@ -32,23 +47,17 @@ async function getChannels(slug?: string | null) {
     }
   } catch (apiError) {
     console.error(
-      "Failed to fetch channels from API database, trying GitHub fallback:",
+      "Failed to fetch channels from API database:",
       apiError,
     );
-    try {
-      const res = await fetch(githubUrl, {
-        next: { revalidate: 1800 }, // Cache GitHub for 30 minutes
-      });
-      if (!res.ok) throw new Error("GitHub fetch failed");
-      const data = await res.json();
-      fetchedChannels = Array.isArray(data) ? data : [];
-    } catch (githubError) {
-      console.error(
-        "Failed to fetch fallback channels from GitHub:",
-        githubError,
-      );
-      fetchedChannels = [];
-    }
+    fetchedChannels = [];
+  }
+
+  // 3. Merge FIFA channels at the beginning, filtering out duplicates
+  if (fifaChannels.length > 0) {
+    const fifaUrls = new Set(fifaChannels.map((c) => c.url));
+    const uniqueFetched = fetchedChannels.filter((c) => !fifaUrls.has(c.url));
+    fetchedChannels = [...fifaChannels, ...uniqueFetched];
   }
 
   // If there is a slug, make sure that channel is fetched and prepended if not already present

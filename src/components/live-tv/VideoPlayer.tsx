@@ -342,6 +342,12 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
             const detail = event?.detail;
             console.error("[SHAKA] Setup error detail:", JSON.stringify(detail));
 
+            // Ignore non-fatal (recoverable) errors
+            if (detail && detail.severity === 1) {
+              console.warn("[SHAKA] Recoverable error encountered, allowing player to self-recover:", detail);
+              return;
+            }
+
             let errMsg = "DASH / MPD load failed";
             if (detail) {
               if (detail.code === 6007 || detail.code === 6008) {
@@ -386,27 +392,27 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     } else if (Hls.isSupported()) {
       hls = new Hls({
         enableWorker: true,
-        lowLatencyMode: true,
+        lowLatencyMode: false,
         progressive: true,
         startLevel: -1,
-        capLevelToPlayerSize: true,
-        maxBufferLength: 10, // Buffer 10s max initially to start playing faster
-        maxMaxBufferLength: 20,
-        maxBufferSize: 30 * 1024 * 1024, // 30MB limit to prevent heavy downloads before start
-        liveSyncDurationCount: 2, // Play 2 segments behind live edge for instant startup
-        abrEwmaFastLive: 1.0,
-        abrEwmaSlowLive: 3.0,
-        abrBandWidthFactor: 0.9,
-        abrBandWidthUpFactor: 0.6,
-        abrEwmaDefaultEstimate: 1500000, // 1.5 Mbps starting estimate to skip bandwidth testing delays
-        maxStarvationDelay: 1.5,
+        capLevelToPlayerSize: false, // Disable to allow HD even on smaller/mobile screen sizes
+        maxBufferLength: 22,
+        maxMaxBufferLength: 36,
+        maxBufferSize: 48 * 1024 * 1024, // 48MB buffer limit
+        liveSyncDurationCount: 3,
+        abrEwmaFastLive: 2.0,
+        abrEwmaSlowLive: 5.0,
+        abrBandWidthFactor: 0.88,
+        abrBandWidthUpFactor: 0.72,
+        abrEwmaDefaultEstimate: 6500000, // 6.5 Mbps default estimate to force immediate HD selection
+        maxStarvationDelay: 3.0,
         manifestLoadingMaxRetry: 3,
         levelLoadingMaxRetry: 3,
         fragLoadingMaxRetry: 4,
-        fragLoadingTimeOut: 5000, // Timeout slow segments in 5s to trigger fast retries
-        fragLoadingRetryDelay: 500,
-        maxBufferHole: 0.5,
-        nudgeMaxRetry: 8,
+        fragLoadingTimeOut: 10000,
+        fragLoadingRetryDelay: 700,
+        maxBufferHole: 0.7,
+        nudgeMaxRetry: 12,
       });
       hlsRef.current = hls;
       hls.loadSource(channel.url);
@@ -453,7 +459,11 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
                   `Fatal network error encountered (attempt ${networkRetryCount}/3), retrying...`,
                   data,
                 );
-                hls?.startLoad();
+                if (data.details === Hls.ErrorDetails.MANIFEST_LOAD_ERROR || data.details === Hls.ErrorDetails.MANIFEST_LOAD_TIMEOUT) {
+                  hls?.loadSource(channel.url);
+                } else {
+                  hls?.startLoad();
+                }
               } else {
                 console.error(
                   "Fatal network error: reached maximum retry limit.",

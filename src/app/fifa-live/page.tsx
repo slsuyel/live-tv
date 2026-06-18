@@ -1,23 +1,23 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import Hls from "hls.js";
 import {
-  Tv,
-  X,
-  Volume2,
-  VolumeX,
-  Maximize2,
-  RefreshCw,
-  Play,
-  Pause,
   ArrowLeft,
-  Grid2X2,
   Columns,
   Columns3,
+  Grid2X2,
+  Maximize2,
   MonitorPlay,
+  Pause,
+  Play,
+  RefreshCw,
+  Tv,
+  Volume2,
+  VolumeX,
+  X,
 } from "lucide-react";
-import Hls from "hls.js";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 interface Channel {
@@ -331,13 +331,12 @@ export default function FifaLivePage() {
               {activeStreams.map((stream) => (
                 <div
                   key={stream.gridId}
-                  className={`bg-[#0c0924] border border-white/10 rounded-xl overflow-hidden flex flex-col transition-all duration-300 group hover:border-purple-500/50 shadow-xl ${
-                    stream.colSpan === 2
+                  className={`bg-[#0c0924] border border-white/10 rounded-xl overflow-hidden flex flex-col transition-all duration-300 group hover:border-purple-500/50 shadow-xl ${stream.colSpan === 2
                       ? "md:col-span-2"
                       : stream.colSpan === 3
                         ? "md:col-span-3"
                         : ""
-                  } ${stream.rowSpan === 2 ? "md:row-span-2" : ""}`}
+                    } ${stream.rowSpan === 2 ? "md:row-span-2" : ""}`}
                 >
                   <div className="bg-[#0f0b2d] px-2 py-1.5 border-b border-white/5 flex items-center justify-between text-[10px] sm:text-xs gap-1.5 shrink-0">
                     <div className="flex items-center gap-1.5 min-w-0">
@@ -412,9 +411,8 @@ export default function FifaLivePage() {
 
                       <button
                         onClick={() => toggleMuteStream(stream.gridId)}
-                        className={`p-1.5 rounded hover:bg-white/10 transition-colors ${
-                          !stream.isMuted ? "text-emerald-400" : "text-zinc-400"
-                        }`}
+                        className={`p-1.5 rounded hover:bg-white/10 transition-colors ${!stream.isMuted ? "text-emerald-400" : "text-zinc-400"
+                          }`}
                         title={
                           stream.isMuted
                             ? "Listen to this stream"
@@ -495,9 +493,20 @@ function MultiviewPlayerElement({
 
     if (Hls.isSupported() && url.includes(".m3u8")) {
       const hls = new Hls({
-        maxMaxBufferLength: 10,
         enableWorker: true,
-        lowLatencyMode: true,
+        lowLatencyMode: false,
+        capLevelToPlayerSize: false,
+        maxBufferLength: 22,
+        maxMaxBufferLength: 36,
+        maxBufferSize: 48 * 1024 * 1024,
+        liveSyncDurationCount: 3,
+        abrEwmaFastLive: 2.0,
+        abrEwmaSlowLive: 5.0,
+        abrBandWidthFactor: 0.88,
+        abrBandWidthUpFactor: 0.72,
+        abrEwmaDefaultEstimate: 6500000,
+        maxStarvationDelay: 3.0,
+        nudgeMaxRetry: 12,
       });
       hlsRef.current = hls;
 
@@ -515,7 +524,11 @@ function MultiviewPlayerElement({
         if (data.fatal) {
           switch (data.type) {
             case Hls.ErrorTypes.NETWORK_ERROR:
-              hls.startLoad();
+              if (data.details === Hls.ErrorDetails.MANIFEST_LOAD_ERROR || data.details === Hls.ErrorDetails.MANIFEST_LOAD_TIMEOUT) {
+                hls.loadSource(url);
+              } else {
+                hls.startLoad();
+              }
               break;
             case Hls.ErrorTypes.MEDIA_ERROR:
               hls.recoverMediaError();
@@ -612,7 +625,7 @@ function MultiviewPlayerElement({
         video
           .play()
           .then(() => setIsPaused(false))
-          .catch(() => {});
+          .catch(() => { });
       }
     };
 
