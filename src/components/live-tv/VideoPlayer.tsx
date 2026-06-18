@@ -1,33 +1,40 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useCallback } from "react";
-import Hls, { Level } from "hls.js";
+import Hls from "hls.js";
 import {
   AlertCircle,
-  Settings,
   Check,
-  RefreshCw,
-  Copy,
-  ExternalLink,
-  Play,
-  Pause,
-  Volume2,
-  VolumeX,
-  Maximize,
-  Minimize,
-  PictureInPicture,
+  ChevronDown,
   ChevronsLeft,
   ChevronsRight,
-  Tv,
+  ExternalLink,
+  Maximize,
+  Minimize,
+  Pause,
+  PictureInPicture,
+  Play,
+  RefreshCw,
+  Sliders,
+  Volume2,
+  VolumeX
 } from "lucide-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Channel } from "./types";
 
 interface VideoPlayerProps {
   channel: Channel;
+  isMuted?: boolean;
+  onMuteChange?: (muted: boolean) => void;
+  reloadCount?: number;
 }
 
-export default function VideoPlayer({ channel }: VideoPlayerProps) {
+export default function VideoPlayer({
+  channel,
+  isMuted: propsIsMuted,
+  onMuteChange,
+  reloadCount: propsReloadCount,
+}: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const hlsRef = useRef<Hls | null>(null);
   const shakaRef = useRef<any>(null);
@@ -39,13 +46,38 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
   const [loading, setLoading] = useState(true);
   const [hasPlayed, setHasPlayed] = useState(false);
   const [reloadCount, setReloadCount] = useState(0);
+
+  useEffect(() => {
+    if (propsReloadCount !== undefined && propsReloadCount > 0) {
+      setReloadCount(propsReloadCount);
+    }
+  }, [propsReloadCount]);
   const [loadTimeout, setLoadTimeout] = useState(false);
 
+  interface UnifiedLevel {
+    id: number;
+    height: number;
+    bitrate: number;
+    label: string;
+  }
+
+  interface UnifiedAudioTrack {
+    id: number | string;
+    lang: string;
+    name: string;
+  }
+
   // Quality settings
-  const [levels, setLevels] = useState<Level[]>([]);
+  const [levels, setLevels] = useState<UnifiedLevel[]>([]);
   const [currentLevel, setCurrentLevel] = useState<number>(-1);
   const [selectedLevel, setSelectedLevel] = useState<number>(-1);
   const [showSettings, setShowSettings] = useState(false);
+
+  // Audio settings
+  const [audioTracks, setAudioTracks] = useState<UnifiedAudioTrack[]>([]);
+  const [currentAudioTrack, setCurrentAudioTrack] = useState<number | string>(-1);
+  const [showAudioSettings, setShowAudioSettings] = useState(false);
+  const audioSettingsRef = useRef<HTMLDivElement>(null);
 
   // Custom Controls UI states
   const [isPaused, setIsPaused] = useState(true);
@@ -63,7 +95,17 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     }
   }, []);
 
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(propsIsMuted !== undefined ? propsIsMuted : true);
+
+  useEffect(() => {
+    if (propsIsMuted !== undefined) {
+      setIsMuted(propsIsMuted);
+      const video = videoRef.current;
+      if (video) {
+        video.muted = propsIsMuted;
+      }
+    }
+  }, [propsIsMuted]);
   const [volume, setVolume] = useState(0.8);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isPip, setIsPip] = useState(false);
@@ -92,14 +134,23 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     }, 3000);
   }, []);
 
-  // Close quality settings dropdown on click outside
+  // Close quality & audio settings dropdowns on click outside
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
+      const target = e.target as Node;
       if (
         settingsRef.current &&
-        !settingsRef.current.contains(e.target as Node)
+        !settingsRef.current.contains(target) &&
+        !(e.target as HTMLElement).closest(".quality-trigger")
       ) {
         setShowSettings(false);
+      }
+      if (
+        audioSettingsRef.current &&
+        !audioSettingsRef.current.contains(target) &&
+        !(e.target as HTMLElement).closest(".audio-trigger")
+      ) {
+        setShowAudioSettings(false);
       }
     };
     document.addEventListener("mousedown", handleDocumentClick);
@@ -110,14 +161,31 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     setSelectedLevel(levelIndex);
     if (hlsRef.current) {
       hlsRef.current.currentLevel = levelIndex;
+    } else if (shakaRef.current) {
+      const shakaPlayerInstance = shakaRef.current;
+      if (levelIndex === -1) {
+        shakaPlayerInstance.configure({ abr: { enabled: true } });
+      } else {
+        shakaPlayerInstance.configure({ abr: { enabled: false } });
+        const tracks = shakaPlayerInstance.getVariantTracks();
+        const targetTrack = tracks.find((t: any) => t.id === levelIndex);
+        if (targetTrack) {
+          shakaPlayerInstance.selectVariantTrack(targetTrack, true);
+        }
+      }
     }
     setShowSettings(false);
   };
 
-  const getLevelLabel = (level: Level, index: number) => {
-    if (level.height) return `${level.height}p`;
-    if (level.name) return level.name;
-    return `Quality ${index + 1} (${Math.round(level.bitrate / 1000)} kbps)`;
+  const handleAudioTrackChange = (trackId: number | string) => {
+    setCurrentAudioTrack(trackId);
+    if (hlsRef.current) {
+      hlsRef.current.audioTrack = trackId as number;
+    } else if (shakaRef.current) {
+      const shakaPlayerInstance = shakaRef.current;
+      shakaPlayerInstance.selectAudioLanguage(trackId as string);
+    }
+    setShowAudioSettings(false);
   };
 
   // Loading Timeout Handler
@@ -314,11 +382,11 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
             },
             abr: {
               enabled: true,
-              defaultBandwidthEstimate: 4500000,
+              defaultBandwidthEstimate: 6500000, // 6.5 Mbps default bandwidth for immediate HD
               switchInterval: 1,
               clearBufferSwitch: false,
-              restrictToElementSize: true,
-              restrictToScreenSize: true,
+              restrictToElementSize: false, // Set to false to allow HD quality on small grid containers
+              restrictToScreenSize: false,
               bandwidthDowngradeTarget: 0.92,
               bandwidthUpgradeTarget: 0.72,
             },
@@ -357,9 +425,8 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
                 errMsg =
                   "Playback failed: Stream is offline or original server is unreachable.";
               } else {
-                errMsg = `Playback failed: Shaka Player Error ${detail.code} (${
-                  detail.message || "Unknown error"
-                })`;
+                errMsg = `Playback failed: Shaka Player Error ${detail.code} (${detail.message || "Unknown error"
+                  })`;
               }
             }
             setError(errMsg);
@@ -369,6 +436,59 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
           shakaPlayerInstance.addEventListener("buffering", (event: any) => {
             if (!active) return;
             setLoading(event.buffering);
+          });
+
+          const updateShakaTracks = () => {
+            if (!shakaPlayerInstance) return;
+            const tracks = shakaPlayerInstance.getVariantTracks() || [];
+            const unique = tracks.filter((track: any, index: number, self: any[]) =>
+              self.findIndex((t) => t.height === track.height) === index
+            ).sort((a: any, b: any) => (b.height || 0) - (a.height || 0));
+
+            const formatted = unique.map((track: any) => {
+              const h = track.height || 0;
+              const b = track.bandwidth || 0;
+              const isHd = h >= 720;
+              const label = h > 0 ? `${h}p ${isHd ? 'HD' : 'SD'}` : `Quality`;
+              const speedStr = b >= 1000000
+                ? `${(b / 1000000).toFixed(1)} Mbps`
+                : `${Math.round(b / 1000)} Kbps`;
+              return {
+                id: track.id,
+                height: h,
+                bitrate: b,
+                label: `${label} (${speedStr})`
+              };
+            });
+            setLevels(formatted);
+          };
+
+          const updateShakaAudioTracks = () => {
+            if (!shakaPlayerInstance) return;
+            const langs = shakaPlayerInstance.getAudioLanguagesAndRoles() || [];
+            const tracks = langs.map((l: any, idx: number) => ({
+              id: l.language,
+              lang: l.language,
+              name: l.label || l.language || `Audio ${idx + 1}`
+            }));
+            setAudioTracks(tracks);
+
+            const activeTracks = shakaPlayerInstance.getVariantTracks().filter((t: any) => t.active);
+            if (activeTracks.length > 0) {
+              setCurrentAudioTrack(activeTracks[0].language);
+            }
+          };
+
+          shakaPlayerInstance.addEventListener("trackschanged", () => {
+            updateShakaTracks();
+            updateShakaAudioTracks();
+          });
+          shakaPlayerInstance.addEventListener("variantchanged", () => {
+            const activeTracks = shakaPlayerInstance.getVariantTracks().filter((t: any) => t.active);
+            if (activeTracks.length > 0) {
+              setCurrentLevel(activeTracks[0].id);
+              setCurrentAudioTrack(activeTracks[0].language);
+            }
           });
 
           await shakaPlayerInstance.load(channel.url);
@@ -420,8 +540,32 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
 
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         if (hls) {
-          setLevels(hls.levels || []);
+          const formatted = (hls.levels || []).map((level, idx) => {
+            const h = level.height || 0;
+            const b = level.bitrate || 0;
+            const isHd = h >= 720;
+            const label = h > 0 ? `${h}p ${isHd ? 'HD' : 'SD'}` : `Quality ${idx + 1}`;
+            const speedStr = b >= 1000000
+              ? `${(b / 1000000).toFixed(1)} Mbps`
+              : `${Math.round(b / 1000)} Kbps`;
+            return {
+              id: idx,
+              height: h,
+              bitrate: b,
+              label: `${label} (${speedStr})`
+            };
+          });
+          setLevels(formatted);
           setCurrentLevel(hls.currentLevel);
+
+          // Populate HLS audio tracks
+          const tracks = (hls.audioTracks || []).map((t, idx) => ({
+            id: idx,
+            lang: t.lang || '',
+            name: t.name || t.lang || `Audio ${idx + 1}`
+          }));
+          setAudioTracks(tracks);
+          setCurrentAudioTrack(hls.audioTrack);
         }
 
         // Attempt muted autoplay to satisfy browser security rules
@@ -430,6 +574,21 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
         video.play().catch((err) => {
           console.warn("Autoplay was prevented:", err);
         });
+      });
+
+      hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, () => {
+        if (hls) {
+          const tracks = (hls.audioTracks || []).map((t, idx) => ({
+            id: idx,
+            lang: t.lang || '',
+            name: t.name || t.lang || `Audio ${idx + 1}`
+          }));
+          setAudioTracks(tracks);
+        }
+      });
+
+      hls.on(Hls.Events.AUDIO_TRACK_SWITCHED, (event, data) => {
+        setCurrentAudioTrack(data.id);
       });
 
       hls.on(Hls.Events.LEVEL_SWITCHED, (event, data) => {
@@ -543,7 +702,7 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
       }
       hlsRef.current = null;
       if (shakaPlayerInstance) {
-        shakaPlayerInstance.destroy().catch(() => {});
+        shakaPlayerInstance.destroy().catch(() => { });
       }
       shakaRef.current = null;
     };
@@ -605,6 +764,9 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     if (!video) return;
     video.muted = !video.muted;
     setIsMuted(video.muted);
+    if (onMuteChange) {
+      onMuteChange(video.muted);
+    }
     if (!video.muted && video.volume === 0) {
       video.volume = 0.8;
       setVolume(0.8);
@@ -745,11 +907,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
       onMouseMove={handleMouseMove}
       onClick={handlePlayerClick}
       onDoubleClick={handlePlayerDoubleClick}
-      className={`relative group bg-black shadow-2xl overflow-hidden transition-all duration-300 border border-white/10 ${
-        isFullscreen
-          ? "w-full h-full"
-          : "aspect-video w-full rounded-2xl sm:rounded-3xl"
-      } ${showControls ? "cursor-default" : "cursor-none"}`}
+      className={`relative group bg-black shadow-2xl overflow-hidden transition-all duration-300 border border-white/10 ${isFullscreen
+        ? "w-full h-full"
+        : "aspect-video w-full rounded-2xl sm:rounded-3xl"
+        } ${showControls ? "cursor-default" : "cursor-none"}`}
     >
       <video
         ref={videoRef}
@@ -881,11 +1042,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
       {/* Double Tap seek ripple visuals */}
       {activeSeekIndicator.visible && (
         <div
-          className={`absolute inset-y-0 w-1/3 flex items-center justify-center pointer-events-none z-30 bg-white/5 transition-opacity duration-300 ${
-            activeSeekIndicator.side === "left"
-              ? "left-0 rounded-r-full"
-              : "right-0 rounded-l-full"
-          }`}
+          className={`absolute inset-y-0 w-1/3 flex items-center justify-center pointer-events-none z-30 bg-white/5 transition-opacity duration-300 ${activeSeekIndicator.side === "left"
+            ? "left-0 rounded-r-full"
+            : "right-0 rounded-l-full"
+            }`}
         >
           <div className="flex flex-col items-center gap-1 text-white bg-black/75 px-4 py-2.5 rounded-full border border-white/10 backdrop-blur-md">
             {activeSeekIndicator.side === "left" ? (
@@ -910,142 +1070,245 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
       {/* Custom controls overlay bar */}
       {!loading && !error && (
         <div
-          className={`player-controls-container absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-linear-to-t from-black/95 via-black/40 to-transparent flex items-center justify-between transition-all duration-300 z-20 ${
-            showControls
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-2 pointer-events-none"
-          }`}
+          className={`player-controls-container absolute bottom-0 left-0 right-0 bg-slate-950/80 border-t border-white/5 flex flex-col transition-all duration-300 z-20 ${showControls
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-2 pointer-events-none"
+            }`}
         >
-          {/* Left Controls */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePlayPause}
-              className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer"
-            >
-              {isPaused ? (
-                <Play size={16} className="fill-white" />
-              ) : (
-                <Pause size={16} className="fill-white" />
-              )}
-            </button>
-
-            <div className="flex items-center gap-1 group/volume">
-              <button
-                onClick={handleMuteUnmute}
-                className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer"
-              >
-                {isMuted || volume === 0 ? (
-                  <VolumeX size={16} />
-                ) : (
-                  <Volume2 size={16} />
-                )}
-              </button>
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.05"
-                value={isMuted ? 0 : volume}
-                onChange={handleVolumeChangeSlider}
-                className="w-16 h-1 rounded-lg appearance-none cursor-pointer outline-none transition-all [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-moz-range-thumb]:h-3 [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white"
-                style={{
-                  background: `linear-gradient(to right, #8b5cf6 0%, #8b5cf6 ${(isMuted ? 0 : volume) * 100}%, rgba(255, 255, 255, 0.25) ${(isMuted ? 0 : volume) * 100}%, rgba(255, 255, 255, 0.25) 100%)`,
-                }}
-              />
+          {/* Progress timeline */}
+          <div className="w-full h-1 bg-white/20 relative group/timeline cursor-pointer">
+            <div className="h-full bg-red-600 w-full relative">
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 h-2.5 w-2.5 rounded-full bg-red-500 shadow-md scale-0 group-hover/timeline:scale-100 transition-transform" />
             </div>
           </div>
 
-          {/* Right Controls */}
-          <div className="flex items-center gap-2 relative">
-            {/* Quality level settings */}
-            {levels.length > 0 && (
-              <div ref={settingsRef} className="relative">
+          {/* Indicators Row (above controls, below timeline) */}
+          <div className="px-4 py-2 flex items-center justify-between border-b border-white/5 bg-black/10">
+            {/* Live Indicator + Language Select */}
+            <div className="flex items-center gap-2 text-xs font-bold text-white">
+              {error ? (
+                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-400 text-[10px] tracking-wide">
+                  <span className="h-1.5 w-1.5 rounded-full bg-zinc-500 inline-block" />
+                  OFFLINE
+                </div>
+              ) : loading ? (
+                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-600/30 text-amber-400 text-[10px] tracking-wide animate-pulse">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400 inline-block animate-ping" />
+                  BUFFERING
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-red-600 text-[10px] tracking-wide animate-pulse">
+                  <span className="h-1.5 w-1.5 rounded-full bg-white inline-block animate-ping" />
+                  LIVE
+                </div>
+              )}
+              {audioTracks.length > 1 && (
+                <>
+                  <span className="text-white/20">|</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowAudioSettings(!showAudioSettings);
+                    }}
+                    className="audio-trigger flex items-center gap-1 text-zinc-400 hover:text-white transition-colors cursor-pointer text-[11px]"
+                  >
+                    <span>{audioTracks.find(t => t.id === currentAudioTrack)?.name || "Default Audio"}</span>
+                    <ChevronDown className="h-3 w-3" />
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Quality selection and seek indicator */}
+            <div className="flex items-center gap-4 text-xs font-bold text-zinc-400">
+              {levels.length > 0 && (
                 <button
                   onClick={() => setShowSettings(!showSettings)}
-                  className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer flex items-center gap-1 text-[10px] font-semibold"
-                  title="Stream Quality"
+                  className="quality-trigger hover:text-white transition-colors flex items-center gap-0.5 cursor-pointer text-[11px]"
                 >
-                  <Settings
-                    className={`h-4 w-4 ${showSettings ? "animate-spin" : ""}`}
-                  />
-                  <span className="hidden sm:inline">
+                  <span>
                     {selectedLevel === -1
-                      ? `Auto${currentLevel >= 0 && levels[currentLevel] ? ` (${getLevelLabel(levels[currentLevel], currentLevel)})` : ""}`
-                      : getLevelLabel(levels[selectedLevel], selectedLevel)}
+                      ? `Auto`
+                      : `${levels.find((l) => l.id === selectedLevel)?.height || selectedLevel}p`}
                   </span>
+                  <span>...</span>
                 </button>
-
-                {showSettings && (
-                  <div className="absolute bottom-8 right-0 w-36 bg-zinc-950/95 border border-zinc-800 rounded-lg shadow-xl backdrop-blur-md overflow-hidden py-1 z-30">
-                    <div className="px-3 py-1 border-b border-zinc-900">
-                      <span className="text-[9px] uppercase tracking-wider text-zinc-500 font-bold">
-                        Quality
-                      </span>
-                    </div>
-                    <div className="max-h-40 overflow-y-auto custom-scrollbar">
-                      <button
-                        onClick={() => handleQualityChange(-1)}
-                        className={`w-full flex items-center justify-between px-3 py-1.5 text-left text-xs transition-colors hover:bg-white/10 cursor-pointer ${
-                          selectedLevel === -1
-                            ? "text-violet-400 font-bold"
-                            : "text-zinc-350"
-                        }`}
-                      >
-                        <span>Auto</span>
-                        {selectedLevel === -1 && (
-                          <Check className="h-3 w-3 text-violet-500" />
-                        )}
-                      </button>
-                      {levels.map((level, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => handleQualityChange(idx)}
-                          className={`w-full flex items-center justify-between px-3 py-1.5 text-left text-xs transition-colors hover:bg-white/10 cursor-pointer ${
-                            selectedLevel === idx
-                              ? "text-violet-400 font-bold"
-                              : "text-zinc-350"
-                          }`}
-                        >
-                          <span>{getLevelLabel(level, idx)}</span>
-                          {selectedLevel === idx && (
-                            <Check className="h-3 w-3 text-violet-500" />
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {isPipSupported && (
+              )}
               <button
-                onClick={handlePipToggle}
-                className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer"
-                title="Picture in Picture"
+                onClick={() => handleSeek(-10)}
+                className="hover:text-white transition-colors cursor-pointer text-zinc-400/90 text-[11px]"
               >
-                <PictureInPicture
-                  size={16}
-                  className={isPip ? "text-violet-400" : ""}
-                />
+                -10s
               </button>
-            )}
+            </div>
+          </div>
 
+          {/* Main Controls Row */}
+          <div className="px-4 py-3 flex items-center justify-between gap-4">
+            {/* Left side: Channel details */}
+            <div className="flex items-center gap-2 min-w-0">
+              {channel.logo && (
+                <img
+                  src={channel.logo}
+                  alt={channel.name}
+                  className="h-6 w-6 rounded-md object-cover bg-white shrink-0 shadow-sm"
+                  onError={(e) => {
+                    (e.target as HTMLElement).style.display = "none";
+                  }}
+                />
+              )}
+              <span className="text-xs sm:text-sm font-bold text-white truncate max-w-[120px] sm:max-w-[200px] tracking-wide">
+                {channel.name}
+              </span>
+              <ChevronDown className="h-3.5 w-3.5 text-zinc-400 hover:text-white transition-colors cursor-pointer shrink-0" />
+            </div>
+
+            {/* Center side: Actions buttons */}
+            <div className="flex items-center justify-center gap-2 sm:gap-3 flex-1">
+              {/* Play Pause */}
+              <button
+                onClick={handlePlayPause}
+                className="w-14 h-8 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white rounded-lg flex items-center justify-center transition-all cursor-pointer shadow-md shadow-blue-600/20"
+              >
+                {isPaused ? (
+                  <Play size={16} className="fill-white" />
+                ) : (
+                  <Pause size={16} className="fill-white" />
+                )}
+              </button>
+
+              {/* Mute Volume */}
+              <button
+                onClick={handleMuteUnmute}
+                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 active:scale-95 text-white transition-all cursor-pointer"
+                title={isMuted ? "Unmute" : "Mute"}
+              >
+                {isMuted || volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
+              </button>
+
+              {/* Fullscreen */}
+              <button
+                onClick={handleFullscreenToggle}
+                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 active:scale-95 text-white transition-all cursor-pointer"
+                title="Fullscreen"
+              >
+                {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+              </button>
+
+              {/* PiP */}
+              {isPipSupported && (
+                <button
+                  onClick={handlePipToggle}
+                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 active:scale-95 text-white transition-all cursor-pointer"
+                  title="Picture in Picture"
+                >
+                  <PictureInPicture
+                    size={16}
+                    className={isPip ? "text-blue-400" : ""}
+                  />
+                </button>
+              )}
+
+              {/* Reload */}
+              <button
+                onClick={handleReload}
+                className="p-2 rounded-lg bg-white/5 hover:bg-white/10 active:scale-95 text-white transition-all cursor-pointer"
+                title="Reload"
+              >
+                <RefreshCw size={16} />
+              </button>
+            </div>
+
+            {/* Right side spacer to keep center aligned */}
+            <div className="w-[120px] hidden sm:block shrink-0" />
+          </div>
+        </div>
+      )}
+
+      {/* Floating Quality popup menu (anchored on right side) */}
+      {showSettings && levels.length > 0 && (
+        <div
+          ref={settingsRef}
+          className="absolute bottom-16 right-4 w-64 bg-slate-950/95 border border-white/10 rounded-xl shadow-2xl backdrop-blur-md overflow-hidden py-2.5 z-30 animate-in fade-in slide-in-from-bottom-2 duration-200"
+        >
+          <div className="px-4 py-1.5 border-b border-white/5 flex items-center gap-1.5">
+            <Sliders className="h-3.5 w-3.5 text-zinc-400" />
+            <span className="text-[10px] uppercase tracking-wider text-zinc-400 font-extrabold">
+              ≡ Quality
+            </span>
+          </div>
+          <div className="max-h-56 overflow-y-auto custom-scrollbar py-1">
+            {/* Auto Option */}
             <button
-              onClick={handleReload}
-              className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer"
-              title="Reload Stream"
+              onClick={() => handleQualityChange(-1)}
+              className={`w-full flex items-center gap-3 px-4 py-2 text-left text-xs transition-colors hover:bg-white/5 cursor-pointer ${selectedLevel === -1 ? "text-blue-400 font-bold" : "text-zinc-350"
+                }`}
             >
-              <RefreshCw size={16} />
+              <div
+                className={`h-4 w-4 rounded border flex items-center justify-center transition-all ${selectedLevel === -1
+                  ? "bg-blue-600 border-blue-600 text-white"
+                  : "border-white/20"
+                  }`}
+              >
+                {selectedLevel === -1 && <Check className="h-3 w-3 stroke-3" />}
+              </div>
+              <span>Auto</span>
             </button>
 
-            <button
-              onClick={handleFullscreenToggle}
-              className="p-1.5 rounded-lg hover:bg-white/10 text-white transition-colors cursor-pointer"
-              title="Fullscreen"
-            >
-              {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
-            </button>
+            {/* Levels mapping */}
+            {levels.map((level) => (
+              <button
+                key={level.id}
+                onClick={() => handleQualityChange(level.id)}
+                className={`w-full flex items-center gap-3 px-4 py-2 text-left text-xs transition-colors hover:bg-white/5 cursor-pointer ${selectedLevel === level.id ? "text-blue-400 font-bold" : "text-zinc-350"
+                  }`}
+              >
+                <div
+                  className={`h-4 w-4 rounded border flex items-center justify-center transition-all ${selectedLevel === level.id
+                    ? "bg-blue-600 border-blue-600 text-white"
+                    : "border-white/20"
+                    }`}
+                >
+                  {selectedLevel === level.id && <Check className="h-3 w-3 stroke-3" />}
+                </div>
+                <span>{level.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Floating Audio Language popup menu (anchored on left side) */}
+      {showAudioSettings && audioTracks.length > 0 && (
+        <div
+          ref={audioSettingsRef}
+          className="absolute bottom-16 left-4 w-52 bg-slate-950/95 border border-white/10 rounded-xl shadow-2xl backdrop-blur-md overflow-hidden py-2.5 z-30 animate-in fade-in slide-in-from-bottom-2 duration-200"
+        >
+          <div className="px-4 py-1.5 border-b border-white/5 flex items-center gap-1.5">
+            <Volume2 className="h-3.5 w-3.5 text-zinc-400" />
+            <span className="text-[10px] uppercase tracking-wider text-zinc-400 font-extrabold">
+              Audio Language
+            </span>
+          </div>
+          <div className="max-h-56 overflow-y-auto custom-scrollbar py-1">
+            {audioTracks.map((track) => (
+              <button
+                key={track.id}
+                onClick={() => handleAudioTrackChange(track.id)}
+                className={`w-full flex items-center gap-3 px-4 py-2 text-left text-xs transition-colors hover:bg-white/5 cursor-pointer ${currentAudioTrack === track.id ? "text-blue-400 font-bold" : "text-zinc-350"
+                  }`}
+              >
+                <div
+                  className={`h-4 w-4 rounded border flex items-center justify-center transition-all ${currentAudioTrack === track.id
+                    ? "bg-blue-600 border-blue-600 text-white"
+                    : "border-white/20"
+                    }`}
+                >
+                  {currentAudioTrack === track.id && <Check className="h-3 w-3 stroke-3" />}
+                </div>
+                <span>{track.name}</span>
+              </button>
+            ))}
           </div>
         </div>
       )}
