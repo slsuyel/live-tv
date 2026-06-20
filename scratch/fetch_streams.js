@@ -3,7 +3,31 @@ const path = require('path');
 const crypto = require('crypto').webcrypto;
 
 const channels = JSON.parse(fs.readFileSync(path.join(__dirname, 'channels.json'), 'utf8'));
-const PLAY_API_URL = "https://ugby.livekhelatv.com/v1/mks/channel";
+let cachedDomain = null;
+
+async function resolveDomain() {
+  if (cachedDomain) return cachedDomain;
+  try {
+    const res = await fetch("https://livekhelatv.com", {
+      method: "HEAD",
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+      }
+    });
+    if (res.url) {
+      const urlObj = new URL(res.url);
+      const resolved = `${urlObj.protocol}//${urlObj.host}`;
+      if (resolved.includes("livekhelatv.com")) {
+        cachedDomain = resolved;
+        console.log(`[Scratch] Resolved active domain dynamically: ${cachedDomain}`);
+        return cachedDomain;
+      }
+    }
+  } catch (err) {
+    console.error("[Scratch] Failed to resolve livekhelatv domain dynamically:", err.message);
+  }
+  return "https://28js.livekhelatv.com";
+}
 
 function mlbdB64UrlToBytes(value) {
   try {
@@ -48,6 +72,9 @@ async function decodePayload(payload, accessToken) {
 }
 
 async function fetchChannel(ch) {
+  const domain = await resolveDomain();
+  const PLAY_API_URL = `${domain}/v1/mks/channel`;
+  
   const params = new URLSearchParams();
   params.set("key", ch.key);
   params.set("access", ch.play_token);
@@ -58,8 +85,8 @@ async function fetchChannel(ch) {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        "Referer": "https://ugby.livekhelatv.com/041a7e3d-71ce-400e-9327-7ef276752358",
-        "Origin": "https://ugby.livekhelatv.com",
+        "Referer": `${domain}/041a7e3d-71ce-400e-9327-7ef276752358`,
+        "Origin": domain,
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
       },
       body: params.toString()

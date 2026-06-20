@@ -63,8 +63,44 @@ export async function decodePayload(payload: any, accessToken: string): Promise<
   }
 }
 
+let cachedDomain: string | null = null;
+let domainExpiresAt = 0;
+
+export async function resolveUgbyDomain(): Promise<string> {
+  const now = Date.now();
+  if (cachedDomain && domainExpiresAt > now) {
+    return cachedDomain;
+  }
+
+  try {
+    const res = await fetch("https://livekhelatv.com", {
+      method: "HEAD",
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+      }
+    });
+    
+    if (res.url) {
+      const urlObj = new URL(res.url);
+      const resolved = `${urlObj.protocol}//${urlObj.host}`;
+      if (resolved.includes("livekhelatv.com")) {
+        cachedDomain = resolved;
+        domainExpiresAt = now + 10 * 60 * 1000; // Cache for 10 minutes
+        console.log(`[ugby] Resolved active domain dynamically: ${cachedDomain}`);
+        return cachedDomain;
+      }
+    }
+  } catch (err: any) {
+    console.error("[ugby] Failed to resolve livekhelatv domain dynamically:", err.message);
+  }
+
+  // Fallback to the latest known subdomain
+  return "https://28js.livekhelatv.com";
+}
+
 export async function fetchUgbyChannels(): Promise<UgbyChannel[]> {
-  const targetUrl = "https://ugby.livekhelatv.com/041a7e3d-71ce-400e-9327-7ef276752358";
+  const domain = await resolveUgbyDomain();
+  const targetUrl = `${domain}/041a7e3d-71ce-400e-9327-7ef276752358`;
   try {
     const res = await fetch(targetUrl, {
       headers: {
@@ -98,7 +134,8 @@ export async function fetchUgbyStream(key: string, playToken: string): Promise<D
     return cached.data;
   }
 
-  const PLAY_API_URL = "https://ugby.livekhelatv.com/v1/mks/channel";
+  const domain = await resolveUgbyDomain();
+  const PLAY_API_URL = `${domain}/v1/mks/channel`;
   const params = new URLSearchParams();
   params.set("key", key);
   params.set("access", playToken);
@@ -108,8 +145,8 @@ export async function fetchUgbyStream(key: string, playToken: string): Promise<D
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        "Referer": "https://ugby.livekhelatv.com/041a7e3d-71ce-400e-9327-7ef276752358",
-        "Origin": "https://ugby.livekhelatv.com",
+        "Referer": `${domain}/041a7e3d-71ce-400e-9327-7ef276752358`,
+        "Origin": domain,
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
       },
       body: params.toString()
@@ -149,3 +186,4 @@ export async function fetchUgbyStream(key: string, playToken: string): Promise<D
     return null;
   }
 }
+

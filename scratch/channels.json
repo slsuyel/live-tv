@@ -1,19 +1,19 @@
 [
   {
-    "key": "dsports",
-    "name": "D Sports",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/5/5a/DSports.png",
-    "category": "Sports",
+    "key": "tigosports",
+    "name": "Tigo Sports HD",
+    "image": "",
+    "category": "FIFA World Cup 2026™",
     "quality": "HD",
     "status": "live",
     "sort": 0,
     "views": 0,
     "live": 0,
     "resolution": "",
-    "play_token": "1781831222.891cfd62bb391cbf3842a0a6816368e921e9025735504f4256c6e8b9fb6a04f4",
-    "play_exp": 1781831222,
+    "play_token": "1781950350.fff14312badd1630af112ef632dcca7639bcc0a9f39dd949e011fbd7730729c6",
+    "play_exp": 1781950350,
     "source_types": [
-      "dash"
+      "hls"
     ],
     "source_count": 1
   },
@@ -28,8 +28,8 @@
     "views": 0,
     "live": 0,
     "resolution": "",
-    "play_token": "1781831222.7b0dbe9f058c3ab3ae2713f9afb13e0f3143085307348e4bd6a748c20059f71e",
-    "play_exp": 1781831222,
+    "play_token": "1781950350.39f68fce8d220097f005e108d78e6871c1528823fdb92fbae5cfdaff9975c19d",
+    "play_exp": 1781950350,
     "source_types": [
       "hls"
     ],
@@ -46,28 +46,28 @@
     "views": 0,
     "live": 0,
     "resolution": "",
-    "play_token": "1781831222.aed8d49d867d24f54e1980afdae15e317984138eb89c01aaea3395fd10ea4ef5",
-    "play_exp": 1781831222,
+    "play_token": "1781950350.3236bcd7d1eb50f7aec007e214fb85ee37060fdecf2c3bb911d99f1ad4d94863",
+    "play_exp": 1781950350,
     "source_types": [
       "hls"
     ],
     "source_count": 1
   },
   {
-    "key": "beinsports",
-    "name": "iOS - beIN SPORTS 1 (Arabic)",
-    "image": "https://i.ibb.co.com/S7tZS6cg/Bein-Sports-1-Direct.png",
+    "key": "foxeng",
+    "name": "FOX (ENG) 60Fps",
+    "image": "https://cdn.broadbandtvnews.com/wp-content/uploads/2025/05/13115423/Fox-One-Logo.jpg",
     "category": "Sports",
     "quality": "HD",
     "status": "live",
-    "sort": 2,
+    "sort": 3,
     "views": 0,
     "live": 0,
     "resolution": "",
-    "play_token": "1781831222.18c981b88b6f31b8bf58fe2000bf2784047902996a9269b07086adbc42daeb6e",
-    "play_exp": 1781831222,
+    "play_token": "1781950350.a4430e3cd3f2110d8416ec1cbe1b3099717abd768274983a90f9b7017c114c10",
+    "play_exp": 1781950350,
     "source_types": [
-      "hls"
+      "dash"
     ],
     "source_count": 1
   },
@@ -82,581 +82,11 @@
     "views": 0,
     "live": 0,
     "resolution": "",
-    "play_token": "1781831222.b6ddf0cbcdf785b0dea535833cf8c4b0bf063026f6c976070cfd769e5a03f6bf",
-    "play_exp": 1781831222,
+    "play_token": "1781950350.f0f046e8bdeeaba7a065a27c680d1e8f008ac9bc8753feb5bd94c9dc9b24c54c",
+    "play_exp": 1781950350,
     "source_types": [
       "dash"
     ],
     "source_count": 1
-  },
-  {
-    "key": "iptv-729668",
-    "name": "AR: beIN SPORTS Pop Up FHD",
-    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-int.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7000,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.563838cc82dc911a3b0de8d01f026050048cceb4b006d871d5e8ad7f21b1eb9a",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729021",
-    "name": "AR: beIN SPORTS NEWS FHD (H.265)",
-    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-news-arabic-int.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7001,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.610a9cb7a6a199990b130cf053dddc9d056e667183b25fce8ab5c6a44bec1eca",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729022",
-    "name": "AR: beIN SPORTS NEWS HD",
-    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-news-arabic-int.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "live",
-    "sort": 7002,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.c638f3cbded5a7b27484769221257fbb3bdfe89c125fa9c81b4a1f4951ca90f7",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729023",
-    "name": "AR: beIN SPORTS FHD (H.265)",
-    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-int.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7003,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.95360ddf3b8459f07e22ac638b39f4d6a012f3e6f9a5d617a5863a1d8e474ce0",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729024",
-    "name": "AR: beIN SPORTS HD",
-    "image": "https://raw.githubusercontent.com/tv-logo/tv-logos/main/countries/international/beinsports/old/stacked/bein-sports-int.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "live",
-    "sort": 7004,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.0a8394e1bc2575054114bf240693a733a717e959fda97eae3862e828982fac22",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729453",
-    "name": "TOD WC 01: Arabic Feed: FIFA World Cup 2026: Argentina vs. Algeria",
-    "image": "https://i.imgur.com/rIIIAi2.jpeg",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "live",
-    "sort": 7005,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.947205b5b9efe58188ab3561f67c78eb54ad63065f210b535b04ee057e5220ad",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729454",
-    "name": "TOD WC 02: Arabic Feed: FIFA World Cup 2026: Argentina vs. Algeria - HD",
-    "image": "https://i.imgur.com/rIIIAi2.jpeg",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "live",
-    "sort": 7006,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.e5e542b3b2730223df4712f14bafc99a8219c82d501a5d8561671ad818663a71",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729558",
-    "name": "TOD WC 03: : كأس العالم: الأرجنتين ضد الجزائر - HDR [EN-AR]",
-    "image": "https://i.imgur.com/rIIIAi2.jpeg",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "4K",
-    "status": "live",
-    "sort": 7007,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.51e7489f0ffc31bb54bde8132a362cd18ea6da3a7c78a5c73b0adfd2d2b06276",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729576",
-    "name": "TOD WC 04: كأس العالم: السعودية ضد أوروغواي - HD",
-    "image": "https://i.imgur.com/rIIIAi2.jpeg",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "live",
-    "sort": 7008,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.2de356de342b50f284a438ac9d833154b52066dc1482af8bbc0b8e885805f255",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729577",
-    "name": "TOD WC 05: FIFA World Cup: Saudi Arabia vs Uruguay - ENG",
-    "image": "https://i.imgur.com/rIIIAi2.jpeg",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "down",
-    "sort": 7009,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.1629e68bc5d31237a15406d03661fb1d86e9c24c38ce18dfc3463924db573ace",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729429",
-    "name": "beIN SPORTS 4K HDR",
-    "image": "https://assets.bein.com/mena/sites/4/2026/05/4K-HDR-200x200-1.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "4K",
-    "status": "live",
-    "sort": 7010,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.84c7bed2bc773d877facfab154c60b8ddc0ddcb826ba66439673f73804a558d5",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729578",
-    "name": "beIN SPORTS 4K HDR*",
-    "image": "https://assets.bein.com/mena/sites/4/2026/05/4K-HDR-200x200-1.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "4K",
-    "status": "live",
-    "sort": 7011,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.f96a1b94513937ff1ceb7f1613a080ecb8951369e4ab798f4236ef17a0d0ae1a",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727604",
-    "name": "beIN SPORTS MAX 1 FHD HEVC Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7012,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.f6da3476e1688216939cae669345cd4c74a2667513fdc5a90683dcea8486f9ca",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727606",
-    "name": "beIN SPORTS MAX 1 FHD Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7013,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.365da4961954da3b1d73ae44d2656aed9f0936f015004266245f3b8f058e66d8",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727607",
-    "name": "beIN SPORTS MAX 1 HD Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "live",
-    "sort": 7014,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.58fcf354ab2b242339da4e40ba407caf1dc90d1c6f8bbd191d54334f79c27954",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727608",
-    "name": "beIN SPORTS MAX 1 SD+ Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "SD",
-    "status": "live",
-    "sort": 7015,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.a0c57d68313bdf904e6393a2a0b6163f84583343945ca98b2eb8119856477943",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727605",
-    "name": "beIN SPORTS MAX 2 FHD HEVC Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX2_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7016,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.1adc3f87562b782b0d08e732184c86d3f070805fe2fb8aa6e2b7bbf77d5355c6",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727609",
-    "name": "beIN SPORTS MAX 2 FHD Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX2_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7017,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.ba77ea71855db4c1735bc6cd5a69f30fd60d940063b0c410e3ed5357f937cfd7",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727610",
-    "name": "beIN SPORTS MAX 2 HD Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX2_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "live",
-    "sort": 7018,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.ebc0f12cdaa5d359756f8e0943a58f2aebf073a94d5fe6678612933bb2f282f5",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727611",
-    "name": "beIN SPORTS MAX 2 SD+ Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX2_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "SD",
-    "status": "live",
-    "sort": 7019,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.e00a0dd94412fa0a6469981f6fc0755e4a484c28b227d3ce238b0a562f8bcaf2",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727612",
-    "name": "beIN SPORTS MAX 3 FHD HEVC Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX3_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7020,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.f0dda622e30f6537dc11211f11cf0dfea1544a136e0ca9cf6fd06e5230bd7460",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727613",
-    "name": "beIN SPORTS MAX 3 FHD Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX3_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7021,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.b61551f7a7d74396a1a49ae5fc44988da8e03fb7d8023da35d1140d4e5e48f8a",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727614",
-    "name": "beIN SPORTS MAX 3 HD Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX3_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "live",
-    "sort": 7022,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.1cbcfe035edb36e5caa9d14a5d5118444319aa938a005a1237f85f0fc76e8fdb",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727615",
-    "name": "beIN SPORTS MAX 3 SD+ Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX3_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "SD",
-    "status": "live",
-    "sort": 7023,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.a2107edaf1f62be5705cb05f8945725b4cbc73bde9466e0fc782df5bcbec79db",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727616",
-    "name": "beIN SPORTS MAX 4 FHD HEVC Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX4_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7024,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.e4e54e9c3ee8785ba266d90a70d41cbb96c32478ba81cfd3c53fd9eb411eae98",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727617",
-    "name": "beIN SPORTS MAX 4 FHD Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX4_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7025,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.8791d49f82cbafe5631bf285bb16333ee6b1082dc3e85fea90786ae2d2af7749",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727618",
-    "name": "beIN SPORTS MAX 4 HD Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX4_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "HD",
-    "status": "live",
-    "sort": 7026,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.bf9a43e3ed730edb8bdfbc202c5b2ed250fdf16f9cb2fa3db7972bd3a527005e",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-727619",
-    "name": "beIN SPORTS MAX 4 SD+ Ⓖ",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX4_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "SD",
-    "status": "live",
-    "sort": 7027,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.286771cb2a631b35d4fec18df9c06997f951021eeee160dc6dde1a7a0b11b846",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729433",
-    "name": "beIN SPORTS MAX 1 FHD [♣]",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7028,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.4a0559e582574aa1f8b4e3bfc2dce213c6fa2ecf635c90a677cc19f7131140e9",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
-  },
-  {
-    "key": "iptv-729432",
-    "name": "beIN SPORTS MAX 1 FHD HEVC [♣]",
-    "image": "https://assets.bein.com/mena/sites/3/2015/06/beIN_SPORTS_MAX1_DIGITAL_Mono.png",
-    "category": "FIFA WC 2026™ beIN MAX Ⓖ",
-    "quality": "FHD",
-    "status": "live",
-    "sort": 7029,
-    "views": 0,
-    "live": 0,
-    "resolution": "",
-    "play_token": "1781831222.621bbd5ff0e4196277671cdd5be497d1cff0bab403aff21d53fb2096b14196de",
-    "play_exp": 1781831222,
-    "source_types": [
-      "hls",
-      "file"
-    ],
-    "source_count": 5
   }
 ]
