@@ -16,8 +16,6 @@ export async function GET(req: NextRequest) {
     // Construct request headers to mimic a browser player
     const headers = new Headers();
     headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
-    headers.set("Origin", parsedUrl.origin);
-    headers.set("Referer", parsedUrl.origin + "/");
 
     const response = await fetch(targetUrl, {
       method: "GET",
