@@ -23,6 +23,25 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Channel } from "./types";
 
+class ProxyHlsLoader extends (Hls.DefaultConfig.loader as any) {
+  constructor(config: any) {
+    super(config);
+  }
+
+  load(context: any, config: any, callbacks: any) {
+    const originalUrl = context.url;
+    if (
+      originalUrl &&
+      !originalUrl.startsWith("/") &&
+      !originalUrl.startsWith("http://localhost") &&
+      !originalUrl.startsWith(window.location.origin)
+    ) {
+      context.url = `/api/proxy?url=${encodeURIComponent(originalUrl)}`;
+    }
+    super.load(context, config, callbacks);
+  }
+}
+
 interface VideoPlayerProps {
   channel: Channel;
   isMuted?: boolean;
@@ -373,6 +392,14 @@ export default function VideoPlayer({
           shakaRef.current = shakaPlayerInstance;
           await shakaPlayerInstance.attach(video);
 
+          // CORS Bypass: Route all non-relative, non-local requests through proxy
+          shakaPlayerInstance.getNetworkingEngine().registerRequestFilter((type: any, request: any) => {
+            const originalUrl = request.uris[0];
+            if (originalUrl && !originalUrl.startsWith("/") && !originalUrl.startsWith("http://localhost") && !originalUrl.startsWith(window.location.origin)) {
+              request.uris[0] = `/api/proxy?url=${encodeURIComponent(originalUrl)}`;
+            }
+          });
+
           shakaPlayerInstance.configure({
             manifest: {
               defaultPresentationDelay: 8,
@@ -529,6 +556,8 @@ export default function VideoPlayer({
       })();
     } else if (Hls.isSupported()) {
       hls = new Hls({
+        fLoader: ProxyHlsLoader as any,
+        pLoader: ProxyHlsLoader as any,
         enableWorker: true,
         lowLatencyMode: false,
         progressive: true,
